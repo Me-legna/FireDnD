@@ -48,10 +48,10 @@ module.exports = {
       }
     }, options);
 
-    await queryInterface.addIndex('Users', ['username', 'email']);
+    // await queryInterface.addIndex('Users', ['username', 'email']);
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
-    await queryInterface.removeIndex('Users', ['username', 'email'])
+    await queryInterface.dropTable('Users',options);
+    // await queryInterface.removeIndex('Users', ['username', 'email'])
   }
 };

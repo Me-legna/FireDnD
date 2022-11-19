@@ -114,11 +114,11 @@ module.exports = (sequelize, DataTypes) => {
         attributes: {}
       }
     },
-    indexes: [
-      {
-        fields: ['username', 'email']
-      },
-    ],
+    // indexes: [
+    //   {
+    //     fields: ['username', 'email']
+    //   },
+    // ],
   });
   return User;
 };
