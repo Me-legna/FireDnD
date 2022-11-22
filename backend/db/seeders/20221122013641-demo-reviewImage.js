@@ -17,11 +17,11 @@ module.exports = {
       },
       {
         reviewId:2,
-        url: 'img2spotId1.url'
+        url: 'img1spotId2.url'
       },
       {
         reviewId:3,
-        url: 'img1spotId2.url'
+        url: 'img1spotId3.url'
       },
     ],{})
 
