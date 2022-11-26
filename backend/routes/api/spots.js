@@ -103,8 +103,8 @@ router.post('/', requireAuth,validateCreateSpot, async (req, res, next) => {
 })
 
 //Add an Image to a Spot based on the Spot's id
-router.post('/:spotId/images', requireAuth,async (req,res,next) =>{
-    const spot = await Spot.findByPk(req.params.Id, {raw:true})
+router.post('/:spotId/images', requireAuth,async (req,res,next) =>{ //use update method to make only one preview
+    const spot = await Spot.findByPk(req.params.spotId, {raw:true})
     const {url, preview} = req.body
     if(spot){
         const userId = spot.ownerId;
