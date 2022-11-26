@@ -64,7 +64,7 @@ const validateCreateSpot = [
         .isDecimal()
         .withMessage('Longitude is not valid'),
     check('name')
-        .isLength({max: 50})
+        .isLength({ max: 50 })
         .withMessage('Name must be less than 50 characters'),
     check('description')
         .exists({ checkFalsy: true })
@@ -73,49 +73,52 @@ const validateCreateSpot = [
     check('price')
         .exists({ checkFalsy: true })
         .notEmpty()
-        .isInt({min: 1})
+        .isInt({ min: 1 })
         .withMessage('Price per day is required and cannot be zero'),
     handleValidationErrors
 ];
 
 //CREATE a spot
-router.post('/', requireAuth,validateCreateSpot, async (req, res, next) => {
+router.post('/', requireAuth, validateCreateSpot, async (req, res, next) => {
 
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
     const ownerId = req.user.id;
     // req.body.ownerId = req.user.id
     const newSpot = await Spot.create(//req.body)
         {
-        ownerId,
-        address,
-        city,
-        state,
-        country,
-        lat,
-        lng,
-        name,
-        description,
-        price
-    })
+            ownerId,
+            address,
+            city,
+            state,
+            country,
+            lat,
+            lng,
+            name,
+            description,
+            price
+        })
     res.json(newSpot)
     // ...req.body
 
 })
 
 //Add an Image to a Spot based on the Spot's id
-router.post('/:spotId/images', requireAuth,async (req,res,next) =>{ //use update method to make only one preview
-    const spot = await Spot.findByPk(req.params.spotId, {raw:true})
-    const {url, preview} = req.body
-    if(spot){
-        const userId = spot.ownerId;
-        const spotId = spot.id;
-        const newSpotImage = await SpotImage.create({userId, spotId, url, preview});
+router.post('/:spotId/images', requireAuth, async (req, res, next) => { //use update method to make only one preview
+    // console.log(req.params.spotId)
+    // res.send('success')
+    const spot = await Spot.findByPk(req.params.spotId, { raw: true })
+    console.log(spot)
+    const { url, preview } = req.body
+    if (spot) {
+        const userId = +spot.ownerId;
+        const spotId = +spot.id;
+        const newSpotImage = await SpotImage.create({ userId, spotId, url, preview });
         const spotImg = await SpotImage.scope('defaultScope').findByPk(newSpotImage.id)
         res.json(spotImg)
-    }else{
+    } else {
         const err = {};
         err.status = 404,
-        err.message = "Spot couldn't be found"
+            err.message = "Spot couldn't be found"
         next(err)
         // res.statusCode = 404
         // res.json({
@@ -123,6 +126,36 @@ router.post('/:spotId/images', requireAuth,async (req,res,next) =>{ //use update
         //     statusCode: 404
         // })
     }
+})
+
+//GET spots of Current User
+router.get('/current', requireAuth,  async (req, res, next) => {
+    const spots = await Spot.findAll({ raw: true });
+
+    const resSpots = [];
+
+    for (let spot of spots) {
+        let starSum = 0;
+        const reviews = await Review.findAll({
+            where: { spotId: spot.id },
+            attributes: ['stars'],
+            raw: true,
+        })
+        reviews.forEach(review => starSum += review.stars);
+        const starAvg = starSum / reviews.length;
+        spot.avgRating = starAvg;
+
+        const previewImg = await SpotImage.findOne({
+            where: { spotId: spot.id, preview: true },
+            attributes: ['url'],
+            raw: true
+        })
+        spot.previewImage = previewImg.url
+
+        resSpots.push(spot)
+    }
+    const mySpots = resSpots.filter(spot => spot.ownerId === req.user.id)
+    res.json({ Spots: mySpots })
 })
 
 module.exports = router;
