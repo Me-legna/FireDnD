@@ -39,7 +39,7 @@ router.get('/', async (req, res, next) => {
     res.json({ Spots: resSpots })
 });
 
-const validateCreateSpot = [
+const validateSpot = [
     check('address')
         .exists({ checkFalsy: true })
         .notEmpty()
@@ -79,7 +79,7 @@ const validateCreateSpot = [
 ];
 
 //CREATE a spot
-router.post('/', requireAuth, validateCreateSpot, async (req, res, next) => {
+router.post('/', requireAuth, validateSpot, async (req, res, next) => {
 
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
     const ownerId = req.user.id;
@@ -192,6 +192,34 @@ router.get('/:spotId', async (req,res,next) => {
     }else{
         res.json(spot)
     }
+})
+
+//Edit a Spot
+router.put('/:spotId', requireAuth, validateSpot, async (req,res,next) => {
+    const spot = await Spot.findByPk(req.params.spotId);
+    const { address, city, state, country, lat, lng, name, description, price } = req.body;
+
+    if(!spot){
+        const err = {};
+        err.status = 404;
+        err.message = "Spot couldn't be found";
+        next(err)
+    }else{
+        if(address) spot.address = address;
+        if(city) spot.city = city;
+        if(state) spot.state = state;
+        if(country) spot.country = country;
+        if(lat) spot.lat = lat;
+        if(lng) spot.lng = lng;
+        if(name) spot.name = name;
+        if(description) spot.description = description;
+        if(price) spot.price = price;
+        await spot.save();
+        res.json(spot)
+    }
+
+
+
 })
 
 module.exports = router;
