@@ -81,25 +81,48 @@ const validateCreateSpot = [
 //CREATE a spot
 router.post('/', requireAuth,validateCreateSpot, async (req, res, next) => {
 
-    // const { address, city, state, country, lat, lng, name, description, price } = req.body;
-    // const ownerId = req.user.id;
-    req.body.ownerId = req.user.id
-    const newSpot = await Spot.create(req.body)
-        // {
-        // ownerId,
-        // ...req.body
-        // address,
-        // city,
-        // state,
-        // country,
-        // lat,
-        // lng,
-        // name,
-        // description,
-        // price
-    // })
-
+    const { address, city, state, country, lat, lng, name, description, price } = req.body;
+    const ownerId = req.user.id;
+    // req.body.ownerId = req.user.id
+    const newSpot = await Spot.create(//req.body)
+        {
+        ownerId,
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price
+    })
     res.json(newSpot)
+    // ...req.body
+
+})
+
+//Add an Image to a Spot based on the Spot's id
+router.post('/:spotId/images', requireAuth,async (req,res,next) =>{
+    const spot = await Spot.findByPk(req.params.Id, {raw:true})
+    const {url, preview} = req.body
+    if(spot){
+        const userId = spot.ownerId;
+        const spotId = spot.id;
+        const newSpotImage = await SpotImage.create({userId, spotId, url, preview});
+        const spotImg = await SpotImage.scope('defaultScope').findByPk(newSpotImage.id)
+        res.json(spotImg)
+    }else{
+        const err = {};
+        err.status = 404,
+        err.message = "Spot couldn't be found"
+        next(err)
+        // res.statusCode = 404
+        // res.json({
+        //     message: "Spot couldn't be found",
+        //     statusCode: 404
+        // })
+    }
 })
 
 module.exports = router;
