@@ -104,10 +104,16 @@ router.post('/', requireAuth, validateSpot, async (req, res, next) => {
 
 //Add an Image to a Spot based on the Spot's id
 router.post('/:spotId/images', requireAuth, async (req, res, next) => { //use update method to make only one preview
-    // console.log(req.params.spotId)
-    // res.send('success')
-    const spot = await Spot.findByPk(req.params.spotId, { raw: true })
-    console.log(spot)
+    // const spot = await Spot.findByPk(req.params.spotId, { raw: true })
+    //if(spot.ownerId !== req.user.id){
+        // const err = {};
+        // err.status = 401;
+        // err.message = "You are not the owner of this Spot";
+        // next(err)
+    // }
+    const spot = await Spot.findOne({where:{id: req.params.spotId, ownerId: req.user.id}, raw:true});
+
+    // console.log(spot)
     const { url, preview } = req.body
     if (spot) {
         const userId = +spot.ownerId;
@@ -196,7 +202,14 @@ router.get('/:spotId', async (req, res, next) => {
 
 //Edit a Spot
 router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
-    const spot = await Spot.findByPk(req.params.spotId);
+    // const spot = await Spot.findByPk(req.params.spotId);
+    //if(spot.ownerId !== req.user.id){
+        // const err = {};
+        // err.status = 401;
+        // err.message = "You are not the owner of this Spot";
+        // next(err)
+    // }
+    const spot = await Spot.findOne({where:{id: req.params.spotId, ownerId: req.user.id}});
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
 
     if (!spot) {
@@ -245,7 +258,7 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
         const userId = +req.user.id;
         const spotId = +spot.id;
         const userReview = await Review.findOne({where:{userId,spotId}})
-        
+
         if(userReview){ //if Review from the current user already exists for the Spot
             const err = {};
             err.status = 403;
