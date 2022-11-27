@@ -167,34 +167,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
 //GET details of a Spot from an id
 router.get('/:spotId', async (req, res, next) => {
     const spot = await Spot.findByPk(req.params.spotId, {
-        // attributes: {
-        //     include: [
-        //         // [sequelize.fn("COUNT", sequelize.col("Reviews.id")), "numReviews"],
-        //         // [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"],
-        //         [
-        //             // Note the wrapping parentheses in the call below!
-        //             sequelize.literal(`(
-        //                 SELECT COUNT(*)
-        //                 FROM Reviews
-        //                 JOIN Spots ON Reviews.spotId = Spots.id
-        //                 WHERE
-        //                     Reviews.spotId = Spot.id
-        //             )`),
-        //             'numReviews'
-        //         ],
-        //         [
-        //             // Note the wrapping parentheses in the call below!
-        //             sequelize.literal(`(
-        //                 SELECT AVG (stars)
-        //                 FROM Reviews
-        //                 JOIN Spots ON Reviews.spotId = Spots.id
-        //                 WHERE
-        //                     Reviews.spotId = Spot.id
-        //             )`),
-        //             'avgStarRating'
-        //         ],
-        //     ]
-        // },
+
         include: [
             {
                 model: SpotImage,
@@ -205,10 +178,6 @@ router.get('/:spotId', async (req, res, next) => {
                 as: "Owner",
                 attributes: ['id', 'firstName', 'lastName']
             },
-            // {
-            //     model: Review,
-            //     attributes: [],
-            // },
         ],
     })
 
@@ -218,8 +187,8 @@ router.get('/:spotId', async (req, res, next) => {
         err.message = "Spot couldn't be found";
         next(err)
     } else {
-        res.json(spot)
-        const reviewInfo = await Review.findOne({
+
+        const reviewInfo = await Review.findAll({
             where:{
                 spotId:spot.id
             },
@@ -229,7 +198,8 @@ router.get('/:spotId', async (req, res, next) => {
             ],
             raw: true
         })
-        const {numReviews, avgStarRating} = reviewInfo
+        const {numReviews, avgStarRating} = reviewInfo[0]
+        console.log(reviewInfo)
         const spotObj = spot.toJSON()
         spotObj.numReviews = numReviews;
         spotObj.avgStarRating = avgStarRating;
