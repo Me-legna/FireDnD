@@ -167,17 +167,13 @@ router.get('/current', requireAuth, async (req, res, next) => {
 //GET details of a Spot from an id
 router.get('/:spotId', async (req, res, next) => {
     const spot = await Spot.findByPk(req.params.spotId, {
-        attributes: {
-            include: [
-                [sequelize.fn("COUNT", sequelize.col("Reviews.id")), "numReviews"],
-                [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"],
-            ]
-        },
+        // attributes: {
+        //     include: [
+        //         [sequelize.fn("COUNT", sequelize.col("Reviews.id")), "numReviews"],
+        //         [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"],
+        //     ]
+        // },
         include: [
-            {
-                model: Review,
-                attributes: [],
-            },
             {
                 model: SpotImage,
                 attributes: ['id', 'url', 'preview'],
@@ -187,6 +183,10 @@ router.get('/:spotId', async (req, res, next) => {
                 as: "Owner",
                 attributes: ['id', 'firstName', 'lastName']
             },
+            // {
+            //     model: Review,
+            //     attributes: [],
+            // },
         ]
     })
 
@@ -196,7 +196,21 @@ router.get('/:spotId', async (req, res, next) => {
         err.message = "Spot couldn't be found";
         next(err)
     } else {
-        res.json(spot)
+        const reviewInfo = await Review.findOne({
+            where:{
+                spotId:spot.id
+            },
+            attributes: [
+                [sequelize.fn("COUNT", sequelize.col("id")), "numReviews"],
+                [sequelize.fn("AVG", sequelize.col("stars")), "avgStarRating"]
+            ],
+            raw: true
+        })
+        const {numReviews, avgStarRating} = reviewInfo
+        const spotObj = spot.toJSON()
+        spotObj.numReviews = numReviews;
+        spotObj.avgStarRating = avgStarRating;
+        res.json(spotObj)
     }
 })
 
@@ -271,8 +285,6 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
                 review,
                 stars,
             })
-            const findReview = await Review.findByPk(newReview.id)
-            console.log(newReview)
             res.json(newReview)
         }
     }
