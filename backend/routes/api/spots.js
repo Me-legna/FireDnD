@@ -188,7 +188,7 @@ router.get('/:spotId', async (req, res, next) => {
                 attributes: ['id', 'firstName', 'lastName']
             },
         ],
-        order: ['id']
+        order: ['Spot.id']
     })
 
     if (!spot || spot.id === null) {
