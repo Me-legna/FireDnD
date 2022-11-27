@@ -12,15 +12,17 @@ const validateSignup = [
   check('email')
     .exists({ checkFalsy: true })
     .isEmail()
-    .withMessage('Please provide a valid email.'),
-  check('username')
-    .exists({ checkFalsy: true })
-    .isLength({ min: 4 })
-    .withMessage('Please provide a username with at least 4 characters.'),
-  check('username')
-    .not()
-    .isEmail()
-    .withMessage('Username cannot be an email.'),
+    .withMessage('Invalid email'), //'Please provide a valid email.'
+  // check('username')
+  //   .exists({ checkFalsy: true })
+  //   .isLength({ min: 4 })
+  //   .withMessage('Please provide a username with at least 4 characters.'),
+  check('username').notEmpty().withMessage('Username is required'),
+    // .not()
+    // .isEmail()
+    // .withMessage('Username cannot be an email.'),
+  check('firstName').notEmpty().withMessage('First Name is required'),
+  check('lastName').notEmpty().withMessage('Last Name is required'),
   check('password')
     .exists({ checkFalsy: true })
     .isLength({ min: 6 })
@@ -34,14 +36,56 @@ router.post(
   validateSignup,
   async (req, res) => {
     const { firstName, lastName, email, password, username } = req.body;
-    const user = await User.signup({ firstName, lastName, email, username, password });
 
-    await setTokenCookie(res, user);
+    const userByEmail = await User.findOne({where:{email}})
+    if(userByEmail){
+      res.statusCode = 403
+      res.json({
+        "message": "User already exists",
+        "statusCode": res.statusCode,
+        "errors": {
+        "email": "User with that email already exists"
+        }
+      })
+    }
+    const userByUserName = await User.findOne({where:{username}})
+    if(userByUserName){
+      res.statusCode = 403
+      res.json({
+        "message": "User already exists",
+        "statusCode": res.statusCode,
+        "errors": {
+        "email": "User with that username already exists"
+        }
+      })
+    }
+
+    const user = await User.signup({ firstName, lastName, email, username, password });
+    const newUser = user.toJSON()
+
+    const token = await setTokenCookie(res, user);
 
     return res.json({
-      user,
+      id: newUser.id,
+      firstName: newUser.firstName,
+      lastName: newUser.lastName,
+      email: newUser.email,
+      username: newUser.username,
+      // token,
     });
   }
 );
+
+//Validation Errors
+// router.use((err, req, res, next) => {
+//   res.status(err.status || 500);
+//   console.error(err);
+//   res.json({
+//     title: err.title || 'Validation Error',
+//     message: err.message,
+//     errors: err.errors,
+//     stack: isProduction ? null : err.stack
+//   });
+// })
 
 module.exports = router;

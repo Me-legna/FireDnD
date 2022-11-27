@@ -11,13 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Spot.hasMany(models.SpotImage, { foreignKey: 'spotId' });
-      Spot.belongsTo(models.User, { foreignKey: 'ownerId', as: 'Spots' })
-      Spot.belongsToMany(models.User, {
-        as: 'Reviews',
-        through: models.Review,
-        foreignKey: 'spotId',
-        otherKey: 'userId',
-      });
+      Spot.hasMany(models.Review, { foreignKey: 'spotId' });
+      Spot.belongsTo(models.User, { foreignKey: 'ownerId', as: 'Owner' })
+      // Spot.belongsToMany(models.User, {
+      //   as: 'Reviews',
+      //   through: models.Review,
+      //   foreignKey: 'spotId',
+      //   otherKey: 'userId',
+      // });
       Spot.belongsToMany(models.User, {
         as: 'Bookings',
         through: models.Booking,
