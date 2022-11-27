@@ -169,8 +169,29 @@ router.get('/:spotId', async (req, res, next) => {
     const spot = await Spot.findByPk(req.params.spotId, {
         attributes: {
             include: [
-                [sequelize.fn("COUNT", sequelize.col("Reviews.id")), "numReviews"],
-                [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"],
+                // [sequelize.fn("COUNT", sequelize.col("Reviews.id")), "numReviews"],
+                // [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"],
+                [
+                    // Note the wrapping parentheses in the call below!
+                    sequelize.literal(`(
+                        SELECT COUNT(*)
+                        FROM Reviews
+                        WHERE
+                            Reviews.spotId = Spot.id
+                    )`),
+                    'numReviews'
+                ],
+                [
+                    // Note the wrapping parentheses in the call below!
+                    sequelize.literal(`(
+                        SELECT AVG (stars)
+                        FROM Reviews
+                        WHERE
+                            Reviews.spotId = Spot.id
+                    )`),
+                    'avgStarRating'
+                ],
+
             ]
         },
         include: [
@@ -188,7 +209,6 @@ router.get('/:spotId', async (req, res, next) => {
                 attributes: ['id', 'firstName', 'lastName']
             },
         ],
-        order: ['Spot.id']
     })
 
     if (!spot || spot.id === null) {
