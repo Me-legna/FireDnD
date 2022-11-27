@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Review.belongsTo(models.User, {foreignKey: 'userId', as: 'Reviews' });
-      Review.belongsTo(models.Spot, {foreignKey: 'spotId' });
+      Review.belongsTo(models.User, {foreignKey: 'userId', as: 'User' });
+      Review.belongsTo(models.Spot, {foreignKey: 'spotId', as: 'Spot' });
       Review.hasMany(models.ReviewImage, {foreignKey: 'reviewId'})
     }
   }
@@ -21,11 +21,11 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    spotId: {
+    userId: {
       type: DataTypes.INTEGER,
       allowNull:false,
     },
-    userId: {
+    spotId: {
       type: DataTypes.INTEGER,
       allowNull:false,
     },
