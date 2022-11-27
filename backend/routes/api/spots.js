@@ -175,9 +175,10 @@ router.get('/:spotId', async (req, res, next) => {
                     // Note the wrapping parentheses in the call below!
                     sequelize.literal(`(
                         SELECT COUNT(*)
-                        FROM Review
+                        FROM Reviews
+                        JOIN Spots ON Reviews.spotId = Spots.id
                         WHERE
-                            Review.spotId = Spot.id
+                            Reviews.spotId = Spot.id
                     )`),
                     'numReviews'
                 ],
@@ -185,9 +186,10 @@ router.get('/:spotId', async (req, res, next) => {
                     // Note the wrapping parentheses in the call below!
                     sequelize.literal(`(
                         SELECT AVG (stars)
-                        FROM Review
+                        FROM Reviews
+                        JOIN Spots ON Reviews.spotId = Spots.id
                         WHERE
-                            Review.spotId = Spot.id
+                            Reviews.spotId = Spot.id
                     )`),
                     'avgStarRating'
                 ],
