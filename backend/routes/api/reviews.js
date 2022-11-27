@@ -24,7 +24,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
             err.status = 403;
             err.message = "Maximum number of images for this resource was reached";
             next(err)
-        }else{
+        } else {
             const reviewId = review.id;
             const { url } = req.body;
             const newReviewImage = await ReviewImage.create({ reviewId, url })
@@ -34,5 +34,52 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
     }
 })
 
+
+//GET reviews of Current User
+router.get('/current', requireAuth, async (req, res, next) => {
+    const reviews = await Review.findAll({
+        where: {
+            userId: req.user.id
+        },
+        include: [
+            {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName'],
+                as: 'User'
+            },
+            {
+                model: Spot,
+                attributes: {
+                    exclude: ['description', 'createdAt', 'updatedAt'],
+                },
+                as: 'Spot'
+            },
+            {
+                model: ReviewImage,
+                attributes: ['id', 'url']
+            }
+        ],
+    })
+
+    if (!reviews) {
+        const err = {};
+        err.status = 404;
+        err.message = "You have not yet made a review";
+        next(err)
+    } else {
+        const reviewObjs = []
+        for(let review of reviews){
+            const rawReview = review.toJSON()
+            const preview = await SpotImage.findOne({where:{spotId: rawReview.Spot.id, preview: true}})
+
+            rawReview.Spot.previewImage = preview.url
+
+            reviewObjs.push(rawReview)
+        }
+        // const myReviews = reviews.toJSON()
+
+        res.json({Reviews: reviewObjs})
+    }
+})
 
 module.exports = router;
