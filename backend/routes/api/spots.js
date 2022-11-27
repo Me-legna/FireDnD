@@ -167,40 +167,35 @@ router.get('/current', requireAuth, async (req, res, next) => {
 //GET details of a Spot from an id
 router.get('/:spotId', async (req, res, next) => {
     const spot = await Spot.findByPk(req.params.spotId, {
-        attributes: {
-            include: [
-                // [sequelize.fn("COUNT", sequelize.col("Reviews.id")), "numReviews"],
-                // [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"],
-                [
-                    // Note the wrapping parentheses in the call below!
-                    sequelize.literal(`(
-                        SELECT COUNT(*)
-                        FROM Reviews
-                        JOIN Spots ON Reviews.spotId = Spots.id
-                        WHERE
-                            Reviews.spotId = Spot.id
-                    )`),
-                    'numReviews'
-                ],
-                [
-                    // Note the wrapping parentheses in the call below!
-                    sequelize.literal(`(
-                        SELECT AVG (stars)
-                        FROM Reviews
-                        JOIN Spots ON Reviews.spotId = Spots.id
-                        WHERE
-                            Reviews.spotId = Spot.id
-                    )`),
-                    'avgStarRating'
-                ],
-
-            ]
-        },
+        // attributes: {
+        //     include: [
+        //         // [sequelize.fn("COUNT", sequelize.col("Reviews.id")), "numReviews"],
+        //         // [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"],
+        //         [
+        //             // Note the wrapping parentheses in the call below!
+        //             sequelize.literal(`(
+        //                 SELECT COUNT(*)
+        //                 FROM Reviews
+        //                 JOIN Spots ON Reviews.spotId = Spots.id
+        //                 WHERE
+        //                     Reviews.spotId = Spot.id
+        //             )`),
+        //             'numReviews'
+        //         ],
+        //         [
+        //             // Note the wrapping parentheses in the call below!
+        //             sequelize.literal(`(
+        //                 SELECT AVG (stars)
+        //                 FROM Reviews
+        //                 JOIN Spots ON Reviews.spotId = Spots.id
+        //                 WHERE
+        //                     Reviews.spotId = Spot.id
+        //             )`),
+        //             'avgStarRating'
+        //         ],
+        //     ]
+        // },
         include: [
-            {
-                model: Review,
-                attributes: [],
-            },
             {
                 model: SpotImage,
                 attributes: ['id', 'url', 'preview'],
@@ -210,6 +205,10 @@ router.get('/:spotId', async (req, res, next) => {
                 as: "Owner",
                 attributes: ['id', 'firstName', 'lastName']
             },
+            // {
+            //     model: Review,
+            //     attributes: [],
+            // },
         ],
     })
 
@@ -220,21 +219,21 @@ router.get('/:spotId', async (req, res, next) => {
         next(err)
     } else {
         res.json(spot)
-        // const reviewInfo = await Review.findOne({
-        //     where:{
-        //         spotId:spot.id
-        //     },
-        //     attributes: [
-        //         [sequelize.fn("COUNT", sequelize.col("id")), "numReviews"],
-        //         [sequelize.fn("AVG", sequelize.col("stars")), "avgStarRating"]
-        //     ],
-        //     raw: true
-        // })
-        // const {numReviews, avgStarRating} = reviewInfo
-        // const spotObj = spot.toJSON()
-        // spotObj.numReviews = numReviews;
-        // spotObj.avgStarRating = avgStarRating;
-        // res.json(spotObj)
+        const reviewInfo = await Review.findOne({
+            where:{
+                spotId:spot.id
+            },
+            attributes: [
+                [sequelize.fn("COUNT", sequelize.col("id")), "numReviews"],
+                [sequelize.fn("AVG", sequelize.col("stars")), "avgStarRating"]
+            ],
+            raw: true
+        })
+        const {numReviews, avgStarRating} = reviewInfo
+        const spotObj = spot.toJSON()
+        spotObj.numReviews = numReviews;
+        spotObj.avgStarRating = avgStarRating;
+        res.json(spotObj)
     }
 })
 
