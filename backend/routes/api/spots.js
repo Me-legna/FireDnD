@@ -4,7 +4,7 @@ const { Op } = require('sequelize');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth.js');
-const { Spot, User, Booking, Review, SpotImage, sequelize } = require('../../db/models');
+const { Spot, User, Booking, Review, ReviewImage, SpotImage, sequelize } = require('../../db/models');
 
 const router = express.Router();
 
@@ -106,12 +106,12 @@ router.post('/', requireAuth, validateSpot, async (req, res, next) => {
 router.post('/:spotId/images', requireAuth, async (req, res, next) => { //use update method to make only one preview
     // const spot = await Spot.findByPk(req.params.spotId, { raw: true })
     //if(spot.ownerId !== req.user.id){
-        // const err = {};
-        // err.status = 401;
-        // err.message = "You are not the owner of this Spot";
-        // next(err)
+    // const err = {};
+    // err.status = 401;
+    // err.message = "You are not the owner of this Spot";
+    // next(err)
     // }
-    const spot = await Spot.findOne({where:{id: req.params.spotId, ownerId: req.user.id}, raw:true});
+    const spot = await Spot.findOne({ where: { id: req.params.spotId, ownerId: req.user.id }, raw: true });
 
     // console.log(spot)
     const { url, preview } = req.body
@@ -204,12 +204,12 @@ router.get('/:spotId', async (req, res, next) => {
 router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
     // const spot = await Spot.findByPk(req.params.spotId);
     //if(spot.ownerId !== req.user.id){
-        // const err = {};
-        // err.status = 401;
-        // err.message = "You are not the owner of this Spot";
-        // next(err)
+    // const err = {};
+    // err.status = 401;
+    // err.message = "You are not the owner of this Spot";
+    // next(err)
     // }
-    const spot = await Spot.findOne({where:{id: req.params.spotId, ownerId: req.user.id}});
+    const spot = await Spot.findOne({ where: { id: req.params.spotId, ownerId: req.user.id } });
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
 
     if (!spot) {
@@ -249,22 +249,22 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
     const spot = await Spot.findByPk(req.params.spotId);
     const { review, stars } = req.body;
 
-    if(!spot){ //if spot doesn't exist
+    if (!spot) { //if spot doesn't exist
         const err = {};
         err.status = 404;
         err.message = "Spot couldn't be found";
         next(err)
-    }else{
+    } else {
         const userId = +req.user.id;
         const spotId = +spot.id;
-        const userReview = await Review.findOne({where:{userId,spotId}})
+        const userReview = await Review.findOne({ where: { userId, spotId } })
 
-        if(userReview){ //if Review from the current user already exists for the Spot
+        if (userReview) { //if Review from the current user already exists for the Spot
             const err = {};
             err.status = 403;
             err.message = "User already has a review for this spot";
             return next(err)
-        }else{
+        } else {
             const newReview = await Review.create({
                 userId,
                 spotId,
@@ -275,6 +275,38 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
             console.log(newReview)
             res.json(newReview)
         }
+    }
+})
+
+//GET Reviews by spotId
+router.get('/:spotId/reviews', async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    if (!spot) {
+        const err = {};
+        err.status = 404;
+        err.message = "Spot couldn't be found";
+        next(err)
+    } else {
+        const spotId = spot.id
+        const Reviews = await Review.findAll({
+            where: {
+                spotId,
+            },
+            include: [
+                {
+                    model: User,
+                    attributes: ['id', 'firstName', 'lastName'],
+                    as: 'User'
+                },
+                {
+                    model: ReviewImage,
+                    attributes: ['id', 'url']
+                }
+            ]
+        })
+
+        res.json({Reviews})
     }
 })
 module.exports = router;
