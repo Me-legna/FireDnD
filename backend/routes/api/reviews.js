@@ -68,9 +68,9 @@ router.get('/current', requireAuth, async (req, res, next) => {
         next(err)
     } else {
         const reviewObjs = []
-        for(let review of reviews){
+        for (let review of reviews) {
             const rawReview = review.toJSON()
-            const preview = await SpotImage.findOne({where:{spotId: rawReview.Spot.id, preview: true}})
+            const preview = await SpotImage.findOne({ where: { spotId: rawReview.Spot.id, preview: true } })
 
             rawReview.Spot.previewImage = preview.url
 
@@ -78,7 +78,41 @@ router.get('/current', requireAuth, async (req, res, next) => {
         }
         // const myReviews = reviews.toJSON()
 
-        res.json({Reviews: reviewObjs})
+        res.json({ Reviews: reviewObjs })
+    }
+})
+
+const validateReview = [
+    check('review')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Review text is required'),
+    check('stars')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .isInt({ min: 1, max: 5 })
+        .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+]
+
+
+//Edit a Review
+router.put('/:reviewId', requireAuth, validateReview, async (req, res, next) => {
+    const myReview = await Review.findOne({ where: { id: req.params.reviewId, userId: req.user.id } })
+
+    if(!myReview){
+        const err = {};
+        err.status = 404;
+        err.message = "Review couldn't be found";
+        next(err)
+    }else{
+        const { review, stars } = req.body;
+
+        if(review) myReview.review = review;
+        if(stars) myReview.stars = stars;
+
+        await myReview.save()
+        res.json(myReview)
     }
 })
 
