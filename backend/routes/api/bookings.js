@@ -30,24 +30,24 @@ const validateBooking = [
 router.get('/current', requireAuth, async (req, res, next) => {
     const Bookings = await Booking.findAll({
         include: {
-                model: Spot,
-                attributes: {
-                    exclude: ['description', 'createdAt', 'updatedAt'],
-                },
-                as: 'Spot',
+            model: Spot,
+            attributes: {
+                exclude: ['description', 'createdAt', 'updatedAt'],
             },
+            as: 'Spot',
+        },
         where: {
             userId: req.user.id
         },
     })
 
-if (!Bookings.length) {
-    const err = {};
-    err.status = 404;
-    err.message = "You have not yet made any Bookings";
-    next(err)
-} else {
-    const bookingObjs = []
+    if (!Bookings.length) {
+        const err = {};
+        err.status = 404;
+        err.message = "You have not yet made any Bookings";
+        next(err)
+    } else {
+        const bookingObjs = []
         for (let booking of Bookings) {
             const rawBooking = booking.toJSON()
             const preview = await SpotImage.findOne({ where: { spotId: rawBooking.Spot.id, preview: true } })
@@ -58,7 +58,53 @@ if (!Bookings.length) {
         }
 
         res.json({ Bookings: bookingObjs })
-}
+    }
+})
+
+//Edit a Booking
+router.put('/:bookingId', requireAuth, validateBooking, async (req, res, next) => {
+    const booking = await Booking.findOne({ where: { id: req.params.bookingId, userId: req.user.id } });
+
+    if (!booking) {
+        const err = {};
+        err.status = 404;
+        err.message = "Booking couldn't be found";
+        next(err)
+    }else {
+        const { startDate, endDate } = req.body;
+        const err = { errors: {} };
+
+        const start = new Date(startDate).getTime()
+        const end = new Date(endDate).getTime()
+        const bookingStart = new Date(booking.startDate).getTime()
+        const bookingEnd = new Date(booking.endDate).getTime()
+
+        if (bookingStart < Date.now()){
+            const error = {};
+            error.message = "Past bookings can't be modified";
+            error.status = 403;
+            return next(error)
+        }
+        if (start === bookingStart || start > bookingStart && start <= bookingEnd) {
+            err.message = 'Sorry, this spot is already booked for the specified dates';
+            err.status = 403;
+            err.errors.startDate = 'Start date conflicts with an existing booking'
+        }
+        if (end === bookingStart || end > bookingStart && end <= bookingEnd) {
+            err.message = 'Sorry, this spot is already booked for the specified dates';
+            err.status = 403;
+            err.errors.endDate = 'Start date conflicts with an existing booking'
+        }
+        if (Object.keys(err.errors).length) next(err)
+        else {
+            booking.startDate = startDate;
+            booking.endDate = endDate;
+
+            booking.save()
+            res.json(booking)
+        }
+
+    }
 })
 
 
