@@ -312,15 +312,15 @@ router.get('/:spotId/reviews', async (req, res, next) => {
 
 const validateBooking = [
     check('startDate')
-    .isDate()
-    .withMessage('Must be a valid Date (YYYY-MM-DD)'),
+        .isDate()
+        .withMessage('Must be a valid Date (YYYY-MM-DD)'),
     check('endDate')
-    .isDate()
-    .withMessage('Must be a valid Date (YYYY-MM-DD)'),
+        .isDate()
+        .withMessage('Must be a valid Date (YYYY-MM-DD)'),
     check('endDate')
-        .custom((value, {req}) => {
+        .custom((value, { req }) => {
             // console.log(value)
-            if(new Date(value).getTime() <= new Date(req.body.startDate).getTime()){
+            if (new Date(value).getTime() <= new Date(req.body.startDate).getTime()) {
                 throw new Error('endDate cannot be on or before startDate')
             }
             return true
@@ -332,41 +332,41 @@ router.post('/:spotId/bookings', requireAuth, validateBooking, async (req, res, 
     const spot = await Spot.findByPk(req.params.spotId)
     const userId = req.user.id;
 
-    if(!spot){
+    if (!spot) {
         const err = {};
         err.status = 404;
         err.message = "Spot couldn't be found";
         next(err)
-    }else if(spot.ownerId === userId){
+    } else if (spot.ownerId === userId) {
         const err = {};
         err.status = 403;
         err.message = "You cannot create a booking for a Spot you own";
         next(err)
-    }else{
+    } else {
         const spotId = spot.id;
-        const spotBookings = await Booking.findAll({where:{spotId}})
+        const spotBookings = await Booking.findAll({ where: { spotId } })
         const { startDate, endDate } = req.body
-        const err = {errors:{}};
+        const err = { errors: {} };
 
-        for(let booking of spotBookings){
+        for (let booking of spotBookings) {
             const start = new Date(startDate).getTime()
             const end = new Date(endDate).getTime()
             const bookingStart = new Date(booking.startDate).getTime()
             const bookingEnd = new Date(booking.endDate).getTime()
 
-            if(start === bookingStart || start > bookingStart && start <= bookingEnd){
+            if (start === bookingStart || start > bookingStart && start <= bookingEnd) {
                 err.message = 'Sorry, this spot is already booked for the specified dates';
                 err.status = 403;
                 err.errors.startDate = 'Start date conflicts with an existing booking'
             }
-            if(end === bookingStart || end > bookingStart && end <= bookingEnd){
+            if (end === bookingStart || end > bookingStart && end <= bookingEnd) {
                 err.message = 'Sorry, this spot is already booked for the specified dates';
                 err.status = 403;
                 err.errors.endDate = 'Start date conflicts with an existing booking'
             }
         }
-        if(Object.keys(err.errors).length) next(err)
-        else{
+        if (Object.keys(err.errors).length) next(err)
+        else {
             const newBooking = await Booking.create({
                 spotId,
                 userId,
@@ -378,6 +378,30 @@ router.post('/:spotId/bookings', requireAuth, validateBooking, async (req, res, 
 
     }
 
+})
+
+//GET all Bookings for a Spot based on the Spot's id
+router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId)
+
+    if (!spot) {
+        const err = {};
+        err.status = 404;
+        err.message = "Spot couldn't be found";
+        next(err)
+    } else if (spot.ownerId !== req.user.id) {
+        const Bookings = await Booking.findAll({
+            where: {spotId: spot.id},
+            attributes:['spotId', 'startDate', 'endDate']
+        })
+        res.json({Bookings})
+    } else if (spot.ownerId === req.user.id){
+        const Bookings = await Booking.findAll({
+            where:{spotId: spot.id},
+            include:{model: User, attributes: ['id', 'firstName', 'lastName'], as: 'User'},
+        })
+        res.json({Bookings})
+    }
 })
 
 module.exports = router;
