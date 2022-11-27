@@ -61,7 +61,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         ],
     })
 
-    if (!reviews) {
+    if (!reviews.length) {
         const err = {};
         err.status = 404;
         err.message = "You have not yet made a review";
