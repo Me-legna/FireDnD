@@ -104,14 +104,16 @@ router.get('/', validateQuery, async (req, res, next) => {
         })
         reviews.forEach(review => starSum += review.stars);
         const starAvg = starSum / reviews.length;
-        spot.avgRating = starAvg;
+        if(!starAvg) spot.avgRating = 'No reviews have been made'
+        else spot.avgRating = starAvg;
 
         const previewImg = await SpotImage.findOne({
             where: { spotId: spot.id, preview: true },
             attributes: ['url'],
             raw: true
         })
-        spot.previewImage = previewImg.url
+        if(!previewImg) spot.previewImage = 'No preview Image Available'
+        else spot.previewImage = previewImg.url
 
         resSpots.push(spot)
     }
@@ -229,14 +231,16 @@ router.get('/current', requireAuth, async (req, res, next) => {
         })
         reviews.forEach(review => starSum += review.stars);
         const starAvg = starSum / reviews.length;
-        spot.avgRating = starAvg;
+        if(!starAvg) spot.avgRating = 'No reviews have been made'
+        else spot.avgRating = starAvg;
 
         const previewImg = await SpotImage.findOne({
             where: { spotId: spot.id, preview: true },
             attributes: ['url'],
             raw: true
         })
-        spot.previewImage = previewImg.url
+        if(!previewImg) spot.previewImage = 'No preview Image Available'
+        else spot.previewImage = previewImg.url
 
         resSpots.push(spot)
     }
@@ -279,10 +283,11 @@ router.get('/:spotId', async (req, res, next) => {
             raw: true
         })
         const { numReviews, avgStarRating } = reviewInfo[0]
-        console.log(reviewInfo)
+
         const spotObj = spot.toJSON()
         spotObj.numReviews = numReviews;
-        spotObj.avgStarRating = avgStarRating;
+        if(!avgStarRating) spotObj.avgStarRating = 'No reviews have been made'
+        else spotObj.avgStarRating = avgStarRating;
         res.json(spotObj)
     }
 })
