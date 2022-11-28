@@ -18,9 +18,9 @@ const validateSignup = [
   //   .isLength({ min: 4 })
   //   .withMessage('Please provide a username with at least 4 characters.'),
   check('username').notEmpty().withMessage('Username is required'),
-    // .not()
-    // .isEmail()
-    // .withMessage('Username cannot be an email.'),
+  // .not()
+  // .isEmail()
+  // .withMessage('Username cannot be an email.'),
   check('firstName').notEmpty().withMessage('First Name is required'),
   check('lastName').notEmpty().withMessage('Last Name is required'),
   check('password')
@@ -37,25 +37,25 @@ router.post(
   async (req, res) => {
     const { firstName, lastName, email, password, username } = req.body;
 
-    const userByEmail = await User.findOne({where:{email}})
-    if(userByEmail){
+    const userByEmail = await User.findOne({ where: { email } })
+    if (userByEmail) {
       res.statusCode = 403
       res.json({
         "message": "User already exists",
         "statusCode": res.statusCode,
         "errors": {
-        "email": "User with that email already exists"
+          "email": "User with that email already exists"
         }
       })
     }
-    const userByUserName = await User.findOne({where:{username}})
-    if(userByUserName){
+    const userByUserName = await User.findOne({ where: { username } })
+    if (userByUserName) {
       res.statusCode = 403
       res.json({
         "message": "User already exists",
         "statusCode": res.statusCode,
         "errors": {
-        "email": "User with that username already exists"
+          "email": "User with that username already exists"
         }
       })
     }
@@ -63,29 +63,10 @@ router.post(
     const user = await User.signup({ firstName, lastName, email, username, password });
     const newUser = user.toJSON()
 
-    const token = await setTokenCookie(res, user);
+    await setTokenCookie(res, user);
 
-    return res.json({
-      id: newUser.id,
-      firstName: newUser.firstName,
-      lastName: newUser.lastName,
-      email: newUser.email,
-      username: newUser.username,
-      // token,
-    });
+    return res.json({user})
   }
 );
-
-//Validation Errors
-// router.use((err, req, res, next) => {
-//   res.status(err.status || 500);
-//   console.error(err);
-//   res.json({
-//     title: err.title || 'Validation Error',
-//     message: err.message,
-//     errors: err.errors,
-//     stack: isProduction ? null : err.stack
-//   });
-// })
 
 module.exports = router;

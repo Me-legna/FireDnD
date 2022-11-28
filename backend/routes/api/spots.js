@@ -437,10 +437,17 @@ router.post('/:spotId/bookings', requireAuth, validateBooking, async (req, res, 
         const spotBookings = await Booking.findAll({ where: { spotId } })
         const { startDate, endDate } = req.body
         const err = { errors: {} };
+        const start = new Date(startDate).getTime()
+        const end = new Date(endDate).getTime()
+
+        if (start < Date.now()){
+            const error = {};
+            error.message = "We can't go back in time!";
+            error.status = 403;
+            return next(error)
+        }
 
         for (let booking of spotBookings) {
-            const start = new Date(startDate).getTime()
-            const end = new Date(endDate).getTime()
             const bookingStart = new Date(booking.startDate).getTime()
             const bookingEnd = new Date(booking.endDate).getTime()
 
