@@ -20,7 +20,9 @@ module.exports = {
         references: {
           model: 'Users',
           key: 'id',
-        }
+        },
+        onDelete: 'SET NULL',
+        hooks: true,
       },
       spotId: {
         type: Sequelize.INTEGER,
@@ -28,7 +30,9 @@ module.exports = {
         references: {
           model: 'Spots',
           key: 'id',
-        }
+        },
+        onDelete: 'CASCADE',
+        hooks: true,
       },
       review: {
         type: Sequelize.STRING,

@@ -20,7 +20,9 @@ module.exports = {
         references:{
           model: 'Users',
           key: 'id',
-        }
+        },
+        onDelete: 'CASCADE',
+        hooks: true,
       },
       address: {
         type: Sequelize.STRING,

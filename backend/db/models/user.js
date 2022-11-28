@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static associate(models) {
-      User.hasMany(models.Spot, {foreignKey: 'ownerId', as: 'Spots'});
+      User.hasMany(models.Spot, {foreignKey: 'ownerId', as: 'Spots', onDelete: 'CASCADE', hooks: true });
       User.belongsToMany(models.Spot, {
         as: 'Reviews',
         through: models.Review,
