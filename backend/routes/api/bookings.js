@@ -108,4 +108,41 @@ router.put('/:bookingId', requireAuth, validateBooking, async (req, res, next) =
 })
 
 
+//Delete a Booking
+router.delete('/:bookingId', requireAuth, async(req, res, next)=>{
+    const booking = await Booking.findOne({
+        where:{id: req.params.bookingId},
+        include: {
+            model: Spot,
+            attributes: ['ownerId'],
+            as: 'Spot'
+        },
+    })
+    console.log(booking)
+    console.log(req.user.id)
+    // console.log(req.params.bookingId)
+    if(!booking || ![booking.userId, booking.Spot.ownerId].includes(req.user.id)){
+        const err = {};
+        err.message = "Booking couldn't be found";
+        err.status = 404;
+        next(err)
+    }else {
+        const bookingStart = new Date(booking.startDate).getTime()
+
+        if(bookingStart > Date.now()){
+            const err = {};
+            err.message = "Bookings that have been started can't be deleted";
+            err.status = 403;
+            next(err)
+        }else{
+            await booking.destroy()
+
+            res.json({
+                message: "Successfully deleted",
+                statusCode: 200
+            })
+        }
+    }
+})
+
 module.exports = router;
