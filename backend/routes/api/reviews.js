@@ -72,7 +72,8 @@ router.get('/current', requireAuth, async (req, res, next) => {
             const rawReview = review.toJSON()
             const preview = await SpotImage.findOne({ where: { spotId: rawReview.Spot.id, preview: true } })
 
-            rawReview.Spot.previewImage = preview.url
+            if(!preview) rawReview.Spot.previewImage = 'No preview Image Available'
+            else rawReview.Spot.previewImage = preview.url
 
             reviewObjs.push(rawReview)
         }

@@ -52,7 +52,8 @@ router.get('/current', requireAuth, async (req, res, next) => {
             const rawBooking = booking.toJSON()
             const preview = await SpotImage.findOne({ where: { spotId: rawBooking.Spot.id, preview: true } })
 
-            rawBooking.Spot.previewImage = preview.url
+            if(!preview) rawBooking.Spot.previewImage = 'No preview Image Available'
+            else rawBooking.Spot.previewImage = preview.url
 
             bookingObjs.push(rawBooking)
         }
