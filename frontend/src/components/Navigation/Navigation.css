@@ -1,3 +1,35 @@
 .hidden {
     display: none;
 }
+#ul-nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 80px;
+    list-style: none;
+}
+#query-filters{
+    flex: 1;
+    justify-content: flex-end;
+}
+#nav-create-spot{
+    flex: 1;
+}
+.nav-middle{
+    padding-left: 400px;
+}
+#logo{
+    display: block;
+    width: 102px;
+}
+
+.fa-user-circle{
+    padding: 5px 5px 5px 12px;
+}
+
+#profile-button{
+    border: 1px solid;
+    border-radius: 21px;
+    padding: 10px 5px 10px 38px;
+    margin-right: -35px;
+}

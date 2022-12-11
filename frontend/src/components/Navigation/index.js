@@ -5,14 +5,22 @@ import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 
-function Navigation({ isLoaded }){
+function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
 
   return (
-    <ul>
+    <ul id='ul-nav'>
       <li>
-        <NavLink exact to="/">Home</NavLink>
+        <NavLink exact to="/">
+          <img id='logo' src={require('../../assets/fireDnD-logo.png')} alt='fireDnD-logo'></img>
+        </NavLink>
       </li>
+      <div id='query-filters'>
+        <li className='nav-middle'>QueryFilterModals?</li>
+      </div>
+      <div id='nav-create-spot'>
+        <li className='create-spot nav-middle'>Create a Spot?</li>
+      </div>
       {isLoaded && (
         <li>
           <ProfileButton user={sessionUser} />
