@@ -89,7 +89,7 @@ router.get('/', validateQuery, async (req, res, next) => {
     if (minPrice || maxPrice) where.price = {}
     if (minPrice) where.price[Op.gte] = +minPrice
     if (maxPrice) where.price[Op.lte] = +maxPrice
-    console.log(where)
+
 
     const spots = await Spot.findAll({ where, raw: true, ...pagination });
 
@@ -195,7 +195,7 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => { //use up
     // }
     const spot = await Spot.findOne({ where: { id: req.params.spotId, ownerId: req.user.id }, raw: true });
 
-    // console.log(spot)
+
     const { url, preview } = req.body
     if (spot) {
         const userId = +spot.ownerId;
@@ -409,7 +409,6 @@ const validateBooking = [
         .withMessage('Must be a valid Date (YYYY-MM-DD)'),
     check('endDate')
         .custom((value, { req }) => {
-            // console.log(value)
             if (new Date(value).getTime() <= new Date(req.body.startDate).getTime()) {
                 throw new Error('endDate cannot be on or before startDate')
             }
