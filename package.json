@@ -1,5 +1,5 @@
 {
-  "name": "authenticate-me(git-root)",
+  "name": "firednd-build",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -13,13 +13,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Me-legna/Mod-4-API-Project.git"
+    "url": "git+https://github.com/Me-legna/Mod-4-5-Solo-Project.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Me-legna/Mod-4-API-Project/issues"
+    "url": "https://github.com/Me-legna/Mod-4-5-Solo-Project/issues"
   },
-  "homepage": "https://github.com/Me-legna/Mod-4-API-Project#readme"
+  "homepage": "https://github.com/Me-legna/Mod-4-5-Solo-Project#readme"
 }
