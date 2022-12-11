@@ -17,7 +17,6 @@ const validateBooking = [
         .withMessage('Must be a valid Date (YYYY-MM-DD)'),
     check('endDate')
         .custom((value, { req }) => {
-            // console.log(value)
             if (new Date(value).getTime() <= new Date(req.body.startDate).getTime()) {
                 throw new Error('endDate cannot be on or before startDate')
             }
@@ -119,9 +118,6 @@ router.delete('/:bookingId', requireAuth, async(req, res, next)=>{
             as: 'Spot'
         },
     })
-    console.log(booking)
-    console.log(req.user.id)
-    // console.log(req.params.bookingId)
     if(!booking || ![booking.userId, booking.Spot.ownerId].includes(req.user.id)){
         const err = {};
         err.message = "Booking couldn't be found";
