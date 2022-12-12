@@ -66,11 +66,7 @@ function ProfileButton({ user }) {
               />
             </li>
             <li>
-              <OpenModalButton
-                buttonText="Demo User"
-                onButtonClick={closeMenu}
-                modalComponent={<DemoUserLogin />}
-              />
+              <DemoUserLogin />
             </li>
             <li>
               <OpenModalButton

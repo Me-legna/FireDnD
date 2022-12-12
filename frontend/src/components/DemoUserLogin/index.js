@@ -27,7 +27,8 @@ function DemoUserLogin() {
 
   return (
     <>
-      <h1>Easy Access 😏</h1>
+    <button onClick={handleSubmit}>Easy Access 😏</button>
+      {/* <h1>Easy Access 😏</h1>
       <form onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
@@ -53,7 +54,7 @@ function DemoUserLogin() {
           />
         </label>
         <button type="submit">Log In</button>
-      </form>
+      </form> */}
     </>
   );
 }
