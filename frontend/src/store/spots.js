@@ -43,11 +43,11 @@ const spotsReducer = (state = {}, action) => {
             return allState
 
         case LOAD_ONE:
-            const oneState = {...state}
             const id = action.spot.id
-            oneState[`spot#${id}`] = action.spot
-            console.log('action', action)
-            console.log('oneState', oneState)
+            const oneState = {...state, spotDetails: { }}
+            oneState.spotDetails[id] = action.spot
+            // console.log('action', action)
+            // console.log('oneState', oneState)
             return oneState
         default:
             return state
