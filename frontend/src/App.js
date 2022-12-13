@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 import * as sessionActions from './store/session'
 import Navigation from "./components/Navigation";
 import AllSpots from './components/AllSpots';
-
+import './App.css'
 
 function App() {
   const dispatch = useDispatch();
@@ -16,9 +16,13 @@ function App() {
 
   return (
     <>
+    <div id='header'>
       <Navigation isLoaded={isLoaded} />
+    </div>
       {isLoaded && (
-            <AllSpots/>
+        <div id='body'>
+          <AllSpots/>
+        </div>
         // <Switch>
         //   <Route path='/'>
         //   </Route>

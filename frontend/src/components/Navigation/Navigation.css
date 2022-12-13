@@ -7,6 +7,7 @@
     justify-content: space-between;
     padding: 0 80px;
     list-style: none;
+    z-index: 100;
 }
 #query-filters{
     flex: 1;
@@ -32,4 +33,24 @@
     border-radius: 21px;
     padding: 10px 5px 10px 38px;
     margin-right: -35px;
+    /* position: fixed; */
+}
+#profile-button:hover{
+    cursor:pointer;
+}
+
+#profile-dropdown {
+    /* display: flex;
+    flex-direction: column; */
+    border: 1px solid black;
+    border-radius: 20px;
+    padding:40px;
+    position: absolute;
+    top: 70px;
+    right: 100px;
+    list-style: none;
+}
+
+.dropdown-item:hover{
+    cursor:pointer;
 }

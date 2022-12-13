@@ -8,19 +8,22 @@ const loadAllSpots = (spots) => ({
 
 export const getAllSpots = () => async dispatch => {
     const response = await fetch('/api/spots')
-    console.log('response', response)
 
-    if(response.ok) {
+    if (response.ok) {
         const spotsList = await response.json();
         dispatch(loadAllSpots(spotsList))
     }
 }
-const initialState = {allSpots:[]}
-const spotsReducer = (state = initialState, action) => {
-    switch (action.type){
-        case LOAD_ALL:
 
-        return {...state,allSpots:[...action.spots.Spots]}
+
+const spotsReducer = (state = {}, action) => {
+    switch (action.type) {
+        case LOAD_ALL:
+            const newState = {};
+
+            action.spots.Spots.forEach(spot => newState[spot.id] = spot);
+            
+            return newState
         default:
             return state
     }

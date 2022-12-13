@@ -6,6 +6,7 @@ import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import DemoUserLogin from "../DemoUserLogin";
 import SignupFormModal from '../SignupFormModal';
+import OpenModalMenuItem from './OpenModalMenuItem'
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -57,25 +58,25 @@ function ProfileButton({ user }) {
             </li>
           </>
         ) : (
-          <>
-            <li>
-              <OpenModalButton
-                buttonText="Log In"
-                onButtonClick={closeMenu}
-                modalComponent={<LoginFormModal />}
-              />
-            </li>
-            <li>
-              <DemoUserLogin />
-            </li>
-            <li>
-              <OpenModalButton
-                buttonText="Sign Up"
-                onButtonClick={closeMenu}
+          <div id="profile-dropdown">
+            <li className="dropdown-item">
+              <OpenModalMenuItem
+                itemText="Sign Up"
+                onItemClick={closeMenu}
                 modalComponent={<SignupFormModal />}
               />
             </li>
-          </>
+            <li className="dropdown-item">
+              <OpenModalMenuItem
+                itemText="Log In"
+                onItemClick={closeMenu}
+                modalComponent={<LoginFormModal />}
+              />
+            </li>
+            <li className="dropdown-item">
+              <DemoUserLogin />
+            </li>
+          </div>
         )}
       </ul>
     </>
