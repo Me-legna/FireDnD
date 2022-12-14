@@ -5,20 +5,20 @@ import { getOneSpot } from "../../store/spots";
 
 
 function SingleSpot (){
-    const params = useParams()
-    const {id} = params
-    const spot = useSelector(state => state)
     const dispatch = useDispatch()
+    const {id} = useParams()
+    // const spotsDetails = useSelector(state => state.spots.spotDetails[id])
+    // const spot = Object.values(spotsDetails).find(spot=> spot.id === +id)
+    // console.log(spotsDetails)
+    // console.log(spot)
 
-    useEffect(async ()=>{
-        const spotDeets = await dispatch(getOneSpot(id))
+    // useEffect(()=>{
+    //     dispatch(getOneSpot(id))
+    // },[dispatch])
 
-        // if(!spotDeets)
-    },[dispatch])
-
-    if(!+id >= 1) return <Redirect to="/" />;
+    // if(!id || id < 1 || isNaN(id)) return <Redirect to="/"/>
     return (
-        <h1> hello from User #{id} </h1>
+        <> Henlow</>
     )
 }
 

@@ -1,37 +1,40 @@
 import React, { useEffect } from "react";
 import { getAllSpots } from "../../store/spots";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
+const onlySpots = (allSpots) => {
+    for(let key in allSpots) {
 
+    }
+}
 function AllSpots() {
     const dispatch = useDispatch()
-    const allSpotsObj = useSelector(state => state.spots)
-    const allSpots = Object.values(allSpotsObj)
+    const allSpotsObj = useSelector(state => state.spots.allSpots, shallowEqual)
+    // console.log('allSpotsObj', allSpotsObj)
+
+    const allSpots = Object.values(allSpotsObj).filter(value => !Array.isArray(value))
+    console.log('allSpots', allSpots)
 
     useEffect(() => {
         dispatch(getAllSpots())
     }, [dispatch])
 
     return (
-        <>
+        <div id="all-spots">
             {allSpots.map(spot => (
-                <NavLink to={`/spots/${spot.id}`}>
-                    <ul key={spot.id} className="spot">
-                        <div>
-                            <picture>
-                                <img className="spot-img" src={spot.previewImage} alt={`spot#${spot.id}`} />
-                            </picture>
+                <NavLink key={spot.id} to={`/spots/${spot.id}`}>
+                        <div  className="spot">
+                            <img className="spot-img" src={spot.previewImage} alt={`spot#${spot.id}`} />
                             <div className="spot-details">
-                                <li className="spot-location">{`${spot.city}, ${spot.state}`}</li>
-                                <li className="spot-avg-rating">{spot.avgRating}</li>
+                                <div className="spot-location">{`${spot.city}, ${spot.state}`}</div>
+                                <div className="spot-avg-rating">{spot.avgRating}</div>
                             </div>
-                            <li className="spot-price">{`$${spot.price} night`}</li>
+                            <div className="spot-price">{`$${spot.price} night`}</div>
                         </div>
-                    </ul>
                 </NavLink>
             ))}
-            </>
+        </div>
     )
 }
 export default AllSpots

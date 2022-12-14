@@ -17,12 +17,9 @@ function App() {
 
   return (
     <>
-      <div id='header'>
         <Navigation isLoaded={isLoaded} />
-      </div>
       {isLoaded && (
         <Switch>
-          <div id='body'>
             <Route exact path='/'>
               <AllSpots />
             </Route>
@@ -30,7 +27,6 @@ function App() {
             <Route path='/spots/:id'>
               <SingleSpot />
             </Route>
-          </div>
         </Switch>
       )}
     </>
