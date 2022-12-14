@@ -9,6 +9,9 @@
     flex-wrap: wrap;
     justify-content: space-around;
 }
+.spot:hover{
+    cursor: pointer;
+}
 .spot-img-div{
     display: flex;
     justify-content: center;

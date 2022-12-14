@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { getAllSpots } from "../../store/spots";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { NavLink, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import './AllSpots.css'
 
 
@@ -9,10 +9,10 @@ function AllSpots() {
     const dispatch = useDispatch()
     const history = useHistory()
     const allSpotsObj = useSelector(state => state.spots.allSpots)
-    console.log('allSpotsObj', allSpotsObj)
+    // console.log('allSpotsObj', allSpotsObj)
 
     const allSpots = Object.values(allSpotsObj).filter(value => !Array.isArray(value))
-    console.log('allSpots', allSpots)
+    // console.log('allSpots', allSpots)
 
     useEffect(() => {
         dispatch(getAllSpots())

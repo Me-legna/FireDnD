@@ -1,1 +1,14 @@
 /* TODO Add site wide styles */
+.flex{
+    display: flex;
+}
+
+.flex-center{
+    display: flex;
+    justify-content: center;
+}
+
+.flex-space-between{
+    display: flex;
+    justify-content: space-between;
+}
