@@ -26,7 +26,7 @@ function SingleHeader() {
                             <span id="star-icon-container">
                                 <div>star-icon</div>
                             </span>
-                            <span id="single-spot-avg-star">{spot.avgStarRating}</span>
+                            <span id="single-spot-avg-star">{isNaN(spot.avgStarRating) ? 'N/A' : spot.avgStarRating}</span>
                             <span className="dot-space"> · </span>
                             <span id="num-reviews-button-container">
                                 <button id="num-reviews-button">{spot.numReviews}</button>
