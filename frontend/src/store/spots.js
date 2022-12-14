@@ -18,7 +18,7 @@ export const getAllSpots = () => async dispatch => {
 
     if (response.ok) {
         const spotsList = await response.json();
-        dispatch(loadAllSpots(spotsList))
+        dispatch(loadAllSpots(spotsList.Spots))
     }
 }
 
@@ -33,29 +33,25 @@ export const getOneSpot = (id) => async dispatch => {
 }
 
 const initialState = {
-    allSpots: {optionalOrderedList: [],},
+    allSpots: {},
     singleSpot: {},
 }
 
 const spotsReducer = (state = initialState, action) => {
     switch (action.type) {
-        case LOAD_ALL:
-        const optionalOrderedList = state.allSpots.optionalOrderedList
-            const allSpots = {optionalOrderedList,};
-            // console.log('action', action)
-            // console.log('allstateA', allSpots)
+        case LOAD_ALL: {
+            const newState = { allSpots: {}, singleSpot: {}, };
 
-            action.spots.Spots.forEach(spot => allSpots[spot.id] = spot);
-            // console.log('allstateB', allSpots)
+            action.spots.forEach(spot => newState.allSpots[spot.id] = spot);
 
-            return {...state, allSpots}
+            return newState
+        }
+        case LOAD_ONE: {
+            const newState = { ...state, singleSpot: {} }
+            newState.singleSpot = action.spot
 
-        case LOAD_ONE:
-            // const id = action.spot.id
-            // oneState.spotDetails[id] = action.spot
-            // console.log('action', action)
-            // console.log('oneState', oneState)
-            return {...state, singleSpot: action.spot}
+            return newState
+        }
         default:
             return state
     }

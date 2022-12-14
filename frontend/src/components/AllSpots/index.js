@@ -11,7 +11,7 @@ function AllSpots() {
     const allSpotsObj = useSelector(state => state.spots.allSpots)
     // console.log('allSpotsObj', allSpotsObj)
 
-    const allSpots = Object.values(allSpotsObj).filter(value => !Array.isArray(value))
+    const allSpots = Object.values(allSpotsObj)
     // console.log('allSpots', allSpots)
 
     useEffect(() => {
