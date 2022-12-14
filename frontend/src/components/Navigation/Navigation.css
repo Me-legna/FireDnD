@@ -40,11 +40,19 @@
 }
 
 #profile-dropdown {
-    /* display: flex;
-    flex-direction: column; */
+    display: flex;
+    width: 12vw;
+    height: 13vw;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    z-index: 100;
+    background: white;
+    align-items: center;
+
+
     border: 1px solid black;
     border-radius: 20px;
-    padding:40px;
     position: absolute;
     top: 70px;
     right: 100px;
