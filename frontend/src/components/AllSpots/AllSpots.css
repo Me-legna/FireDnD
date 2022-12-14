@@ -1,3 +1,43 @@
-/* #all-spots{
+#all-spots{
     display: flex;
-} */
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.spot{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.spot-img-div{
+    display: flex;
+    justify-content: center;
+}
+.spot-location{
+    grid-column: 1;
+}
+.spot-distance{
+    grid-column: 1 / -1;
+    opacity: 50%;
+    font-size: 11px;
+}
+.spot-avail-dates{
+    grid-column: 1 / -1;
+    opacity: 50%;
+    font-size: 11px;
+}
+.spot-price{
+    grid-column: 1 / -1;
+}
+.spot-avg-rating{
+    display: flex;
+    justify-self: end;
+    grid-column: -2 / -1;
+    grid-row: 1;
+}
+
+.spot-details{
+    display: grid;
+    grid-template-columns:200px 10px 15px;
+    grid-template-rows: repeat(4,1fr);
+}

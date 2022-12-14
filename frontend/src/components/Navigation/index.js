@@ -22,9 +22,9 @@ function Navigation({ isLoaded }) {
         <li className='create-spot nav-middle'>Create a Spot?</li>
       </div>
       {isLoaded && (
-        <li>
+        <div>
           <ProfileButton user={sessionUser} />
-        </li>
+        </div>
       )}
     </ul>
   );

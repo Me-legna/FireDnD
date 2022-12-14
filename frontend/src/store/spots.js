@@ -39,14 +39,15 @@ const initialState = {
 const spotsReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_ALL:
+        const optionalOrderedList = state.allSpots.optionalOrderedList
+            const allSpots = {optionalOrderedList,};
+            console.log('action', action)
+            console.log('allstateA', allSpots)
 
-            const allState = {...state};
-            // console.log('action', action)
+            action.spots.Spots.forEach(spot => allSpots[spot.id] = spot);
+            console.log('allstateB', allSpots)
 
-            action.spots.Spots.forEach(spot => allState.allSpots[spot.id] = spot);
-            // console.log('allstate', allState)
-
-            return allState
+            return {...state, allSpots}
 
         case LOAD_ONE:
             // const id = action.spot.id

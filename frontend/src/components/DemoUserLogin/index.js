@@ -19,9 +19,7 @@ function DemoUserLogin() {
     };
 
   return (
-    <>
-    <li onClick={handleSubmit}>Easy Access 😏</li>
-    </>
+    <div onClick={handleSubmit}>Easy Access 😏</div>
   );
 }
 
