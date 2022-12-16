@@ -1,20 +1,8 @@
-// import { useParams } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
-// import { useEffect } from "react";
-// import { getOneSpot } from "../../store/spots";
+
 import './SingleSpot.css'
 
 function SingleHeader({spot}) {
-    // const dispatch = useDispatch()
-    // const { id } = useParams()
-    // const spot = useSelector(state => state.spots.singleSpot)
-    // console.log('spot', spot)
 
-    // useEffect(() => {
-    //     dispatch(getOneSpot(id))
-    // }, [dispatch, id])
-
-    // if (!spot) return null
     return (
         <div id="single-spot-header-container">
             < div id="single-spot-header">

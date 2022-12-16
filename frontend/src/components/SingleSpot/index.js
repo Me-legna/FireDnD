@@ -13,7 +13,7 @@ function SingleSpot() {
     const dispatch = useDispatch()
     const { id } = useParams()
     const spot = useSelector(state => state.spots.singleSpot)
-    console.log('spot', spot)
+    // console.log('spot', spot)
 
     useEffect(() => {
         dispatch(getOneSpot(id))

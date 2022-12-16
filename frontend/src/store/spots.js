@@ -39,27 +39,17 @@ export const getOneSpot = (id) => async dispatch => {
     }
 }
 
-export const createNewSpot = (newSpot, owner) => async dispatch => {
-    const { address, city, state, country, lat, lng, name, description, price, previewUrl } = newSpot
+export const createNewSpot = (newSpot, owner, previewUrl) => async dispatch => {
+    // const { address, city, state, country, lat, lng, name, description, price } = newSpot
     // console.log('THUNK RUNNING', newSpot)
     const spotResponse = await csrfFetch('/api/spots', {
         method: 'POST',
-        body: JSON.stringify({
-            address,
-            city,
-            state,
-            country,
-            lat,
-            lng,
-            name,
-            description,
-            price,
-        })
+        body: JSON.stringify(newSpot)
     })
-    console.log('spotResponse', spotResponse)
+    // console.log('spotResponse', spotResponse)
     if (spotResponse.ok) {
         const newSpot = await spotResponse.json()
-        console.log('newSpot', newSpot)
+        // console.log('newSpot', newSpot)
         const imgResponse = await csrfFetch(`/api/spots/${newSpot.id}/images`, {
             method: 'POST',
             body: JSON.stringify({
@@ -71,7 +61,7 @@ export const createNewSpot = (newSpot, owner) => async dispatch => {
 
         if (imgResponse.ok) {
             const newSpotPreview = await imgResponse.json()
-            console.log('newSpotPreview', newSpotPreview)
+            // console.log('newSpotPreview', newSpotPreview)
             newSpot.Owner = owner;
             newSpot.SpotImages = [newSpotPreview]
             dispatch(createSpot(newSpot))
@@ -79,6 +69,11 @@ export const createNewSpot = (newSpot, owner) => async dispatch => {
         }
     }
     return spotResponse
+}
+
+export const updateSpot = () => async dispatch => {
+
+    const updateResponse = await csrfFetch(``)
 }
 
 
@@ -105,7 +100,7 @@ const spotsReducer = (state = initialState, action) => {
         case CREATE: {
             const newState = { ...state, singleSpot: {} }
             newState.singleSpot = action.newSpot
-            console.log('newState', newState)
+            // console.log('newState', newState)
 
             return newState;
         }

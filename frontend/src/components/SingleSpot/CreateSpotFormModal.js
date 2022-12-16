@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import * as sessionActions from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { createNewSpot } from "../../store/spots";
@@ -35,19 +34,19 @@ function CreateSpotFormModal() {
             lng: 37.7645358,
             name,
             description,
-            price,
-            previewUrl
+            price
         }
 
 
-        const response = await dispatch(createNewSpot(newSpot, user))
+        await dispatch(createNewSpot(newSpot, user, previewUrl))
+        .then((res)=>history.push(`/spots/${res.id}`))
+        .then(closeModal)
+        .catch(async res => {
+            const data = await res.json()
 
-        if (response && response.errors) {
-            console.log('handle errors')
-        }
-        closeModal()
-        history.push(`/spots/${response.id}`)
-        // console.log('submit response', response)
+            if(data && data.errors) setErrors(Object.values(data.errors))
+        })
+
     };
 
     return (
