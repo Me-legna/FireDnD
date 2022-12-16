@@ -83,21 +83,19 @@ export const createNewSpot = (newSpot, owner, previewUrl) => async dispatch => {
     return spotResponse
 }
 
-export const updateSpot = (updatedSpot, spotId, spotImages, owner) => async dispatch => {
+export const updateSpot = (updatedSpot, spotInfo) => async dispatch => {
 
-    const updateResponse = await csrfFetch(`/api/spots/${spotId}`, {
+    const updateResponse = await csrfFetch(`/api/spots/${spotInfo.id}`, {
         method: 'PUT',
         body: JSON.stringify(updatedSpot)
     })
 
     if (updateResponse.ok) {
         const data = await updateResponse.json();
+        const freshSpot = {...data, ...spotInfo}
 
-        data.SpotImages = spotImages;
-        data.Owner = owner;
-
-        dispatch(editedSpot(data))
-        return data
+        dispatch(editedSpot(freshSpot))
+        return freshSpot
     }
     return updateResponse
 }

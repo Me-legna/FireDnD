@@ -36,8 +36,16 @@ function EditSpotFormModal() {
             price
         }
 
+        const {id, Owner, SpotImages, numReviews, avgStarRating} = spot
+        const spotInfo = {
+            id,
+            Owner,
+            SpotImages,
+            numReviews,
+            avgStarRating
+        }
 
-        await dispatch(updateSpot(updatedSpot, spot.id, spot.SpotImages, spot.Owner))
+        await dispatch(updateSpot(updatedSpot, spotInfo))
         .then(closeModal)
         .catch(async res => {
             const data = await res.json()

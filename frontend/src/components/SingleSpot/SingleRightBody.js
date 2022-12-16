@@ -41,7 +41,7 @@ function SingleRightBody({ spot }) {
                             : (
                                 <div className="flex-column">
                                     <input type="number" value={numNights} onChange={(e)=>setNumNights(e.target.value)} min='1'></input>
-                                    <span>{`$${spot.price} x ${numNights} = $${spot.price * numNights}`}</span>
+                                    <span>{`$${spot.price} x ${numNights} ${numNights < 2 ? 'night' : 'nights'} = $${spot.price * numNights}`}</span>
                                 </div>
                             )
                             }
