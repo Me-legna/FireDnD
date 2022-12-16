@@ -26,7 +26,7 @@ const editedSpot = (updatedSpot) => ({
     updatedSpot
 })
 
-const deleteSpot = (deletedSpotId) => ({
+const deletedSpot = (deletedSpotId) => ({
     type: DELETE,
     deletedSpotId
 })
@@ -100,7 +100,16 @@ export const updateSpot = (updatedSpot, spotInfo) => async dispatch => {
     return updateResponse
 }
 
-// export const deleteSpot = ()
+export const deleteSpot = (spotId) => async dispatch => {
+    const deleteResponse = await csrfFetch(`/api/spots/${spotId}`, {
+        method: 'DELETE'
+    })
+
+    if(deleteResponse.ok){
+        await dispatch(deletedSpot(spotId))
+    }
+    return deleteResponse
+}
 
 
 const initialState = {

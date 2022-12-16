@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useSelector } from "react-redux"
 import OpenModalButton from "../OpenModalButton"
+import DeleteSpotModal from "./DeleteSpotModal"
 import EditSpotFormModal from "./EditSpotFormModal"
 
 function SingleRightBody({ spot }) {
@@ -29,7 +30,7 @@ function SingleRightBody({ spot }) {
                             ? (
                                 <div>
                                     <OpenModalButton buttonText='Edit Spot' modalComponent={<EditSpotFormModal spot={spot}/>}/>
-                                    <OpenModalButton buttonText='Delete Spot'/>
+                                    <OpenModalButton buttonText='Delete Spot' modalComponent={<DeleteSpotModal spot={spot}/>}/>
                                 </div>
                             )
                             : (

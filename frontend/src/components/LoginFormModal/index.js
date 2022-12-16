@@ -21,8 +21,8 @@ function LoginFormModal() {
         async (res) => {
           const data = await res.json();
 
-          if(data && data.message) setErrors([data.message]);
-          if(data && data.errors) setErrors(Object.values(data.errors));
+          if (data && data.message) setErrors([data.message]);
+          if (data && data.errors) setErrors(Object.values(data.errors));
         }
       );
   };
@@ -46,10 +46,10 @@ function LoginFormModal() {
           />
         </label>
         <label>
-          Password
           <input
             type="password"
             value={password}
+            placeholder='Password'
             onChange={(e) => setPassword(e.target.value)}
             required
           />
