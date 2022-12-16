@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useSelector } from "react-redux"
 import OpenModalButton from "../OpenModalButton"
+import EditSpotFormModal from "./EditSpotFormModal"
 
 function SingleRightBody({ spot }) {
     const user = useSelector(state => state.session.user)
@@ -27,7 +28,7 @@ function SingleRightBody({ spot }) {
                         {user ? user.id === spot.Owner.id
                             ? (
                                 <div>
-                                    <OpenModalButton buttonText='Edit Spot'/>
+                                    <OpenModalButton buttonText='Edit Spot' modalComponent={<EditSpotFormModal spot={spot}/>}/>
                                     <OpenModalButton buttonText='Delete Spot'/>
                                 </div>
                             )
