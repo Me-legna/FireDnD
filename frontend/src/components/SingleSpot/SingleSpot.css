@@ -21,3 +21,11 @@
 .share-save-button{
     margin: 0px 8px
 }
+.form-input{
+    margin: 10px 12.5%;
+    width: 75%;
+}
+.select-input{
+    margin: 10px 12.5%;
+    width:78%
+}

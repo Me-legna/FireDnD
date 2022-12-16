@@ -5,9 +5,14 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 80px;
     list-style: none;
-    z-index: 100;
+    position: sticky;
+    top: 0;
+    height: 80px;
+    border-bottom: 1px solid rgba(0,0,0,0.15);
+    margin: 0 0% 15px;
+    background: white;
+    z-index: 1000;
 }
 #query-filters{
     flex: 1;
@@ -17,7 +22,9 @@
     flex: 1;
 }
 .nav-middle{
-    padding-left: 400px;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 18px;
 }
 #logo{
     display: block;
@@ -54,11 +61,13 @@
     border: 1px solid black;
     border-radius: 20px;
     position: absolute;
-    top: 70px;
-    right: 100px;
+    right: 0px;
     list-style: none;
 }
 
 .dropdown-item:hover{
     cursor:pointer;
+}
+.user-info:hover{
+    cursor: default;
 }

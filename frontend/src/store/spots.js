@@ -40,39 +40,45 @@ export const getOneSpot = (id) => async dispatch => {
 }
 
 export const createNewSpot = (newSpot, owner) => async dispatch => {
-    const { address, city, state, country, name, description, price, previewImg } = newSpot
+    const { address, city, state, country, lat, lng, name, description, price, previewUrl } = newSpot
+    // console.log('THUNK RUNNING', newSpot)
     const spotResponse = await csrfFetch('/api/spots', {
         method: 'POST',
-        body: {
+        body: JSON.stringify({
             address,
             city,
             state,
             country,
-            lat: -122.4730327,
-            lng: 37.7645358,
+            lat,
+            lng,
             name,
             description,
             price,
-        }
+        })
     })
-
-    if(spotResponse.ok){
+    console.log('spotResponse', spotResponse)
+    if (spotResponse.ok) {
         const newSpot = await spotResponse.json()
+        console.log('newSpot', newSpot)
         const imgResponse = await csrfFetch(`/api/spots/${newSpot.id}/images`, {
             method: 'POST',
-            body: {
-                url: previewImg,
+            body: JSON.stringify({
+                url: previewUrl,
                 preview: true,
-            }
+            })
         })
+        // console.log('imgResponse',imgResponse)
 
-        if(imgResponse.ok){
-            // const newSpotPreview = await imgResponse.json()
+        if (imgResponse.ok) {
+            const newSpotPreview = await imgResponse.json()
+            console.log('newSpotPreview', newSpotPreview)
             newSpot.Owner = owner;
+            newSpot.SpotImages = [newSpotPreview]
             dispatch(createSpot(newSpot))
+            return newSpot
         }
-        return newSpot
     }
+    return spotResponse
 }
 
 
@@ -96,10 +102,13 @@ const spotsReducer = (state = initialState, action) => {
 
             return newState
         }
-        // case CREATE: {
-        //     const newState = {...state}
-        //     newState[action.newSpot.id] = action.newSpot;
-        // }
+        case CREATE: {
+            const newState = { ...state, singleSpot: {} }
+            newState.singleSpot = action.newSpot
+            console.log('newState', newState)
+
+            return newState;
+        }
         default:
             return state
     }

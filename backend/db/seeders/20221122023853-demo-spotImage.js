@@ -13,17 +13,17 @@ module.exports = {
     await queryInterface.bulkInsert(options, [
       {
         spotId:1,
-        url: 'spotId1.url',
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-22285259/original/a8013c81-e598-4708-8c2a-2692676a5717.jpeg?im_w=720',
         preview: true,
       },
       {
         spotId:2,
-        url: 'spotId2.url',
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-22285259/original/a8013c81-e598-4708-8c2a-2692676a5717.jpeg?im_w=720',
         preview: true
       },
       {
         spotId:3,
-        url: 'spotId3.url',
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-22285259/original/a8013c81-e598-4708-8c2a-2692676a5717.jpeg?im_w=720',
         preview: true
       },
     ],{})

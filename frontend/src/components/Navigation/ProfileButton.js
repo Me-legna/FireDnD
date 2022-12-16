@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
-import OpenModalButton from '../OpenModalButton';
+// import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import DemoUserLogin from "../DemoUserLogin";
 import SignupFormModal from '../SignupFormModal';
@@ -50,11 +50,11 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <div id="profile-dropdown">
-            <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
-            <li>{user.email}</li>
+            <li className="user-info">{user.username}</li>
+            <li className="user-info">{user.firstName} {user.lastName}</li>
+            <li className="user-info">{user.email}</li>
             <li>
-              <button onClick={logout}>Log Out</button>
+              <button className="dropdown-item" onClick={logout}>Log Out</button>
             </li>
           </div>
         ) : (

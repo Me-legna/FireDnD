@@ -1,13 +1,17 @@
 #all-spots{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
+}
+.big-all-spots{
+    padding-top: 100px;
 }
 
 .spot{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    margin: 10px 10px 0px 0px;
 }
 .spot:hover{
     cursor: pointer;
@@ -17,30 +21,28 @@
     justify-content: center;
 }
 .spot-location{
-    grid-column: 1;
 }
 .spot-distance{
-    grid-column: 1 / -1;
     opacity: 50%;
-    font-size: 11px;
+    font-size: 14px;
+    margin: 2px 0px;
 }
 .spot-avail-dates{
-    grid-column: 1 / -1;
     opacity: 50%;
-    font-size: 11px;
+    font-size: 14px;
+    margin: 2px 0px;
 }
 .spot-price{
-    grid-column: 1 / -1;
+    margin-top: 8px;
 }
 .spot-avg-rating{
     display: flex;
     justify-self: end;
-    grid-column: -2 / -1;
-    grid-row: 1;
+    align-items: center;
 }
 
 .spot-details{
-    display: grid;
-    grid-template-columns:200px 10px 15px;
-    grid-template-rows: repeat(4,1fr);
+    display: flex;
+    justify-content: space-between;
+    margin: 9px 5px;
 }

@@ -6,7 +6,7 @@ import * as sessionActions from './store/session'
 import Navigation from "./components/Navigation";
 import AllSpots from './components/AllSpots';
 import './App.css'
-import SingleSpot from './components/SingleSpot/SingleHeader';
+import SingleSpot from './components/SingleSpot';
 
 function App() {
   const dispatch = useDispatch();
