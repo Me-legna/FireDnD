@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { updateSpot } from "../../store/spots";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import "./SingleSpot.css";
 
-function EditSpotFormModal({spot}) {
+function EditSpotFormModal() {
     const dispatch = useDispatch();
-    const history = useHistory()
+    // const history = useHistory()
+    const spot = useSelector(state => state.spots.singleSpot)
     const [address, setAddress] = useState(spot.address)
     const [city, setCity] = useState(spot.city)
     const [state, setState] = useState(spot.state)
@@ -36,14 +37,22 @@ function EditSpotFormModal({spot}) {
         }
 
 
-        await dispatch(updateSpot(updatedSpot, spot.id))
+        await dispatch(updateSpot(updatedSpot, spot.id, spot.SpotImages, spot.Owner))
         .then(closeModal)
         .catch(async res => {
             const data = await res.json()
 
-            if(data && data.errors) setErrors(Object.values(data.errors));
+            if (data && data.errors) setErrors(Object.values(data.errors));
         })
-        // .then((res)=>history.push(`/spots/${res.id}`))
+
+        // .then((res) => history.push(`/spots/${res.id}`))
+        // setAddress(address);
+        // setCity(city);
+        // setState(state);
+        // setCountry(country);
+        // setName(name);
+        // setDescription(description);
+        // setPrice(price);
 
     };
 
