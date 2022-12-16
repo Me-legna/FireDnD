@@ -23,7 +23,9 @@ function SignupFormModal() {
         .then(closeModal)
         .catch(async (res) => {
           const data = await res.json();
-          if (data && data.errors) setErrors(data.errors);
+
+          if(data && data.message) setErrors([data.message]);
+          if(data && data.errors) setErrors(Object.values(data.errors));
         });
     }
     return setErrors(['Confirm Password field must be the same as the Password field']);
@@ -49,6 +51,8 @@ function SignupFormModal() {
           Username
           <input
             type="text"
+            minLength={3}
+            maxLength={15}
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
@@ -58,6 +62,8 @@ function SignupFormModal() {
           First Name
           <input
             type="text"
+            minLength={3}
+            maxLength={20}
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
@@ -67,6 +73,8 @@ function SignupFormModal() {
           Last Name
           <input
             type="text"
+            minLength={3}
+            maxLength={20}
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required

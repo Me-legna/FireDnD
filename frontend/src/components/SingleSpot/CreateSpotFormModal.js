@@ -44,7 +44,7 @@ function CreateSpotFormModal() {
         .catch(async res => {
             const data = await res.json()
 
-            if(data && data.errors) setErrors(Object.values(data.errors))
+            if(data && data.errors) setErrors(Object.values(data.errors));
         })
 
     };
