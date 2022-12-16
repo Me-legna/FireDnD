@@ -3,6 +3,8 @@ import { csrfFetch } from "./csrf";
 const LOAD_ALL = 'spots/ALL';
 const LOAD_ONE = 'spots/ONE';
 const CREATE = 'spots/CREATE';
+const UPDATE = 'spots/UPDATE';
+const DELETE = 'spots/DELETE';
 
 const loadAllSpots = (spots) => ({
     type: LOAD_ALL,
@@ -17,6 +19,16 @@ const loadOneSpot = (spot) => ({
 const createSpot = (newSpot) => ({
     type: CREATE,
     newSpot
+})
+
+const editedSpot = (updatedSpot) => ({
+    type: UPDATE,
+    updatedSpot
+})
+
+const deleteSpot = (deletedSpotId) => ({
+    type: DELETE,
+    deletedSpotId
 })
 
 
@@ -71,10 +83,23 @@ export const createNewSpot = (newSpot, owner, previewUrl) => async dispatch => {
     return spotResponse
 }
 
-export const updateSpot = () => async dispatch => {
+export const updateSpot = (updatedSpot, spotId) => async dispatch => {
 
-    const updateResponse = await csrfFetch(``)
+    const updateResponse = await csrfFetch(`/api/spots/${spotId}`, {
+        method: 'PUT',
+        body: JSON.stringify(updatedSpot)
+    })
+
+    if (updateResponse.ok) {
+        const data = await updateResponse.json();
+
+        dispatch(editedSpot(data))
+        return data
+    }
+    return updateResponse
 }
+
+// export const deleteSpot = ()
 
 
 const initialState = {
@@ -89,23 +114,40 @@ const spotsReducer = (state = initialState, action) => {
 
             action.spots.forEach(spot => newState.allSpots[spot.id] = spot);
 
-            return newState
+            return newState;
         }
         case LOAD_ONE: {
-            const newState = { ...state, singleSpot: {} }
-            newState.singleSpot = action.spot
+            const newState = { ...state, singleSpot: {} };
 
-            return newState
+            newState.singleSpot = action.spot;
+
+            return newState;
         }
         case CREATE: {
-            const newState = { ...state, singleSpot: {} }
-            newState.singleSpot = action.newSpot
+            const newState = { ...state, singleSpot: {} };
+
+            newState.singleSpot = action.newSpot;
             // console.log('newState', newState)
 
             return newState;
         }
+        case UPDATE: {
+            const newState = { ...state, singleSpot: {} };
+
+            newState[action.updatedSpot.id] = action.updatedSpot;
+            newState.singleSpot = action.updatedSpot;
+
+            return newState;
+        }
+        case DELETE: {
+            const newState = {...state, singleSpot: {}};
+
+            delete newState[action.deletedSpotId]
+
+            return newState
+        }
         default:
-            return state
+            return state;
     }
 
 }

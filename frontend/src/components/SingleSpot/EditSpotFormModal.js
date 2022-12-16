@@ -15,9 +15,7 @@ function EditSpotFormModal({spot}) {
     const [name, setName] = useState(spot.name)
     const [description, setDescription] = useState(spot.description)
     const [price, setPrice] = useState(spot.price)
-    const [previewUrl, setPreviewUrl] = useState(spot.previewImage)
     const [errors, setErrors] = useState([]);
-    const user = useSelector(state => state.session.user)
     const usa = ['AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY']
     const { closeModal } = useModal();
 
@@ -25,7 +23,7 @@ function EditSpotFormModal({spot}) {
         e.preventDefault();
         setErrors([]);
 
-        const newSpot = {
+        const updatedSpot = {
             address,
             city,
             state,
@@ -38,7 +36,7 @@ function EditSpotFormModal({spot}) {
         }
 
 
-        await dispatch(updateSpot(newSpot, previewUrl))
+        await dispatch(updateSpot(updatedSpot, spot.id))
         .then(closeModal)
         .catch(async res => {
             const data = await res.json()
@@ -58,16 +56,6 @@ function EditSpotFormModal({spot}) {
                         <li key={idx}>{error}</li>
                     ))}
                 </ul>
-                <label>
-                    <input
-                        className="flex form-input"
-                        type="url"
-                        placeholder="Preview Image Url"
-                        value={previewUrl}
-                        onChange={(e) => setPreviewUrl(e.target.value)}
-                        required
-                    />
-                </label>
                 <label>
                     <input
                         className="flex form-input"
