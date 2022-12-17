@@ -7,6 +7,7 @@ import LoginFormModal from '../LoginFormModal';
 import DemoUserLogin from "../DemoUserLogin";
 import SignupFormModal from '../SignupFormModal';
 import OpenModalMenuItem from './OpenModalMenuItem'
+import AllUserReviews from "../Reviews/AllUserReviews";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -53,6 +54,13 @@ function ProfileButton({ user }) {
             <li className="user-info">{user.username}</li>
             <li className="user-info">{user.firstName} {user.lastName}</li>
             <li className="user-info">{user.email}</li>
+            <li className="dropdown-item">
+              <OpenModalMenuItem
+                itemText='Manage Reviews'
+                onItemClick={closeMenu}
+                modalComponent={<AllUserReviews />}
+                />
+            </li>
             <li>
               <button className="dropdown-item" onClick={logout}>Log Out</button>
             </li>

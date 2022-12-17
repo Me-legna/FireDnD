@@ -11,6 +11,11 @@ const loadSpotReviews = (spotReviews) => ({
     spotReviews
 })
 
+const loadUserReviews = (userReviews) => ({
+    type: GET_USER,
+    userReviews
+})
+
 export const getSpotReviews = (spotId) => async dispatch => {
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`)
 
@@ -19,6 +24,18 @@ export const getSpotReviews = (spotId) => async dispatch => {
         dispatch(loadSpotReviews(data.Reviews))
     }
 }
+
+
+export const getUserReviews = () => async dispatch => {
+    const response = await csrfFetch('/api/reviews/current')
+
+    if(response.ok){
+        const data = await response.json()
+        dispatch(loadUserReviews(data.Reviews))
+    }
+    return response
+}
+
 
 const initialState = {
     spot: {},
@@ -31,6 +48,13 @@ const reviewsReducer = (state = initialState, action) => {
             const newState = {spot: {}, user: {}}
 
             action.spotReviews.forEach(review => newState.spot[review.id] = review)
+
+            return newState
+        }
+        case GET_USER: {
+            const newState = {...state, user: {}}
+
+            action.userReviews.forEach(review => newState.user[review.id] = review)
 
             return newState
         }
