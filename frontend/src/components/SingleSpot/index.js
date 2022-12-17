@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Redirect, useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getOneSpot } from "../../store/spots";
@@ -11,13 +11,15 @@ import SingleRightBody from "./SingleRightBody";
 
 function SingleSpot() {
     const dispatch = useDispatch()
+    const history = useHistory()
     const { id } = useParams()
     const spot = useSelector(state => state.spots.singleSpot)
     // console.log('spot', spot)
 
     useEffect(() => {
         dispatch(getOneSpot(id))
-    }, [dispatch, id])
+        .catch(() => history.push('/404'))
+    }, [dispatch,history, id])
 
     if (!spot.id) return null
     return (

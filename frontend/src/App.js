@@ -7,6 +7,7 @@ import Navigation from "./components/Navigation";
 import AllSpots from './components/AllSpots';
 import './App.css'
 import SingleSpot from './components/SingleSpot';
+import NotFoundPage from './components/404Page';
 
 function App() {
   const dispatch = useDispatch();
@@ -26,6 +27,10 @@ function App() {
 
             <Route path='/spots/:id'>
               <SingleSpot />
+            </Route>
+
+            <Route path='/'>
+                <NotFoundPage />
             </Route>
         </Switch>
       )}
