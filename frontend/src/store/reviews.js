@@ -16,10 +16,19 @@ const loadUserReviews = (userReviews) => ({
     userReviews
 })
 
+const create_Review = (newReview) => ({
+    type: CREATE,
+    newReview
+})
+const delete_Review = (reviewId) => ({
+    type: DELETE,
+    reviewId
+})
+
 export const getSpotReviews = (spotId) => async dispatch => {
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`)
 
-    if(response.ok){
+    if (response.ok) {
         const data = await response.json()
         dispatch(loadSpotReviews(data.Reviews))
     }
@@ -29,9 +38,36 @@ export const getSpotReviews = (spotId) => async dispatch => {
 export const getUserReviews = () => async dispatch => {
     const response = await csrfFetch('/api/reviews/current')
 
-    if(response.ok){
+    if (response.ok) {
         const data = await response.json()
         dispatch(loadUserReviews(data.Reviews))
+    }
+    return response
+}
+
+
+export const createReview = (newReview) => async dispatch => {
+    const { spotId } = newReview
+    const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+        method: 'POST',
+        body: JSON.stringify(newReview)
+    })
+
+    if (response.ok) {
+        const data = await response.json()
+        dispatch(create_Review(data))
+    }
+    return response
+}
+
+
+export const deleteReview = (reviewId) => async dispatch => {
+    const response = await csrfFetch(`/reviews/${reviewId}`, {
+        method: 'DELETE'
+    })
+
+    if (response.ok) {
+        await dispatch(delete_Review(reviewId))
     }
     return response
 }
@@ -45,16 +81,31 @@ const initialState = {
 const reviewsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_SPOT: {
-            const newState = {spot: {}, user: {}}
+            const newState = { spot: {}, user: {} }
 
             action.spotReviews.forEach(review => newState.spot[review.id] = review)
 
             return newState
         }
         case GET_USER: {
-            const newState = {...state, user: {}}
+            const newState = { ...state, user: {} }
 
             action.userReviews.forEach(review => newState.user[review.id] = review)
+
+            return newState
+        }
+        case CREATE: {
+            const newState = {...state, user: {}}
+
+            newState.spot[action.newReview.id] = action.newReview
+
+            return newState
+        }
+        case DELETE: {
+            const newState = {...state}
+
+            delete newState.spot[action.reviewId]
+            delete newState.user[action.reviewId]
 
             return newState
         }
