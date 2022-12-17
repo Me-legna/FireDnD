@@ -8,6 +8,7 @@ import AllSpots from './components/AllSpots';
 import './App.css'
 import SingleSpot from './components/SingleSpot';
 import NotFoundPage from './components/404Page';
+import Reviews from './components/Reviews';
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ function App() {
 
             <Route path='/spots/:id'>
               <SingleSpot />
+              <Reviews />
             </Route>
 
             <Route path='/'>
