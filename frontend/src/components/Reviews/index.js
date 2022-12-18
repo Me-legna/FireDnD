@@ -13,39 +13,51 @@ function Reviews() {
     const dispatch = useDispatch()
     const history = useHistory()
     const { id } = useParams()
+    const ownerId = useSelector(state => state.spots.singleSpot.ownerId)
     const user = useSelector(state => state.session.user)
+    const isOwner = ownerId === user?.id
     const spotReviews = useSelector(state => state.reviews.spot)
     const userReview = Object.values(spotReviews).find(review => review?.userId === user?.id)
-    console.log('spotReviews', userReview)
+    console.log('ownerId', isOwner)
 
     useEffect(() => {
         dispatch(getSpotReviews(id))
 
     }, [dispatch, id])
 
+    
     return (
         <div>
             <div>
                 <h1 >Henlow </h1>
-                {user ? !userReview
-                    ? (
-                        <OpenModalButton
-                            buttonText='Create Review'
-                            modalComponent={<CreateReviewFormModal />}
-                        />
-                    )
-                    : (
-                        <OpenModalButton
-                            buttonText='Delete Review'
-                            modalComponent={<DeleteReviewModal />}
-                        />
-                    )
-                    : (
-                        <div>Log in to create a Review</div>
-                    )
-                }
+                <div>
+
+                    {user
+                        ? isOwner
+                            ? (<div></div>)
+                            : userReview
+                                ? (
+                                    <OpenModalButton
+                                        buttonText='Delete Review'
+                                        modalComponent={<DeleteReviewModal />}
+                                    />
+                                )
+                                : (
+
+                                    <OpenModalButton
+                                        buttonText='Create Review'
+                                        modalComponent={<CreateReviewFormModal />}
+                                    />
+                                )
+                        : (
+                            <div>Log in to create a Review</div>
+                        )
+                    }
+                </div>
+
                 <AllSingleReviews />
             </div>
+
         </div>
     )
 }
