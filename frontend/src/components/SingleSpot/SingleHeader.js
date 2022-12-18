@@ -1,4 +1,4 @@
-import solidStar from '../../assets/spotImages/star-solid.svg'
+import solidStar from '../../images/spotImages/star-solid.svg'
 import './SingleSpot.css'
 
 function SingleHeader({ spot }) {

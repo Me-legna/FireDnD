@@ -6,7 +6,7 @@ import OpenModalButton from '../OpenModalButton'
 import AllSingleReviews from './AllSingleReviews'
 import CreateReviewFormModal from './CreateReviewFormModal'
 import DeleteReviewModal from './DeleteReviewModal'
-import solidStar from '../../assets/spotImages/star-solid.svg'
+import solidStar from '../../images/spotImages/star-solid.svg'
 import './Reviews.css'
 
 

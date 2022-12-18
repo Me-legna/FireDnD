@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { createReview } from "../../store/reviews";
-import solidStar from '../../assets/spotImages/star-solid.svg'
+import solidStar from '../../images/spotImages/star-solid.svg'
 
 function CreateReviewFormModal() {
     const dispatch = useDispatch();
