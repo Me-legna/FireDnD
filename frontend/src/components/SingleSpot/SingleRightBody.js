@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"
 import OpenModalButton from "../OpenModalButton"
 import DeleteSpotModal from "./DeleteSpotModal"
 import EditSpotFormModal from "./EditSpotFormModal"
-import solidStar from '../../assets/spotImages/star-solid.svg'
+import solidStar from '../../images/spotImages/star-solid.svg'
 
 function SingleRightBody({ spot }) {
     const user = useSelector(state => state.session.user)

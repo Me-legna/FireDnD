@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import { getUserReviews } from "../../store/reviews"
-import solidStar from '../../assets/spotImages/star-solid.svg'
+import solidStar from '../../images/spotImages/star-solid.svg'
 import { useModal } from "../../context/Modal"
 
 

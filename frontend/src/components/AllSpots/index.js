@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { getAllSpots } from "../../store/spots";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import solidStar from '../../assets/spotImages/star-solid.svg'
+import solidStar from '../../images/spotImages/star-solid.svg'
 import './AllSpots.css'
 
 
