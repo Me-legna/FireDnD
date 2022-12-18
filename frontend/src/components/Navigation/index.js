@@ -17,7 +17,7 @@ function Navigation({ isLoaded }) {
     <ul id='ul-nav' className='flex-center'>
       <li>
         <NavLink exact to="/">
-          <img id='logo' src={require('../../assets/fireDnD-logo.png')} alt='fireDnD-logo'></img>
+          <img id='logo' src={require('../../images/fireDnD-logo.png')} alt='fireDnD-logo'></img>
         </NavLink>
       </li>
       <div id='query-filters'>
