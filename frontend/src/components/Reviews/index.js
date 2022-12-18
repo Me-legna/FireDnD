@@ -1,4 +1,4 @@
-import { useDeferredValue, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import { getSpotReviews } from '../../store/reviews'
@@ -18,6 +18,7 @@ function Reviews() {
     const isOwner = ownerId === user?.id
     const spotReviews = useSelector(state => state.reviews.spot)
     const userReview = Object.values(spotReviews).find(review => review?.userId === user?.id)
+    // const forceUpdate = use
     console.log('ownerId', isOwner)
 
     useEffect(() => {
@@ -25,7 +26,7 @@ function Reviews() {
 
     }, [dispatch, id])
 
-    
+
     return (
         <div>
             <div>
