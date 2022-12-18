@@ -40,7 +40,7 @@ function Reviews() {
                                 ? (
                                     <OpenModalButton
                                         buttonText='Delete Review'
-                                        modalComponent={<DeleteReviewModal />}
+                                        modalComponent={<DeleteReviewModal review={userReview}/>}
                                     />
                                 )
                                 : (

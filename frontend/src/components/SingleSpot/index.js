@@ -13,13 +13,14 @@ function SingleSpot() {
     const dispatch = useDispatch()
     const history = useHistory()
     const { id } = useParams()
+    const spotReviews = useSelector(state => state.reviews.spot)
     const spot = useSelector(state => state.spots.singleSpot)
     // console.log('spot', spot)
 
     useEffect(() => {
         dispatch(getOneSpot(id))
         .catch(() => history.push('/404'))
-    }, [dispatch,history, id])
+    }, [dispatch, history, id, spotReviews])
 
     if (!spot.id) return null
     return (
