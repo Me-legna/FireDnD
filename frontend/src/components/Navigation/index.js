@@ -7,6 +7,8 @@ import './Navigation.css';
 // import OpenModalButton from '../OpenModalButton';
 import CreateSpotFormModal from '../SingleSpot/CreateSpotFormModal';
 import OpenModalMenuItem from './OpenModalMenuItem';
+import LoginFormModal from '../LoginFormModal';
+import SignupFormModal from '../SignupFormModal';
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
@@ -19,22 +21,36 @@ function Navigation({ isLoaded }) {
         </NavLink>
       </li>
       <div id='query-filters'>
-        <li className='nav-middle'>QueryFilterModals?</li>
+        <li className='nav-middle'>Search and Filter Modals incoming...</li>
       </div>
       <div id='nav-create-spot'>
-        { sessionUser
-        ? (
-        <li className='create-spot nav-middle dropdown-item'>
-          <OpenModalMenuItem
-          itemText='fireDnD a Spot!'
-          modalComponent={<CreateSpotFormModal />}
-          />
-          </li>
+        {sessionUser
+          ? (
+            <li className='create-spot nav-middle dropdown-item'>
+              <OpenModalMenuItem
+                itemText='fireDnD a Spot!'
+                modalComponent={<CreateSpotFormModal />}
+              />
+            </li>
           )
           : (
-            <li className='create-spot nav-middle' >{'Login/Sign Up To fireDnD a Spot --->'}</li>
+            <li className='create-spot nav-middle dropdown-item' >
+              <li className="dropdown-item">
+                <OpenModalMenuItem
+                  itemText="Sign Up"
+                  modalComponent={<SignupFormModal />}
+                />
+              </li>
+              <div className='dot-space'>/</div>
+              <li className="dropdown-item">
+                <OpenModalMenuItem
+                  itemText="Log In"
+                  modalComponent={<LoginFormModal />}
+                />
+              </li>
+            </li>
           )
-          }
+        }
       </div>
       {isLoaded && (
         <div>

@@ -8,6 +8,7 @@ import DemoUserLogin from "../DemoUserLogin";
 import SignupFormModal from '../SignupFormModal';
 import OpenModalMenuItem from './OpenModalMenuItem'
 import AllUserReviews from "../Reviews/AllUserReviews";
+import CreateSpotFormModal from "../SingleSpot/CreateSpotFormModal";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -54,36 +55,51 @@ function ProfileButton({ user }) {
             <li className="user-info">{user.username}</li>
             <li className="user-info">{user.firstName} {user.lastName}</li>
             <li className="user-info">{user.email}</li>
-            <li className="dropdown-item">
-              <OpenModalMenuItem
-                itemText='Manage Reviews'
-                onItemClick={closeMenu}
-                modalComponent={<AllUserReviews />}
+            <div>
+              <li className="dropdown-item">
+                <OpenModalMenuItem
+                  itemText='FireDnD a Spot'
+                  onItemClick={closeMenu}
+                  modalComponent={<CreateSpotFormModal />}
                 />
-            </li>
-            <li>
-              <button className="dropdown-item" onClick={logout}>Log Out</button>
-            </li>
+              </li>
+              <li className="dropdown-item">
+                <OpenModalMenuItem
+                  itemText='Manage Reviews'
+                  onItemClick={closeMenu}
+                  modalComponent={<AllUserReviews />}
+                />
+              </li>
+            </div>
+            <div>
+              <li>
+                <button className="dropdown-item" onClick={logout}>Log Out</button>
+              </li>
+            </div>
           </div>
         ) : (
           <div id="profile-dropdown">
-            <li className="dropdown-item">
-              <OpenModalMenuItem
-                itemText="Sign Up"
-                onItemClick={closeMenu}
-                modalComponent={<SignupFormModal />}
-              />
-            </li>
-            <li className="dropdown-item">
-              <OpenModalMenuItem
-                itemText="Log In"
-                onItemClick={closeMenu}
-                modalComponent={<LoginFormModal />}
-              />
-            </li>
-            <li className="dropdown-item">
-              <DemoUserLogin />
-            </li>
+            <div>
+              <li className="dropdown-item">
+                <OpenModalMenuItem
+                  itemText="Sign Up"
+                  onItemClick={closeMenu}
+                  modalComponent={<SignupFormModal />}
+                />
+              </li>
+              <li className="dropdown-item">
+                <OpenModalMenuItem
+                  itemText="Log In"
+                  onItemClick={closeMenu}
+                  modalComponent={<LoginFormModal />}
+                />
+              </li>
+            </div>
+            <div>
+              <li className="dropdown-item">
+                <DemoUserLogin />
+              </li>
+            </div>
           </div>
         )}
       </ul>
