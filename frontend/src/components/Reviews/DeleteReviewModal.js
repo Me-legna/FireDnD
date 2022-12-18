@@ -1,14 +1,11 @@
 import React, { useState } from "react";
-// import * as sessionActions from "../../store/session";
-// import { useHistory } from 'react-router-dom'
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-// import "./SingleSpot.css";
 import { deleteReview } from "../../store/reviews";
 
 function DeleteReviewModal({ review }) {
     const dispatch = useDispatch();
-    // const history = useHistory()
+
     const { closeModal } = useModal()
     const [checked, setChecked] = useState(false)
     const [errors, setErrors] = useState([]);
@@ -21,15 +18,11 @@ function DeleteReviewModal({ review }) {
             .catch(
                 async (res) => {
                     const data = await res.json();
-                    // console.log('data', data)
+
                     if (data && data.message) setErrors([data.message]);
                     if (data && data.errors) setErrors(Object.values(data.errors));
                 }
             );
-        // .then(history.push("/"))
-        // <Redirect to="/" />
-        // .then(closeModal)
-        // history.push('/')
     };
 
     return (

@@ -8,13 +8,13 @@ import { useHistory } from "react-router-dom";
 function CreateSpotFormModal() {
     const dispatch = useDispatch();
     const history = useHistory()
-    const [address, setAddress] = useState('1555 Short St')
-    const [city, setCity] = useState('New Orleans')
-    const [state, setState] = useState('LA')
-    const [country, setCountry] = useState('USA')
-    const [name, setName] = useState('Just a Spot I Call Home')
-    const [description, setDescription] = useState('What a lovely, cozy, incredible home! You will love living inside this beautiful home!')
-    const [price, setPrice] = useState('100')
+    const [address, setAddress] = useState('')
+    const [city, setCity] = useState('')
+    const [state, setState] = useState('')
+    const [country, setCountry] = useState('')
+    const [name, setName] = useState('')
+    const [description, setDescription] = useState('')
+    const [price, setPrice] = useState('')
     const [previewUrl, setPreviewUrl] = useState('https://a0.muscache.com/im/pictures/miso/Hosting-46695796/original/d01dc3d2-9597-4d88-92f7-3e15a1c0d604.jpeg?im_w=480')
     const [errors, setErrors] = useState([]);
     const user = useSelector(state => state.session.user)

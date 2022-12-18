@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { createReview } from "../../store/reviews";
+import solidStar from '../../assets/spotImages/star-solid.svg'
 
-function CreateReviewFormModal () {
+function CreateReviewFormModal() {
     const dispatch = useDispatch();
     const [review, setReview] = useState('')
-    const [stars, setStars] = useState('')
+    const [stars, setStars] = useState(3)
 
     const { closeModal } = useModal();
     const [errors, setErrors] = useState([]);
@@ -47,8 +48,8 @@ function CreateReviewFormModal () {
                         placeholder="Write a review..."
                         rows={6}
                         cols={50}
-                        style={{resize: "none"}}
-                        maxLength={150}
+                        style={{ resize: "none" }}
+                        maxLength={300}
                         value={review}
                         onChange={(e) => setReview(e.target.value)}
                         required
@@ -65,7 +66,10 @@ function CreateReviewFormModal () {
                         onChange={(e) => setStars(e.target.value)}
                         required
                     />
-                    <output>{stars}</output>
+                    <div>
+                        <img className="solid-star" src={solidStar} alt="solid-black-star" />
+                        <output>{stars}</output>
+                    </div>
                 </label>
                 <button className="select-input" type="submit">Submit Review 🥳</button>
             </form>

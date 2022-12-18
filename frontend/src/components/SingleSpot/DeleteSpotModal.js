@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as sessionActions from "../../store/session";
+// import * as sessionActions from "../../store/session";
 import { useHistory } from 'react-router-dom'
 import { useDispatch} from "react-redux";
 import { useModal } from "../../context/Modal";
@@ -21,14 +21,12 @@ function DeleteSpotModal({ spot }) {
         .catch(
             async (res) => {
                 const data = await res.json();
-                console.log('data', data)
+
                 if (data && data.message) setErrors([data.message]);
                 if (data && data.errors) setErrors(Object.values(data.errors));
             }
             );
-            // .then(history.push("/"))
-            // <Redirect to="/" />
-            // .then(closeModal)
+
             history.push('/')
     };
 

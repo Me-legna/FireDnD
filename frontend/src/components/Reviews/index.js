@@ -19,8 +19,6 @@ function Reviews() {
     const spotReviews = useSelector(state => state.reviews.spot)
     const spotReviewsArr = Object.values(spotReviews)
     const userReview = spotReviewsArr.find(review => review?.userId === user?.id)
-    // const forceUpdate = use
-    console.log('ownerId', isOwner)
 
     useEffect(() => {
         dispatch(getSpotReviews(id))

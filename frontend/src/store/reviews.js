@@ -3,7 +3,7 @@ import { csrfFetch } from "./csrf";
 const GET_SPOT = '/reviews/SPOT'
 const GET_USER = '/reviews/USER'
 const CREATE = '/reviews/CREATE'
-const UPDATE = '/reviews/UPDATE'
+// const UPDATE = '/reviews/UPDATE'
 const DELETE = '/reviews/DELETE'
 
 const loadSpotReviews = (spotReviews) => ({

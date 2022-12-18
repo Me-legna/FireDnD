@@ -1,4 +1,4 @@
-import { Redirect, useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getOneSpot } from "../../store/spots";
@@ -15,7 +15,7 @@ function SingleSpot() {
     const { id } = useParams()
     const spotReviews = useSelector(state => state.reviews.spot)
     const spot = useSelector(state => state.spots.singleSpot)
-    // console.log('spot', spot)
+
 
     useEffect(() => {
         dispatch(getOneSpot(id))

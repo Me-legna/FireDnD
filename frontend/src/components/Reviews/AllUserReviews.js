@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Link, useHistory } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { getUserReviews } from "../../store/reviews"
 import solidStar from '../../assets/spotImages/star-solid.svg'
 import { useModal } from "../../context/Modal"
@@ -8,7 +8,6 @@ import { useModal } from "../../context/Modal"
 
 function AllUserReviews() {
     const dispatch = useDispatch()
-    const history = useHistory()
     const userReviews = useSelector(state => state.reviews.user)
     const userReviewsList = Object.values(userReviews)
     const { closeModal } = useModal()

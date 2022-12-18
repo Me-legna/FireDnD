@@ -37,10 +37,11 @@ function LoginFormModal() {
           ))}
         </ul>
         <label>
-          Username or Email
           <input
             type="text"
             value={credential}
+            maxLength={50}
+            placeholder={'Username or Email'}
             onChange={(e) => setCredential(e.target.value)}
             required
           />
@@ -49,6 +50,7 @@ function LoginFormModal() {
           <input
             type="password"
             value={password}
+            maxLength={50}
             placeholder='Password'
             onChange={(e) => setPassword(e.target.value)}
             required

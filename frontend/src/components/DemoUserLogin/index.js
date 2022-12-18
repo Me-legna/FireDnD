@@ -16,7 +16,7 @@ function DemoUserLogin() {
 
     return dispatch(sessionActions.login({ credential, password }))
 
-    };
+  };
 
   return (
     <div onClick={handleSubmit}>Easy Access 😏</div>

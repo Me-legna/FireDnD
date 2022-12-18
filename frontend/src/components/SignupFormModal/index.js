@@ -39,41 +39,42 @@ function SignupFormModal() {
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
         <label>
-          Email
           <input
             type="email"
             value={email}
+            maxLength={50}
+            placeholder={'Email'}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
         </label>
         <label>
-          Username
           <input
             type="text"
             minLength={3}
-            maxLength={15}
+            maxLength={30}
+            placeholder={'UserName'}
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
           />
         </label>
         <label>
-          First Name
           <input
             type="text"
             minLength={3}
             maxLength={20}
+            placeholder={'First Name'}
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
           />
         </label>
         <label>
-          Last Name
           <input
             type="text"
             minLength={3}
+            placeholder={'Last Name'}
             maxLength={20}
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
@@ -81,18 +82,20 @@ function SignupFormModal() {
           />
         </label>
         <label>
-          Password
           <input
             type="password"
+            placeholder={'password'}
             value={password}
+            maxLength={50}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </label>
         <label>
-          Confirm Password
           <input
             type="password"
+            placeholder={'Confirm Password'}
+            maxLength={50}
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required

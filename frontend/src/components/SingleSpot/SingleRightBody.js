@@ -8,8 +8,6 @@ import solidStar from '../../assets/spotImages/star-solid.svg'
 function SingleRightBody({ spot }) {
     const user = useSelector(state => state.session.user)
     const [numNights, setNumNights] = useState(1)
-    // console.log('user', user)
-    // console.log('spot', spot)
 
     return (
         <div>
