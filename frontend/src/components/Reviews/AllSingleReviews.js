@@ -1,9 +1,29 @@
 
-function AllSingleReviews () {
+function AllSingleReviews({ spotReviews }) {
 
     return (
         <div>
-            <h2>Single Reviews</h2>
+            <div>
+                {!!spotReviews.length
+                    ? spotReviews.map(review => (
+                        <div key={review.id}>
+                            <div>
+                                <div>
+                                    <i className="fas fa-user-circle" />
+                                    <div>{review.User.firstName}</div>
+                                </div>
+                                <div>
+                                    {review.review}
+                                </div>
+
+                            </div>
+                        </div>
+                    ))
+                    : (
+                        <div>{'No reviews (yet) 🥹'}</div>
+                    )
+                }
+            </div>
         </div>
     )
 }

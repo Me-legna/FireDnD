@@ -36,7 +36,7 @@ function AllSpots() {
                                 <div className="flex-column">
                                     <div className="spot-avg-rating">
                                         <img className="solid-star" src={solidStar} alt="solid-black-star" />
-                                        <span>{isNaN(spot.avgRating) ? 'N/A' : spot.avgRating}</span>
+                                        <span>{isNaN(spot.avgRating) ? 'New' : spot.avgRating}</span>
                                     </div>
                                 </div>
                             </div>

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux"
 import OpenModalButton from "../OpenModalButton"
 import DeleteSpotModal from "./DeleteSpotModal"
 import EditSpotFormModal from "./EditSpotFormModal"
+import solidStar from '../../assets/spotImages/star-solid.svg'
 
 function SingleRightBody({ spot }) {
     const user = useSelector(state => state.session.user)
@@ -20,32 +21,39 @@ function SingleRightBody({ spot }) {
                                 <span className="right-body-price">{`$${spot.price} `}</span>
                                 <span>night</span>
                             </div>
-                            <div>
-                                <span>{spot.avgStarRating}</span>
-                                <span className="dot-space">·</span>
-                                <span>{spot.numReviews} {spot.numReviews === 1 ? 'review' : 'reviews'}</span>
-                            </div>
+                            {isNaN(spot.avgStarRating)
+                                ? (
+                                    <div></div>
+                                )
+                                : (
+                                    <div>
+                                        <img className="solid-star" src={solidStar} alt="solid-black-star" />
+                                        <span>{spot.avgStarRating}</span>
+                                        <span className="dot-space">·</span>
+                                        <span>{spot.numReviews} {spot.numReviews === 1 ? 'review' : 'reviews'}</span>
+                                    </div>
+                                )}
                         </div>
                         {user ? user.id === spot.Owner.id
                             ? (
                                 <div>
-                                    <OpenModalButton buttonText='Edit Spot' modalComponent={<EditSpotFormModal spot={spot}/>}/>
-                                    <OpenModalButton buttonText='Delete Spot' modalComponent={<DeleteSpotModal spot={spot}/>}/>
+                                    <OpenModalButton buttonText='Edit Spot' modalComponent={<EditSpotFormModal spot={spot} />} />
+                                    <OpenModalButton buttonText='Delete Spot' modalComponent={<DeleteSpotModal spot={spot} />} />
                                 </div>
                             )
                             : (
                                 <div className="flex-column">
-                                    <input type="number" value={numNights} onChange={(e)=>setNumNights(e.target.value)}></input>
-                                    <span>{`$${spot.price} x ${numNights} = ${spot.price * numNights}`}</span>
+                                    <input type="number" value={numNights} onChange={(e) => setNumNights(e.target.value)} min='1'></input>
+                                    <div>{`$${spot.price} x ${numNights} ${numNights < 2 ? 'night' : 'nights'} = $${spot.price * numNights}`}</div>
                                 </div>
                             )
                             : (
                                 <div className="flex-column">
-                                    <input type="number" value={numNights} onChange={(e)=>setNumNights(e.target.value)} min='1'></input>
-                                    <span>{`$${spot.price} x ${numNights} ${numNights < 2 ? 'night' : 'nights'} = $${spot.price * numNights}`}</span>
+                                    <input type="number" value={numNights} onChange={(e) => setNumNights(e.target.value)} min='1'></input>
+                                    <div>{`$${spot.price} x ${numNights} ${numNights < 2 ? 'night' : 'nights'} = $${spot.price * numNights}`}</div>
                                 </div>
                             )
-                            }
+                        }
                     </div>
                 </div>
             </div>

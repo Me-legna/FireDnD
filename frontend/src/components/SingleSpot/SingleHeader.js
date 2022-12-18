@@ -1,4 +1,4 @@
-
+import solidStar from '../../assets/spotImages/star-solid.svg'
 import './SingleSpot.css'
 
 function SingleHeader({spot}) {
@@ -11,12 +11,12 @@ function SingleHeader({spot}) {
                     <div className="single-spot-prefix-div">
                         <span id='single-spot-review-location'>
                             <span id="star-icon-container">
-                                <div>star-icon</div>
+                                <img className="solid-star" src={solidStar} alt="solid-black-star" />
                             </span>
-                            <span id="single-spot-avg-star">{isNaN(spot.avgStarRating) ? 'N/A' : spot.avgStarRating}</span>
+                            <span id="single-spot-avg-star">{isNaN(spot.avgStarRating) ? 'New' : spot.avgStarRating}</span>
                             <span className="dot-space"> · </span>
                             <span id="num-reviews-button-container">
-                                <button id="num-reviews-button">{spot.numReviews}</button>
+                                <div >{spot.numReviews} {spot.numReviews === 1 ? 'review' : 'reviews'}</div>
                             </span>
                         </span>
 

@@ -104,7 +104,7 @@ router.get('/', validateQuery, async (req, res, next) => {
         })
         reviews.forEach(review => starSum += review.stars);
         const starAvg = starSum / reviews.length;
-        if(!starAvg) spot.avgRating = 'No reviews have been made'
+        if(!starAvg) spot.avgRating = 'New'
         else spot.avgRating = starAvg;
 
         const previewImg = await SpotImage.findOne({
@@ -231,7 +231,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         })
         reviews.forEach(review => starSum += review.stars);
         const starAvg = starSum / reviews.length;
-        if(!starAvg) spot.avgRating = 'No reviews have been made'
+        if(!starAvg) spot.avgRating = 'New'
         else spot.avgRating = starAvg;
 
         const previewImg = await SpotImage.findOne({
@@ -286,7 +286,7 @@ router.get('/:spotId', async (req, res, next) => {
 
         const spotObj = spot.toJSON()
         spotObj.numReviews = numReviews;
-        if(!avgStarRating) spotObj.avgStarRating = 'No reviews have been made'
+        if(!avgStarRating) spotObj.avgStarRating = 'New'
         else spotObj.avgStarRating = avgStarRating;
         res.json(spotObj)
     }
