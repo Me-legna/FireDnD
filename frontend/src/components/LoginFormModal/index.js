@@ -20,7 +20,9 @@ function LoginFormModal() {
       .catch(
         async (res) => {
           const data = await res.json();
-          if (data && data.errors) setErrors(data.errors);
+
+          if (data && data.message) setErrors([data.message]);
+          if (data && data.errors) setErrors(Object.values(data.errors));
         }
       );
   };
@@ -35,19 +37,21 @@ function LoginFormModal() {
           ))}
         </ul>
         <label>
-          Username or Email
           <input
             type="text"
             value={credential}
+            maxLength={50}
+            placeholder={'Username or Email'}
             onChange={(e) => setCredential(e.target.value)}
             required
           />
         </label>
         <label>
-          Password
           <input
             type="password"
             value={password}
+            maxLength={50}
+            placeholder='Password'
             onChange={(e) => setPassword(e.target.value)}
             required
           />

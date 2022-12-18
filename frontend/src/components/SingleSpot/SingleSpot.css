@@ -1,0 +1,31 @@
+#single-spot-header-container{
+    padding: 0px 40px;
+}
+#single-spot-header{
+    display: flex;
+    flex-direction: column;
+}
+#single-spot-prefix{
+    display: flex;
+    justify-content: space-between;
+}
+.single-spot-prefix-div{
+    display: flex;
+}
+#single-spot-review-location{
+    display: flex;
+}
+.dot-space{
+    margin: 0px 10px;
+}
+.share-save-button{
+    margin: 0px 8px
+}
+.form-input{
+    margin: 10px 12.5%;
+    width: 75%;
+}
+.select-input{
+    margin: 10px 12.5%;
+    width:78%
+}

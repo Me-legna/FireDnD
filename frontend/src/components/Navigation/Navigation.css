@@ -1,3 +1,73 @@
 .hidden {
     display: none;
 }
+#ul-nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    list-style: none;
+    position: sticky;
+    top: 0;
+    height: 80px;
+    border-bottom: 1px solid rgba(0,0,0,0.15);
+    margin: 0 0% 15px;
+    background: white;
+    z-index: 1000;
+}
+#query-filters{
+    flex: 1;
+    justify-content: flex-end;
+}
+#nav-create-spot{
+    flex: 1;
+}
+.nav-middle{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 18px;
+}
+#logo{
+    display: block;
+    width: 102px;
+}
+
+.fa-user-circle{
+    padding: 5px 5px 5px 12px;
+}
+
+#profile-button{
+    border: 1px solid;
+    border-radius: 21px;
+    padding: 10px 5px 10px 38px;
+    margin-right: -35px;
+    /* position: fixed; */
+}
+#profile-button:hover{
+    cursor:pointer;
+}
+
+#profile-dropdown {
+    display: flex;
+    width: 12vw;
+    height: 13vw;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    z-index: 100;
+    background: white;
+    align-items: center;
+
+
+    border: 1px solid black;
+    border-radius: 20px;
+    position: absolute;
+    right: 0px;
+    list-style: none;
+}
+
+.dropdown-item:hover{
+    cursor:pointer;
+}
+.user-info:hover{
+    cursor: default;
+}

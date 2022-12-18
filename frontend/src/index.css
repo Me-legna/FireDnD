@@ -1,1 +1,33 @@
 /* TODO Add site wide styles */
+.flex{
+    display: flex;
+}
+
+.flex-center{
+    display: flex;
+    justify-content: center;
+}
+
+.flex-space-between{
+    display: flex;
+    justify-content: space-between;
+}
+.flex-around{
+    display: flex;
+    justify-content: space-around;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-img{
+    width: 278px;
+    height: 264px;
+    border-radius: 12px;
+}
+.solid-star{
+    height: 12px;
+    margin-right: 3px;
+}

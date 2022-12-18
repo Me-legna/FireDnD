@@ -2,10 +2,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
-import OpenModalButton from '../OpenModalButton';
+// import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import DemoUserLogin from "../DemoUserLogin";
 import SignupFormModal from '../SignupFormModal';
+import OpenModalMenuItem from './OpenModalMenuItem'
+import AllUserReviews from "../Reviews/AllUserReviews";
+import CreateSpotFormModal from "../SingleSpot/CreateSpotFormModal";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -43,43 +46,61 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
+      <button id="profile-button" onClick={openMenu}>
         <i className="fas fa-user-circle" />
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
-          <>
-            <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
-            <li>{user.email}</li>
-            <li>
-              <button onClick={logout}>Log Out</button>
-            </li>
-          </>
+          <div id="profile-dropdown">
+            <li className="user-info">{user.username}</li>
+            <li className="user-info">{user.firstName} {user.lastName}</li>
+            <li className="user-info">{user.email}</li>
+            <div>
+              <li className="dropdown-item">
+                <OpenModalMenuItem
+                  itemText='FireDnD a Spot'
+                  onItemClick={closeMenu}
+                  modalComponent={<CreateSpotFormModal />}
+                />
+              </li>
+              <li className="dropdown-item">
+                <OpenModalMenuItem
+                  itemText='Manage Reviews'
+                  onItemClick={closeMenu}
+                  modalComponent={<AllUserReviews />}
+                />
+              </li>
+            </div>
+            <div>
+              <li>
+                <button className="dropdown-item" onClick={logout}>Log Out</button>
+              </li>
+            </div>
+          </div>
         ) : (
-          <>
-            <li>
-              <OpenModalButton
-                buttonText="Log In"
-                onButtonClick={closeMenu}
-                modalComponent={<LoginFormModal />}
-              />
-            </li>
-            <li>
-              <OpenModalButton
-                buttonText="Demo User"
-                onButtonClick={closeMenu}
-                modalComponent={<DemoUserLogin />}
-              />
-            </li>
-            <li>
-              <OpenModalButton
-                buttonText="Sign Up"
-                onButtonClick={closeMenu}
-                modalComponent={<SignupFormModal />}
-              />
-            </li>
-          </>
+          <div id="profile-dropdown">
+            <div>
+              <li className="dropdown-item">
+                <OpenModalMenuItem
+                  itemText="Sign Up"
+                  onItemClick={closeMenu}
+                  modalComponent={<SignupFormModal />}
+                />
+              </li>
+              <li className="dropdown-item">
+                <OpenModalMenuItem
+                  itemText="Log In"
+                  onItemClick={closeMenu}
+                  modalComponent={<LoginFormModal />}
+                />
+              </li>
+            </div>
+            <div>
+              <li className="dropdown-item">
+                <DemoUserLogin />
+              </li>
+            </div>
+          </div>
         )}
       </ul>
     </>
