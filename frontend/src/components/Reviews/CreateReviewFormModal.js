@@ -11,6 +11,8 @@ function CreateReviewFormModal() {
 
     const { closeModal } = useModal();
     const [errors, setErrors] = useState([]);
+    const User = useSelector(state => state.session.user)
+    const ReviewImages = []
     const spotId = useSelector(state => state.spots.singleSpot.id)
 
     const handleSubmit = async (e) => {
@@ -22,8 +24,13 @@ function CreateReviewFormModal() {
             stars
         }
 
+        const reviewInfo = {
+            User,
+            ReviewImages
+        }
 
-        await dispatch(createReview(newReview, spotId))
+
+        await dispatch(createReview(newReview, spotId, reviewInfo))
             .then(closeModal)
             .catch(async res => {
                 const data = await res.json()
