@@ -1,73 +1,99 @@
 .hidden {
     display: none;
 }
-#ul-nav{
+
+#ul-nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
     list-style: none;
     position: sticky;
     top: 0;
+    width: 95%;
     height: 80px;
-    border-bottom: 1px solid rgba(0,0,0,0.15);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
     margin: 0 0% 15px;
     background: white;
     z-index: 1000;
 }
-#query-filters{
+
+#query-filters {
     flex: 1;
     justify-content: flex-end;
 }
-#nav-create-spot{
+
+#nav-create-spot {
     flex: 1;
 }
-.nav-middle{
+
+.nav-middle {
     display: flex;
     justify-content: flex-end;
     margin-right: 18px;
 }
-#logo{
+
+#logo {
     display: block;
     width: 102px;
 }
 
-.fa-user-circle{
+.fa-user-circle {
     padding: 5px 5px 5px 12px;
 }
 
-#profile-button{
+#profile-button {
     border: 1px solid;
     border-radius: 21px;
     padding: 10px 5px 10px 38px;
-    margin-right: -35px;
-    /* position: fixed; */
 }
-#profile-button:hover{
-    cursor:pointer;
+
+.profile-section {
+    padding: 10px 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    width: 100%;
+    flex: 1 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.logout {
+    display: flex;
+    align-self: flex-start;
+    padding-left: 22px;
+    width: 100%;
+    padding-bottom: 12px;
+}
+
+
+#profile-button:hover {
+    cursor: pointer;
 }
 
 #profile-dropdown {
     display: flex;
-    width: 12vw;
-    height: 13vw;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
+    width: 14rem;
+    height: 14rem;
+    flex-flow: column wrap;
+    justify-content: space-between;
+    align-content: flex-start;
     z-index: 100;
     background: white;
     align-items: center;
-
-
     border: 1px solid black;
     border-radius: 20px;
     position: absolute;
-    right: 0px;
+    right: 10px;
     list-style: none;
+
 }
 
-.dropdown-item:hover{
-    cursor:pointer;
+.dropdown-item:hover {
+    cursor: pointer;
+    box-shadow: inset rgba(30, 29, 29, 0.256);
 }
-.user-info:hover{
+
+
+.user-info:hover {
     cursor: default;
 }

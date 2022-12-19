@@ -28,37 +28,43 @@ function LoginFormModal() {
   };
 
   return (
-    <>
-      <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-          ))}
-        </ul>
-        <label>
-          <input
-            type="text"
-            value={credential}
-            maxLength={50}
-            placeholder={'Username or Email'}
-            onChange={(e) => setCredential(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          <input
-            type="password"
-            value={password}
-            maxLength={50}
-            placeholder='Password'
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        <button type="submit">Log In</button>
-      </form>
-    </>
+    <div className="modal-form">
+      <div className="modal-header">
+        <h1>Log In</h1>
+      </div>
+      <div className="modal-body-container">
+          <form className="modal-body" onSubmit={handleSubmit}>
+          <ul>
+            {errors.map((error, idx) => (
+              <li key={idx}>{error}</li>
+            ))}
+          </ul>
+          <label className="modal-label">
+            <input
+              className="modal-top-input"
+              type="text"
+              value={credential}
+              maxLength={50}
+              placeholder={'Username or Email'}
+              onChange={(e) => setCredential(e.target.value)}
+              required
+            />
+          </label>
+          <label className="modal-label">
+            <input
+              className="modal-bottom-input"
+              type="password"
+              value={password}
+              maxLength={50}
+              placeholder='Password'
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </label>
+          <button className="submit clickable" type="submit">Log In</button>
+        </form>
+      </div>
+    </div>
   );
 }
 

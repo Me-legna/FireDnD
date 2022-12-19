@@ -10,7 +10,7 @@ function SingleRightBody({ spot }) {
     const [numNights, setNumNights] = useState(1)
 
     return (
-        <div>
+        <div className="single-right-main">
             <div>
                 <div>
                     <div>
@@ -41,13 +41,13 @@ function SingleRightBody({ spot }) {
                             )
                             : (
                                 <div className="flex-column">
-                                    <input type="number" value={numNights} onChange={(e) => setNumNights(e.target.value)} min='1'></input>
+                                    <input className="clickable" type="number" value={numNights} onChange={(e) => setNumNights(e.target.value)} min='1'></input>
                                     <div>{`$${spot.price} x ${numNights} ${numNights < 2 ? 'night' : 'nights'} = $${spot.price * numNights}`}</div>
                                 </div>
                             )
                             : (
                                 <div className="flex-column">
-                                    <input type="number" value={numNights} onChange={(e) => setNumNights(e.target.value)} min='1'></input>
+                                    <input className="clickable" type="number" value={numNights} onChange={(e) => setNumNights(e.target.value)} min='1'></input>
                                     <div>{`$${spot.price} x ${numNights} ${numNights < 2 ? 'night' : 'nights'} = $${spot.price * numNights}`}</div>
                                 </div>
                             )

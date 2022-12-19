@@ -52,10 +52,12 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <div id="profile-dropdown">
-            <li className="user-info">{user.username}</li>
-            <li className="user-info">{user.firstName} {user.lastName}</li>
-            <li className="user-info">{user.email}</li>
-            <div>
+            <div className="profile-section">
+              <li className="user-info">{user.username}</li>
+              <li className="user-info">{user.firstName} {user.lastName}</li>
+              <li className="user-info">{user.email}</li>
+            </div>
+            <div className="profile-section">
               <li className="dropdown-item">
                 <OpenModalMenuItem
                   itemText='FireDnD a Spot'
@@ -71,15 +73,13 @@ function ProfileButton({ user }) {
                 />
               </li>
             </div>
-            <div>
-              <li>
-                <button className="dropdown-item" onClick={logout}>Log Out</button>
-              </li>
+            <div className="logout">
+                <div className="dropdown-item" onClick={logout}>Log Out</div>
             </div>
           </div>
         ) : (
           <div id="profile-dropdown">
-            <div>
+            <div className="profile-section">
               <li className="dropdown-item">
                 <OpenModalMenuItem
                   itemText="Sign Up"
@@ -95,7 +95,7 @@ function ProfileButton({ user }) {
                 />
               </li>
             </div>
-            <div>
+            <div className="profile-section">
               <li className="dropdown-item">
                 <DemoUserLogin />
               </li>

@@ -28,32 +28,41 @@ function AllUserReviews() {
 
 
     return (
-        <div>
-            <h3>AllUserReviews</h3>
-            <ul>
-                {errors.map((error, idx) => (
-                    <div key={idx}>{error}</div>
-                ))}
-            </ul>
-            <div>
-                <ul>
-                    {!!userReviewsList.length ? userReviewsList.map(review => (
-                        <div key={review.id} className='flex-column'>
-                            <Link to={`/spots/${review.spotId}`} onClick={closeModal}>{review.Spot.name}</Link>
-                            <div className="flex">
-                                <div>{review.review}</div>
+        <>
+            <div className="modal-header">
+                <h3>AllUserReviews</h3>
+            </div>
+            <div className="modal-body-container">
+                <div className='reviews-body'>
+
+                    <ul>
+                        {errors.map((error, idx) => (
+                            <div key={idx}>{error}</div>
+                        ))}
+                    </ul>
+                    <ul style={{margin:'0px', padding:'0px'}}>
+                        {!!userReviewsList.length ? userReviewsList.map(review => (
+                            <div key={review.id} className='modal-body'>
                                 <div className="spot-avg-rating">
-                                    <img className="solid-star" src={solidStar} alt="solid-black-star" />
-                                    <span>{review.stars}</span>
+                                    <div>
+                                        <Link to={`/spots/${review.spotId}`} onClick={closeModal}>{review.Spot.name}</Link>
+                                    </div>
+                                    <div>
+                                        <img className="solid-star" src={solidStar} alt="solid-black-star" />
+                                        <span>{review.stars}</span>
+                                    </div>
+                                </div>
+                                <div className="modal-label">
+                                    <div className="modal-review">{review.review}</div>
                                 </div>
                             </div>
-                        </div>
-                    )) : (
-                        <div></div>
-                    )}
-                </ul>
+                        )) : (
+                            <div></div>
+                        )}
+                    </ul>
+                </div>
             </div>
-        </div>
+        </>
     )
 }
 

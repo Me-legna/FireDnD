@@ -20,15 +20,15 @@ function Navigation({ isLoaded }) {
           <img id='logo' src={require('../../images/fireDnD-logo.png')} alt='fireDnD-logo'></img>
         </NavLink>
       </li>
-      <div id='query-filters'>
+      {/* <div id='query-filters'>
         <li className='nav-middle'>Search and Filter Modals incoming...</li>
-      </div>
+      </div> */}
       <div id='nav-create-spot'>
         {sessionUser
           ? (
-            <li className='create-spot nav-middle dropdown-item'>
+            <li className='create-spot nav-middle'>
               <OpenModalMenuItem
-                itemText='fireDnD a Spot!'
+                itemText='FireDnD a Spot!'
                 modalComponent={<CreateSpotFormModal />}
               />
             </li>

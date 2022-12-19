@@ -24,8 +24,8 @@ function SignupFormModal() {
         .catch(async (res) => {
           const data = await res.json();
 
-          if(data && data.message) setErrors([data.message]);
-          if(data && data.errors) setErrors(Object.values(data.errors));
+          if (data && data.message) setErrors([data.message]);
+          if (data && data.errors) setErrors(Object.values(data.errors));
         });
     }
     return setErrors(['Confirm Password field must be the same as the Password field']);
@@ -33,76 +33,86 @@ function SignupFormModal() {
 
   return (
     <>
+    <div className="modal-header">
       <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-        </ul>
-        <label>
-          <input
-            type="email"
-            value={email}
-            maxLength={50}
-            placeholder={'Email'}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          <input
-            type="text"
-            minLength={3}
-            maxLength={30}
-            placeholder={'UserName'}
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          <input
-            type="text"
-            minLength={3}
-            maxLength={20}
-            placeholder={'First Name'}
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          <input
-            type="text"
-            minLength={3}
-            placeholder={'Last Name'}
-            maxLength={20}
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          <input
-            type="password"
-            placeholder={'password'}
-            value={password}
-            maxLength={50}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          <input
-            type="password"
-            placeholder={'Confirm Password'}
-            maxLength={50}
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-        </label>
-        <button type="submit">Sign Up</button>
-      </form>
+    </div>
+      <div className="modal-body-container">
+        <form className="modal-body" onSubmit={handleSubmit}>
+          <ul>
+            {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+          </ul>
+          <label className="modal-label">
+            <input
+            className="modal-top-input"
+              type="email"
+              value={email}
+              maxLength={50}
+              placeholder={'Email'}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </label>
+          <label className="modal-label">
+            <input
+              className="modal-input"
+              type="text"
+              minLength={3}
+              maxLength={30}
+              placeholder={'UserName'}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </label>
+          <label className="modal-label">
+            <input
+              className="modal-input"
+              type="text"
+              minLength={3}
+              maxLength={20}
+              placeholder={'First Name'}
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+            />
+          </label>
+          <label className="modal-label">
+            <input
+              className="modal-input"
+              type="text"
+              minLength={3}
+              placeholder={'Last Name'}
+              maxLength={20}
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              required
+            />
+          </label>
+          <label className="modal-label">
+            <input
+              className="modal-input"
+              type="password"
+              placeholder={'password'}
+              value={password}
+              maxLength={50}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </label>
+          <label className="modal-label">
+            <input
+              className="modal-bottom-input"
+              type="password"
+              placeholder={'Confirm Password'}
+              maxLength={50}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+          </label>
+          <button className="submit clickable" type="submit">Sign Up</button>
+        </form>
+      </div>
     </>
   );
 }

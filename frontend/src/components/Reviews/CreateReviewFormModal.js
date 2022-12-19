@@ -11,6 +11,8 @@ function CreateReviewFormModal() {
 
     const { closeModal } = useModal();
     const [errors, setErrors] = useState([]);
+    const User = useSelector(state => state.session.user)
+    const ReviewImages = []
     const spotId = useSelector(state => state.spots.singleSpot.id)
 
     const handleSubmit = async (e) => {
@@ -22,8 +24,13 @@ function CreateReviewFormModal() {
             stars
         }
 
+        const reviewInfo = {
+            User,
+            ReviewImages
+        }
 
-        await dispatch(createReview(newReview, spotId))
+
+        await dispatch(createReview(newReview, spotId, reviewInfo))
             .then(closeModal)
             .catch(async res => {
                 const data = await res.json()
@@ -35,14 +42,16 @@ function CreateReviewFormModal() {
 
     return (
         <div>
-            <h1>Leave a Review 🙏</h1>
-            <form onSubmit={handleSubmit} className='spot-form flex-column'>
+            <div className="modal-header">
+                <h1>Leave a Review 🙏</h1>
+            </div>
+            <form onSubmit={handleSubmit} className="modal-body">
                 <ul>
                     {errors.map((error, idx) => (
                         <li key={idx}>{error}</li>
                     ))}
                 </ul>
-                <label>
+                <label className="modal-label">
                     <textarea
                         className="flex form-input"
                         placeholder="Write a review..."
@@ -55,23 +64,23 @@ function CreateReviewFormModal() {
                         required
                     />
                 </label>
-                <label>
-                    <input
-                        className="flex form-input"
-                        type="range"
-                        min={1}
-                        max={5}
-                        placeholder="Star Rating"
-                        value={stars}
-                        onChange={(e) => setStars(e.target.value)}
-                        required
-                    />
-                    <div>
+                <label className="modal-label">
+                    <div className="flex-align">
+                        <input
+                            className="flex form-input"
+                            type="range"
+                            min={1}
+                            max={5}
+                            placeholder="Star Rating"
+                            value={stars}
+                            onChange={(e) => setStars(e.target.value)}
+                            required
+                        />
                         <img className="solid-star" src={solidStar} alt="solid-black-star" />
                         <output>{stars}</output>
                     </div>
                 </label>
-                <button className="select-input" type="submit">Submit Review 🥳</button>
+                <button className="submit clickable" type="submit">Submit Review 🥳</button>
             </form>
         </div>
     );

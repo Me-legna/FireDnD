@@ -2,7 +2,7 @@
 function SingleLeftBody({ spot }) {
 
     return (
-        <div>
+        <div className="single-left-main">
             <div>
                 <div>
                     <div>
