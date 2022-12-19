@@ -27,34 +27,41 @@ function DeleteReviewModal({ review }) {
 
     return (
         <>
-            <h1>Delete your Review? {checked ? '😳' : '🤔'}</h1>
-            <form onSubmit={handleSubmit}>
-                <ul>
-                    {errors.map((error, idx) => (
-                        <li key={idx}>{error}</li>
-                    ))}
-                </ul>
-                <div>
-                    <label>
-                        No
-                        <input
-                            type="radio"
-                            name="choice-radio"
-                            onChange={(e) => setChecked(false)}
-                            checked={checked ? false : true}
-                        />
-                    </label>
-                    <label>
-                        Yes
-                        <input
-                            type="radio"
-                            name="choice-radio"
-                            onChange={(e) => setChecked(true)}
-                            checked={checked}
-                        />
-                    </label>
-                </div>
-                {/* <label>
+            <div className="modal-header">
+
+                <h1>Delete your Review? {checked ? '😳' : '🤔'}</h1>
+            </div>
+            <div className="modal-body-container">
+
+                <form onSubmit={handleSubmit} className='modal-body'>
+                    <ul>
+                        {errors.map((error, idx) => (
+                            <li key={idx}>{error}</li>
+                        ))}
+                    </ul>
+                    <div>
+                        <label>
+                            No
+                            <input
+                                type="radio"
+                                name="choice-radio"
+                                className="clickable"
+                                onChange={(e) => setChecked(false)}
+                                checked={checked ? false : true}
+                            />
+                        </label>
+                        <label>
+                            Yes
+                            <input
+                                type="radio"
+                                name="choice-radio"
+                                className="clickable"
+                                onChange={(e) => setChecked(true)}
+                                checked={checked}
+                            />
+                        </label>
+                    </div>
+                    {/* <label>
                     Password
                     <input
                         type="password"
@@ -63,8 +70,9 @@ function DeleteReviewModal({ review }) {
                         required
                     />
                 </label> */}
-                {checked && (<button type="submit" className="form-input" disabled={!checked}>Delete Review</button>)}
-            </form>
+                    {checked && (<button type="submit" className="submit-spot clickable" disabled={!checked}>Delete Review</button>)}
+                </form>
+            </div>
         </>
     );
 }

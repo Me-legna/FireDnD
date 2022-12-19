@@ -1,18 +1,37 @@
 /* TODO Add site wide styles */
-.flex{
+.flex {
     display: flex;
 }
-
-.flex-center{
+.flex-wrap{
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
+.all-reviews {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.review-idx{
+    width: 70%;
+}
+.each-review{
+    display: flex;
 
-.flex-space-between{
+}
+.review-user{
+    display: flex
+}
+.flex-align{
+    display: flex;
+    align-items: center;
+}
+.flex-space-between {
     display: flex;
     justify-content: space-between;
 }
-.flex-around{
+
+.flex-around {
     display: flex;
     justify-content: space-around;
 }
@@ -21,13 +40,138 @@
     display: flex;
     flex-direction: column;
 }
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
 
-.card-img{
+.card-img {
     width: 278px;
     height: 264px;
     border-radius: 12px;
 }
-.solid-star{
+
+.solid-star {
     height: 12px;
     margin-right: 3px;
 }
+
+#root {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px 40px;
+}
+
+.single-preview {
+    display: flex;
+    justify-content: center;
+    max-height: 560px;
+    width: 700px;
+    overflow: hidden;
+}
+
+.single-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 17px;
+}
+
+.modal-label {
+    width: 100%;
+}
+
+
+.modal-top-input {
+    border-radius: 10px 10px 0px 0px;
+    width: 100%;
+    height: 50px;
+    margin-bottom: -1px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.modal-bottom-input {
+    border-radius: 0px 0px 10px 10px;
+    width: 100%;
+    height: 50px;
+    margin-bottom: -1px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.modal-input {
+    width: 100%;
+    height: 50px;
+    margin-bottom: -1px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+}
+.modal-review {
+    width: 100%;
+    height: 50px;
+    margin-bottom: -1px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    padding: 15%;
+    border-radius: 16px;
+}
+
+.submit {
+    width: 100%;
+    border-radius: 8px;
+    color: white;
+    line-height: 40px;
+    background: linear-gradient(to right, rgb(230, 30, 77) 0%, rgb(227, 28, 95) 50%, rgb(215, 4, 102) 100%);
+    margin-left: 2%;
+    margin-top: 10%;
+    padding: 7px;
+}
+.open-modal-button {
+    width: 100%;
+    border-radius: 8px;
+    color: white;
+    line-height: 40px;
+    background: linear-gradient(to right, rgb(230, 30, 77) 0%, rgb(227, 28, 95) 50%, rgb(215, 4, 102) 100%);
+    margin-left: 2%;
+    margin-top: 10%;
+    padding: 7px;
+}
+
+.submit-spot {
+    width: 100%;
+    border-radius: 8px;
+    color: white;
+    line-height: 40px;
+    background: linear-gradient(to right, rgb(230, 30, 77) 0%, rgb(227, 28, 95) 50%, rgb(215, 4, 102) 100%);
+    margin-left: 2%;
+    margin-top: 3%;
+    padding: 7px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.modal-body-container {
+    padding: 1rem;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    align-items: center;
+}
+.reviews-body {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    align-items: center;
+}
+
+.clickable:hover {
+    cursor: pointer;
+}
+
+/* .bottom-border {} */

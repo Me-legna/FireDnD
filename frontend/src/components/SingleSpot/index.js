@@ -27,7 +27,7 @@ function SingleSpot() {
         <div className="flex-column flex-center">
             <SingleHeader spot={spot} />
             <SingleImages spot={spot} />
-            <div className="flex-around">
+            <div className="single-body">
                 <SingleLeftBody spot={spot} />
                 <SingleRightBody spot={spot} />
             </div>

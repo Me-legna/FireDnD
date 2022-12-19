@@ -1,47 +1,57 @@
-#all-spots{
+#all-spots {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
-    justify-content: flex-start;
-}
-.big-all-spots{
-    padding-top: 100px;
+    justify-content: center;
 }
 
-.spot{
+.big-all-spots {
+    padding: 0px 40px;
+    margin: 16px 0px 40px;
+}
+
+.spot {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    margin: 10px 10px 0px 0px;
+    margin: 10px;
 }
-.spot:hover{
+
+.spot:hover {
     cursor: pointer;
 }
-.spot-img-div{
+
+.spot-img-div {
     display: flex;
     justify-content: center;
 }
-.spot-location{
-}
-.spot-distance{
+
+.spot-location {}
+
+.spot-distance {
     opacity: 50%;
     font-size: 14px;
     margin: 2px 0px;
-}
-.spot-avail-dates{
-    opacity: 50%;
-    font-size: 14px;
-    margin: 2px 0px;
-}
-.spot-price{
-    margin-top: 8px;
-}
-.spot-avg-rating{
-    display: flex;
-    justify-self: end;
-    align-items: center;
 }
 
-.spot-details{
+.spot-avail-dates {
+    opacity: 50%;
+    font-size: 14px;
+    margin: 2px 0px;
+}
+
+.spot-price {
+    margin-top: 8px;
+}
+
+.spot-avg-rating {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-left: 36%;
+}
+
+.spot-details {
     display: flex;
     justify-content: space-between;
     margin: 9px 5px;

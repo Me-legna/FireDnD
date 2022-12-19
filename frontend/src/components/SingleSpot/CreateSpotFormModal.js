@@ -39,121 +39,125 @@ function CreateSpotFormModal() {
 
 
         await dispatch(createNewSpot(newSpot, user, previewUrl))
-        .then((res)=>history.push(`/spots/${res.id}`))
-        .then(closeModal)
-        .catch(async res => {
-            const data = await res.json()
+            .then((res) => history.push(`/spots/${res.id}`))
+            .then(closeModal)
+            .catch(async res => {
+                const data = await res.json()
 
-            if(data && data.errors) setErrors(Object.values(data.errors));
-        })
+                if (data && data.errors) setErrors(Object.values(data.errors));
+            })
 
     };
 
     return (
         <>
-            <h1>fireDnD your Spot 😏</h1>
-            <form onSubmit={handleSubmit} className='spot-form flex-column'>
-                <ul>
-                    {errors.map((error, idx) => (
-                        <li key={idx}>{error}</li>
-                    ))}
-                </ul>
-                <label>
-                    <input
-                        className="flex form-input"
-                        type="url"
-                        placeholder="Preview Image Url"
-                        value={previewUrl}
-                        onChange={(e) => setPreviewUrl(e.target.value)}
-                        required
-                    />
-                </label>
-                <label>
-                    <input
-                        className="flex form-input"
-                        type="text"
-                        minLength={5}
-                        maxLength={50}
-                        placeholder="Title"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required
-                    />
-                </label>
-                <label>
-                    <input
-                        className="flex form-input"
-                        type="text"
-                        placeholder="Street Address"
-                        maxLength={50}
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
-                        required
-                    />
-                </label>
-                <label>
-                    <input
-                        className="flex form-input"
-                        type="text"
-                        placeholder="City"
-                        maxLength={50}
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)}
-                        required
-                    />
-                </label>
-                <label>
-                    <select
-                        className="flex select-input"
-                        type="select"
-                        placeholder="State"
-                        value={state}
-                        onChange={(e) => setState(e.target.value)}
-                        required
-                    >
-                        <option value="">Select a State</option>
-                        {usa.map((state, idx) => (
-                            <option key={`${state + idx}`} value={`${state}`}>{state}</option>
+            <div className="modal-header">
+                <h1>fireDnD your Spot 😏</h1>
+            </div>
+            <div className="modal-body-container">
+                <form onSubmit={handleSubmit} className='modal-body'> {/* spot-form flex-column*/}
+                    <ul>
+                        {errors.map((error, idx) => (
+                            <li key={idx}>{error}</li>
                         ))}
-                    </select>
-                </label>
-                <label>
-                    <input
-                        className="flex form-input"
-                        type="text"
-                        maxLength={50}
-                        minLength={3}
-                        placeholder="Country"
-                        value={country}
-                        onChange={(e) => setCountry(e.target.value)}
-                        required
-                    />
-                </label>
-                <label>
-                    <input
-                        className="flex form-input"
-                        type="text"
-                        minLength={50}
-                        maxLength={500}
-                        placeholder="Description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        required
-                    />
-                </label>
-                <label>
-                    <input
-                        className="flex form-input"
-                        type="number"
-                        min={1}
-                        placeholder="Price per night"
-                        value={price}
-                        onChange={(e) => setPrice(e.target.value)}
-                        required
-                    />
-                </label>
-                <button className="select-input" type="submit">Create Spot</button>
-            </form>
+                    </ul>
+                    <label className="modal-label">
+                        <input
+                            className="modal-top-input"
+                            type="url"
+                            placeholder="Preview Image Url"
+                            value={previewUrl}
+                            onChange={(e) => setPreviewUrl(e.target.value)}
+                            required
+                        />
+                    </label>
+                    <label className="modal-label">
+                        <input
+                            className="modal-input"
+                            type="text"
+                            minLength={5}
+                            maxLength={50}
+                            placeholder="Title"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            required
+                        />
+                    </label>
+                    <label className="modal-label">
+                        <input
+                            className="modal-input"
+                            type="text"
+                            placeholder="Street Address"
+                            maxLength={50}
+                            value={address}
+                            onChange={(e) => setAddress(e.target.value)}
+                            required
+                        />
+                    </label>
+                    <label className="modal-label">
+                        <input
+                            className="modal-input"
+                            type="text"
+                            placeholder="City"
+                            maxLength={50}
+                            value={city}
+                            onChange={(e) => setCity(e.target.value)}
+                            required
+                        />
+                    </label>
+                    <label className="modal-label">
+                        <select
+                            className="modal-input"
+                            type="select"
+                            placeholder="State"
+                            value={state}
+                            onChange={(e) => setState(e.target.value)}
+                            required
+                        >
+                            <option value="">Select a State</option>
+                            {usa.map((state, idx) => (
+                                <option key={`${state + idx}`} value={`${state}`}>{state}</option>
+                            ))}
+                        </select>
+                    </label>
+                    <label className="modal-label">
+                        <input
+                            className="modal-input"
+                            type="text"
+                            maxLength={50}
+                            minLength={3}
+                            placeholder="Country"
+                            value={country}
+                            onChange={(e) => setCountry(e.target.value)}
+                            required
+                        />
+                    </label>
+                    <label className="modal-label">
+                        <input
+                            className="modal-input"
+                            type="text"
+                            minLength={50}
+                            maxLength={500}
+                            placeholder="Description"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            required
+                        />
+                    </label>
+                    <label className="modal-label">
+                        <input
+                            className="modal-bottom-input"
+                            type="number"
+                            min={1}
+                            placeholder="Price per night"
+                            value={price}
+                            onChange={(e) => setPrice(e.target.value)}
+                            required
+                        />
+                    </label>
+                    <button className="submit-spot clickable" type="submit">Create Spot</button>
+                </form>
+            </div>
         </>
     );
 }

@@ -27,8 +27,8 @@ function Reviews() {
 
 
     return (
-        <div>
-            <div>
+        <div className='review-idx'>
+            <div >
                 <div>
                     {isNaN(spot.avgStarRating)
                         ? (
@@ -49,10 +49,12 @@ function Reviews() {
                             ? (<div></div>)
                             : userReview
                                 ? (
+                                    <div>
                                     <OpenModalButton
                                         buttonText='Delete Review'
                                         modalComponent={<DeleteReviewModal review={userReview} />}
                                     />
+                                    </div>
                                 )
                                 : (
 
