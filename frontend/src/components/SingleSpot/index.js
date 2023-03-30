@@ -6,6 +6,7 @@ import SingleHeader from "./SingleHeader.js";
 import SingleImages from "./SingleImages.js";
 import SingleLeftBody from "./SingleLeftBody";
 import SingleRightBody from "./SingleRightBody";
+import Reviews from "../Reviews";
 
 
 
@@ -31,6 +32,7 @@ function SingleSpot() {
                 <SingleLeftBody spot={spot} />
                 <SingleRightBody spot={spot} />
             </div>
+            <Reviews/>
         </div>
     )
 }

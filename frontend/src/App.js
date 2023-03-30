@@ -28,7 +28,6 @@ function App() {
 
             <Route path='/spots/:id'>
               <SingleSpot />
-              <Reviews />
             </Route>
 
             <Route path='/'>
