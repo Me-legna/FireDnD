@@ -16,7 +16,7 @@
     display: flex;
 }
 .dot-space{
-    margin: 0px 10px;
+    margin: 0px 5px;
 }
 .share-save-button{
     margin: 0px 8px
@@ -43,5 +43,15 @@
     width: 60%;
 }
 .single-right-main{
-    width: 30%;
+    width: 40%;
+    height: 100%;
+    border: 1px solid black;
+    padding: 40px 0px;
+    border-radius: 10px;
+    box-shadow: 0rem 0rem 1rem 0rem black;
+}
+
+.review-preview-ctn{
+    display: flex;
+    justify-content: space-between;
 }
