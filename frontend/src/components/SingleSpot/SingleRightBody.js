@@ -27,7 +27,7 @@ function SingleRightBody({ spot }) {
 	};
 
 	const excludeDates = [
-		{ start: subDays(new Date(), 99999999), end: addDays(new Date(), -1) }
+		{ start: subDays(new Date(), 99999999), end: addDays(new Date(), 0) }
 	];
 
 	spotBookingsArr.forEach((booking) => {
@@ -59,7 +59,14 @@ function SingleRightBody({ spot }) {
         setEndDate(null)
     }
 
-	console.log("spotBookingsArr", spotBookingsArr);
+     const clearDates = (e) => {
+        e.preventDefault()
+
+        setStartDate(null)
+        setEndDate(null)
+    }
+
+	console.log("excludeDates", excludeDates);
 	console.log("startDate", startDate);
 	console.log("endDate", endDate);
 
@@ -78,10 +85,14 @@ function SingleRightBody({ spot }) {
 					onChange={onChange}
 					startDate={startDate}
 					endDate={endDate}
+                    minDate={startDate ? startDate : null}
+                    maxDate={startDate ? excludeDates.find(dateRange => dateRange?.start > startDate)?.start : null}
+                    // disabled={disabled}
 					excludeDateIntervals={excludeDates}
 					selectsRange
 					inline
 				/>
+                <button onClick={clearDates}>Clear Dates</button>
 				<button onClick={handleBook} className="open-modal-button">
 					Reserve
 				</button>

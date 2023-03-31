@@ -35,19 +35,19 @@ function Navigation({ isLoaded }) {
           )
           : (
             <li className='create-spot nav-middle dropdown-item' >
-              <li className="dropdown-item">
+              <div className="dropdown-item">
                 <OpenModalMenuItem
                   itemText="Sign Up"
                   modalComponent={<SignupFormModal />}
                 />
-              </li>
+              </div>
               <div className='dot-space'>/</div>
-              <li className="dropdown-item">
+              <div className="dropdown-item">
                 <OpenModalMenuItem
                   itemText="Log In"
                   modalComponent={<LoginFormModal />}
                 />
-              </li>
+              </div>
             </li>
           )
         }

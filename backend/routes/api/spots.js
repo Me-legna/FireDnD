@@ -403,7 +403,7 @@ router.get('/:spotId/reviews', async (req, res, next) => {
 const validateBooking = [
     check('startDate')
         .isDate()
-        .withMessage('Start Date must be selected'),
+        .withMessage('Check-in Date must be selected'),
         // .withMessage('Must be a valid Date (YYYY-MM-DD)'),
     check('startDate')
         .custom(async (value, { req }) => {
@@ -422,18 +422,18 @@ const validateBooking = [
                 }
             })
             if (booking) {
-                throw new Error('This spot already has a booking within the requested dates')
+                throw new Error('Check-in date conflicts with an existing booking')
             }
             return true
         }),
     check('endDate')
         .isDate()
-        .withMessage('End Date must be selected'),
+        .withMessage('Checkout Date must be selected'),
         // .withMessage('Must be a valid Date (YYYY-MM-DD)'),
     check('endDate')
         .custom((value, { req }) => {
             if (new Date(value).getTime() <= new Date(req.body.startDate).getTime()) {
-                throw new Error('endDate cannot be on or before startDate')
+                throw new Error('Checkout Date cannot be on or before Check-in Date')
             }
             return true
         }),
@@ -476,12 +476,12 @@ router.post('/:spotId/bookings', requireAuth, validateBooking, async (req, res, 
             if (start === bookingStart || start > bookingStart && start <= bookingEnd) {
                 err.message = 'Sorry, this spot is already booked for the specified dates';
                 err.status = 403;
-                err.errors.startDate = 'Start date conflicts with an existing booking'
+                err.errors.startDate = 'Check-in date conflicts with an existing booking'
             }
             if (end === bookingStart || end > bookingStart && end <= bookingEnd) {
                 err.message = 'Sorry, this spot is already booked for the specified dates';
                 err.status = 403;
-                err.errors.endDate = 'Start date conflicts with an existing booking'
+                err.errors.endDate = 'Check-in date conflicts with an existing booking'
             }
         }
         if (Object.keys(err.errors).length) next(err)
