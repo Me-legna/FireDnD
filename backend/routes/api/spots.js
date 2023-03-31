@@ -403,10 +403,33 @@ router.get('/:spotId/reviews', async (req, res, next) => {
 const validateBooking = [
     check('startDate')
         .isDate()
-        .withMessage('Must be a valid Date (YYYY-MM-DD)'),
+        .withMessage('Start Date must be selected'),
+        // .withMessage('Must be a valid Date (YYYY-MM-DD)'),
+    check('startDate')
+        .custom(async (value, { req }) => {
+            const booking = await Booking.findOne({
+                where:{
+                    [Op.or]: [
+                        {startDate: {
+                            [Op.gte]:req.body.startDate,
+                            [Op.lt]:req.body.endDate,
+                        }},
+                        {endDate: {
+                            [Op.gt]:req.body.startDate,
+                            [Op.lte]:req.body.endDate,
+                        }}
+                    ]
+                }
+            })
+            if (booking) {
+                throw new Error('This spot already has a booking within the requested dates')
+            }
+            return true
+        }),
     check('endDate')
         .isDate()
-        .withMessage('Must be a valid Date (YYYY-MM-DD)'),
+        .withMessage('End Date must be selected'),
+        // .withMessage('Must be a valid Date (YYYY-MM-DD)'),
     check('endDate')
         .custom((value, { req }) => {
             if (new Date(value).getTime() <= new Date(req.body.startDate).getTime()) {
@@ -488,7 +511,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     } else if (spot.ownerId !== req.user.id) {
         const Bookings = await Booking.findAll({
             where: { spotId: spot.id },
-            attributes: ['spotId', 'startDate', 'endDate']
+            attributes: ['id','spotId', 'startDate', 'endDate']
         })
         res.json({ Bookings })
     } else if (spot.ownerId === req.user.id) {
@@ -520,4 +543,4 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
 })
 
 
-module.exports = router;
+module.exports = {router, validateBooking}

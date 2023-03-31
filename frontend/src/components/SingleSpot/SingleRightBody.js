@@ -19,6 +19,7 @@ function SingleRightBody({ spot }) {
 	const [numNights, setNumNights] = useState(1);
 	const [startDate, setStartDate] = useState(null);
 	const [endDate, setEndDate] = useState(null);
+    const [errors, setErrors] = useState([])
 	const onChange = (dates) => {
 		const [start, end] = dates;
 		setStartDate(start);
@@ -47,6 +48,12 @@ function SingleRightBody({ spot }) {
             endDate: endDate?.toISOString().split('T')[0]
         }
         await dispatch(createBooking(newBooking, spot.id))
+        .catch(async(res) => {
+            const data = await res.json()
+
+            if (data && data.message) setErrors([data.message]);
+            if (data && data.errors) setErrors(Object.values(data.errors));
+        })
 
         setStartDate(null)
         setEndDate(null)
@@ -60,6 +67,11 @@ function SingleRightBody({ spot }) {
 		<div className="single-right-main">
 			<ReviewAvgData />
 			<div className="date-ctn">
+				<ul>
+					{errors.map((error, idx) => (
+						<li key={idx}>{error}</li>
+					))}
+				</ul>
 				<DatePicker
 					dateFormat="yyyy-MM-dd"
 					selected={startDate}
