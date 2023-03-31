@@ -543,4 +543,4 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
 })
 
 
-module.exports = {router, validateBooking}
+module.exports = {spotsRouter: router, validateBooking}
