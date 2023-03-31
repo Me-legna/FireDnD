@@ -7,6 +7,7 @@ import SingleImages from "./SingleImages.js";
 import SingleLeftBody from "./SingleLeftBody";
 import SingleRightBody from "./SingleRightBody";
 import Reviews from "../Reviews";
+import { getSpotBookings } from "../../store/bookings";
 
 
 
@@ -21,6 +22,7 @@ function SingleSpot() {
     useEffect(() => {
         dispatch(getOneSpot(id))
         .catch(() => history.push('/404'))
+        dispatch(getSpotBookings(id))
     }, [dispatch, history, id, spotReviews])
 
     if (!spot.id) return null

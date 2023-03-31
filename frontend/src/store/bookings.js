@@ -49,7 +49,7 @@ export const getUserBookings = () => async (dispatch) => {
 };
 
 export const createBooking =
-	(newBooking, spotId, bookingInfo) => async (dispatch) => {
+	(newBooking, spotId) => async (dispatch) => {
 		const response = await csrfFetch(`/api/spots/${spotId}/bookings`, {
 			method: "POST",
 			body: JSON.stringify(newBooking),
@@ -57,8 +57,8 @@ export const createBooking =
 
 		if (response.ok) {
 			const data = await response.json();
-			const booking = { ...data, ...bookingInfo };
-			dispatch(create_Booking(booking));
+			// const booking = { ...data, ...bookingInfo };
+			dispatch(create_Booking(data));
 		}
 		return response;
 	};
