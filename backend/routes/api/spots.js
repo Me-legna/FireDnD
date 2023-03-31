@@ -401,44 +401,60 @@ router.get('/:spotId/reviews', async (req, res, next) => {
 })
 
 const validateBooking = [
-    check('startDate')
-        .isDate()
-        .withMessage('Check-in Date must be selected'),
-        // .withMessage('Must be a valid Date (YYYY-MM-DD)'),
-    check('startDate')
+	check("owner")
         .custom(async (value, { req }) => {
-            const booking = await Booking.findOne({
-                where:{
-                    [Op.or]: [
-                        {startDate: {
-                            [Op.gte]:req.body.startDate,
-                            [Op.lt]:req.body.endDate,
-                        }},
-                        {endDate: {
-                            [Op.gt]:req.body.startDate,
-                            [Op.lte]:req.body.endDate,
-                        }}
-                    ]
+            if(req.params.spotId){
+                const spot = await Spot.findByPk(req.params.spotId);
+                if(spot.ownerId === req.user.id){
+                    throw new Error("You cannot create a booking for a Spot you own")
                 }
-            })
-            if (booking) {
-                throw new Error('Check-in date conflicts with an existing booking')
             }
-            return true
+            return true;
         }),
-    check('endDate')
+	check("startDate")
         .isDate()
-        .withMessage('Checkout Date must be selected'),
+        .withMessage("Check-in Date must be selected"),
         // .withMessage('Must be a valid Date (YYYY-MM-DD)'),
-    check('endDate')
-        .custom((value, { req }) => {
-            if (new Date(value).getTime() <= new Date(req.body.startDate).getTime()) {
-                throw new Error('Checkout Date cannot be on or before Check-in Date')
+	check("startDate").custom(async (value, { req }) => {
+        if(req.params.spotId){
+            const booking = await Booking.findOne({
+                where: {
+                    spotId: req.params.spotId,
+                    [Op.or]: [
+                        {
+                            startDate: {
+                                [Op.gte]: req.body.startDate,
+                                [Op.lt]: req.body.endDate,
+                            },
+                        },
+                        {
+                            endDate: {
+                                [Op.gt]: req.body.startDate,
+                                [Op.lte]: req.body.endDate,
+                            },
+                        },
+                    ],
+                },
+            });
+            if (booking) {
+                throw new Error("Check-in date conflicts with an existing booking");
             }
-            return true
-        }),
-    handleValidationErrors
-]
+
+        }
+		return true;
+	}),
+	check("endDate")
+        .isDate()
+        .withMessage("Checkout Date must be selected"),
+        // .withMessage('Must be a valid Date (YYYY-MM-DD)'),
+	check("endDate").custom((value, { req }) => {
+		if (new Date(value).getTime() <= new Date(req.body.startDate).getTime()) {
+			throw new Error("Checkout Date cannot be on or before Check-in Date");
+		}
+		return true;
+	}),
+	handleValidationErrors,
+];
 //Create a Booking by spotId
 router.post('/:spotId/bookings', requireAuth, validateBooking, async (req, res, next) => {
     const spot = await Spot.findByPk(req.params.spotId)

@@ -31,8 +31,6 @@ function SingleRightBody({ spot }) {
 	];
 
 	spotBookingsArr.forEach((booking) => {
-        console.log('booking', booking)
-        console.log('bookingDate', new Date(booking.startDate))
 		const exclude = {
 			start: subDays(new Date(booking.startDate), 0),
 			end: addDays(new Date(booking.endDate), 1),
@@ -66,9 +64,10 @@ function SingleRightBody({ spot }) {
         setEndDate(null)
     }
 
-	console.log("excludeDates", excludeDates);
-	console.log("startDate", startDate);
-	console.log("endDate", endDate);
+	// console.log("spotBookingsArr", spotBookingsArr);
+	// console.log("excludeDates", excludeDates);
+	// console.log("startDate", startDate);
+	// console.log("endDate", endDate);
 
 	return (
 		<div className="single-right-main">
