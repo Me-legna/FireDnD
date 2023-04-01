@@ -40,13 +40,15 @@
         padding: 40px 0px;
 }
 .single-left-main{
-    width: 60%;
+    width: 55%;
+    word-break: break-all;
+    white-space: normal;
 }
 .single-right-main{
     width: 40%;
     height: 100%;
     border: 1px solid black;
-    padding: 40px 0px;
+    padding: 20px 0px;
     border-radius: 10px;
     box-shadow: 0rem 0rem 1rem 0rem black;
 }
@@ -57,5 +59,39 @@
 }
 
 .date-ctn{
-    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.date-headers{
+    display: flex;
+    justify-content: space-evenly;
+}
+.clear-dates-btn{
+    background: none;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 3px 3px 0 0;
+    border-bottom: 1px solid
+}
+.clear-dates-btn:hover{
+    cursor: pointer;
+    background: #d6d1d1;
+}
+.react-datepicker__input-container {
+    text-align: center;
+}
+.react-datepicker__input-container input{
+    cursor: pointer;
+    width: 60%;
+    text-align: center;
+}
+.right-body-price{
+    font-weight: 600;
+    font-size: 30px;
+}
+
+.spacer{
+    border: 1px solid;
+    margin: 20px;
 }
