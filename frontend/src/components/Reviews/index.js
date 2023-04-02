@@ -7,6 +7,7 @@ import AllSingleReviews from './AllSingleReviews'
 import CreateReviewFormModal from './CreateReviewFormModal'
 import DeleteReviewModal from './DeleteReviewModal'
 import solidStar from '../../images/spotImages/star-solid.svg'
+import logo from "../../images/fireDnD-logo.png";
 import './Reviews.css'
 
 
@@ -19,6 +20,11 @@ function Reviews() {
     const spotReviews = useSelector(state => state.reviews.spot)
     const spotReviewsArr = Object.values(spotReviews)
     const userReview = spotReviewsArr.find(review => review?.userId === user?.id)
+
+     const addDefaultSrc = (e) => {
+				e.target.onerror = null; // prevents looping
+				e.target.src = logo;
+			};
 
     useEffect(() => {
         dispatch(getSpotReviews(id))
@@ -36,7 +42,7 @@ function Reviews() {
                         )
                         : (
                             <div>
-                                <img className="solid-star" src={solidStar} alt="solid-black-star" />
+                                <img className="solid-star" src={solidStar} onError={addDefaultSrc} alt="solid-black-star" />
                                 <span>{spot.avgStarRating}</span>
                                 <span className="dot-space">·</span>
                                 <span>{spot.numReviews} {spot.numReviews === 1 ? 'review' : 'reviews'}</span>

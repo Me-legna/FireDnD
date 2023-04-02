@@ -4,11 +4,17 @@ import solidStar from "../../images/spotImages/star-solid.svg";
 import OpenModalButton from "../OpenModalButton";
 import DeleteSpotModal from "./DeleteSpotModal";
 import EditSpotFormModal from "./EditSpotFormModal";
+import logo from "../../images/fireDnD-logo.png";
 import "./SingleSpot.css";
 
 function SingleHeader({ spot }) {
 	const user = useSelector((state) => state.session.user);
 	const [numNights, setNumNights] = useState();
+
+	const addDefaultSrc = (e) => {
+		e.target.onerror = null; // prevents looping
+		e.target.src = logo;
+	};
 
 	return (
 		<div id="single-spot-header-container">
@@ -22,6 +28,7 @@ function SingleHeader({ spot }) {
 									<img
 										className="solid-star"
 										src={solidStar}
+										onError={addDefaultSrc}
 										alt="solid-black-star"
 									/>
 								</span>

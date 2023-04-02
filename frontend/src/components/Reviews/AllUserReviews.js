@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 import { getUserReviews } from "../../store/reviews"
 import solidStar from '../../images/spotImages/star-solid.svg'
 import { useModal } from "../../context/Modal"
+import logo from "../../images/fireDnD-logo.png";
 
 
 function AllUserReviews() {
@@ -12,6 +13,11 @@ function AllUserReviews() {
     const userReviewsList = Object.values(userReviews)
     const { closeModal } = useModal()
     const [errors, setErrors] = useState([]);
+
+     const addDefaultSrc = (e) => {
+				e.target.onerror = null; // prevents looping
+				e.target.src = logo;
+			};
 
     useEffect(() => {
         setErrors([]);
@@ -48,7 +54,7 @@ function AllUserReviews() {
                                         <Link to={`/spots/${review.spotId}`} onClick={closeModal}>{review.Spot.name}</Link>
                                     </div>
                                     <div>
-                                        <img className="solid-star" src={solidStar} alt="solid-black-star" />
+                                        <img className="solid-star" src={solidStar} onError={addDefaultSrc}  alt="solid-black-star" />
                                         <span>{review.stars}</span>
                                     </div>
                                 </div>

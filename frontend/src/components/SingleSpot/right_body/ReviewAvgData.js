@@ -1,8 +1,16 @@
 import { useSelector } from "react-redux";
 import solidStar from "../../../images/spotImages/star-solid.svg";
+import logo from "../../images/fireDnD-logo.png";
+
 
 function ReviewAvgData() {
 	const spot = useSelector((state) => state.spots.singleSpot);
+
+	const addDefaultSrc = (e) => {
+		e.target.onerror = null; // prevents looping
+		e.target.src = logo;
+	};
+
 	return (
 		<div className="review-preview-ctn">
 			<div>
@@ -13,7 +21,7 @@ function ReviewAvgData() {
 				<div></div>
 			) : (
 				<div>
-					<img className="solid-star" src={solidStar} alt="solid-black-star" />
+					<img className="solid-star" src={solidStar} onError={addDefaultSrc} alt="solid-black-star" />
 					<span>{spot.avgStarRating}</span>
 					<span className="dot-space">·</span>
 					<span>

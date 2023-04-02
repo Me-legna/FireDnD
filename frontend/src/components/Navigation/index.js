@@ -9,15 +9,21 @@ import CreateSpotFormModal from '../SingleSpot/CreateSpotFormModal';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import logo from "../../images/fireDnD-logo.png";
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
+
+  const addDefaultSrc = (e) => {
+		e.target.onerror = null; // prevents looping
+		e.target.src = logo;
+	};
 
   return (
     <ul id='ul-nav' className='flex-center'>
       <li>
         <NavLink exact to="/">
-          <img id='logo' src={require('../../images/fireDnD-logo.png')} alt='fireDnD-logo'></img>
+          <img id='logo' onError={addDefaultSrc} src={require('../../images/fireDnD-logo.png')} alt='fireDnD-logo'></img>
         </NavLink>
       </li>
       {/* <div id='query-filters'>

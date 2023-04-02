@@ -97,8 +97,6 @@ function SingleRightBody({ spot }) {
 		setEndDate(end);
 		if(start && end) handleOpen()
 	};
-	console.log('userBookings',userBookings)
-	console.log('booking', booking)
 	const clearDates = (e) => {
 		e.preventDefault();
 
