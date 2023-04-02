@@ -95,3 +95,15 @@
     border: 1px solid;
     margin: 20px;
 }
+.reserve-btn{
+    width: 70%;
+}
+.open-modal-button:hover{
+    cursor: pointer;
+    color: #e5d3d3;
+    background: rgb(209 43 82);
+}
+.react-datepicker__day--highlighted-custom-3{
+    background-color:green;
+    color:white !important;
+}

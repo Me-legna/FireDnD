@@ -1,6 +1,6 @@
 // frontend/src/App.js
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import * as sessionActions from './store/session'
 import Navigation from "./components/Navigation";
@@ -9,13 +9,20 @@ import './App.css'
 import SingleSpot from './components/SingleSpot';
 import NotFoundPage from './components/404Page';
 import Reviews from './components/Reviews';
+import { getUserBookings } from './store/bookings';
 
 function App() {
+  const user = useSelector(state => state.session.user)
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
+
+  useEffect(() => {
+		if (user) dispatch(getUserBookings());
+	}, [dispatch, user]);
 
   return (
     <>

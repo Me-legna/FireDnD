@@ -62,7 +62,7 @@ function SingleHeader({ spot }) {
 						</div>
 					</div>
 					<div className="single-spot-prefix-div">
-						{user.id === spot.Owner.id ? (
+						{user && user.id === spot.Owner.id ? (
 							<div>
 								<OpenModalButton
 									buttonText="Edit Spot"

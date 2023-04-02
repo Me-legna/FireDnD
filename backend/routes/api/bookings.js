@@ -86,16 +86,16 @@ router.put('/:bookingId', requireAuth, validateBooking, async (req, res, next) =
             error.status = 403;
             return next(error)
         }
-        if (start === bookingStart || start > bookingStart && start <= bookingEnd) {
-            err.message = 'Sorry, this spot is already booked for the specified dates';
-            err.status = 403;
-            err.errors.startDate = 'Check-in date conflicts with an existing booking'
-        }
-        if (end === bookingStart || end > bookingStart && end <= bookingEnd) {
-            err.message = 'Sorry, this spot is already booked for the specified dates';
-            err.status = 403;
-            err.errors.endDate = 'Check-out date conflicts with an existing booking'
-        }
+        // if (start === bookingStart || start > bookingStart && start <= bookingEnd) {
+        //     err.message = 'Sorry, this spot is already booked for the specified dates';
+        //     err.status = 403;
+        //     err.errors.startDate = 'Check-in date conflicts with an existing booking'
+        // }
+        // if (end === bookingStart || end > bookingStart && end <= bookingEnd) {
+        //     err.message = 'Sorry, this spot is already booked for the specified dates';
+        //     err.status = 403;
+        //     err.errors.endDate = 'Check-out date conflicts with an existing booking'
+        // }
         if (Object.keys(err.errors).length) next(err)
         else {
             booking.startDate = startDate;

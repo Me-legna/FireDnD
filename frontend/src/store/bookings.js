@@ -15,13 +15,12 @@ const loadUserBookings = (userBookings) => ({
 	type: GET_USER,
 	userBookings,
 });
-
 const create_Booking = (newBooking) => ({
 	type: CREATE,
 	newBooking,
 });
 const update_Booking = (updatedBooking) => ({
-	type: CREATE,
+	type: UPDATE,
 	updatedBooking,
 });
 const delete_booking = (bookingId) => ({
@@ -63,7 +62,7 @@ export const createBooking =
 		return response;
 	};
 export const updateBooking =
-	(newBooking, bookingId, bookingInfo) => async (dispatch) => {
+	(newBooking, bookingId) => async (dispatch) => {
 		const response = await csrfFetch(`/api/bookings/${bookingId}`, {
 			method: "PUT",
 			body: JSON.stringify(newBooking),
@@ -71,8 +70,9 @@ export const updateBooking =
 
 		if (response.ok) {
 			const data = await response.json();
-			const booking = { ...data, ...bookingInfo };
-			dispatch(update_Booking(booking));
+			console.log('data', data)
+			// const booking = { ...data, ...bookingInfo };
+			dispatch(update_Booking(data));
 		}
 		return response;
 	};
@@ -124,8 +124,8 @@ const bookingsReducer = (state = initialState, action) => {
 		case UPDATE: {
 			const newState = { spot: { ...state.spot }, user: {...state.user} };
 
-			newState.spot[action.newBooking.id] = action.newBooking;
-			newState.user[action.newBooking.id] = action.newBooking;
+			newState.spot[action.updatedBooking.id] = action.updatedBooking;
+			newState.user[action.updatedBooking.id] = action.updatedBooking;
 
 			return newState;
 		}

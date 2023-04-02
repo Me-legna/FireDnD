@@ -9,36 +9,51 @@ import DatePicker from "react-datepicker";
 import subDays from "date-fns/subDays";
 import addDays from "date-fns/addDays";
 import differenceInDays from "date-fns/differenceInDays";
+import eachDayOfInterval from "date-fns/eachDayOfInterval";
 import "react-datepicker/dist/react-datepicker.css";
-import { createBooking } from "../../store/bookings";
+import { createBooking, updateBooking } from "../../store/bookings";
 import { useEffect } from "react";
 
 function SingleRightBody({ spot }) {
 	const user = useSelector((state) => state.session.user);
 	const spotBookings = useSelector((state) => state.bookings.spot);
+	const userBookings = useSelector((state) => state.bookings.user);
 	const spotBookingsArr = Object.values(spotBookings);
+	const userBookingsArr = Object.values(userBookings)
+	const booking = userBookingsArr.find(
+		(booking) => booking.spotId === spot.id
+	);
+	const userBookingsIds = Object.keys(userBookings).map(id => +id);
 	const dispatch = useDispatch();
 	const [startDate, setStartDate] = useState(null);
 	const [endDate, setEndDate] = useState(null);
 	const [isOpen, setIsOpen] = useState(false);
+	const [isEditing, setIsEditing] = useState(false);
 	const [numNights, setNumNights] = useState(0);
 	const [errors, setErrors] = useState([]);
-	const onChange = (dates) => {
-		const [start, end] = dates;
-		setStartDate(start);
-		setEndDate(end);
-	};
 
+	const highlightDates = [];
 	const excludeDates = [
 		{ start: subDays(new Date(), 99999999), end: addDays(new Date(), 0) },
 	];
 
 	spotBookingsArr.forEach((booking) => {
-		const exclude = {
-			start: subDays(new Date(booking.startDate), 0),
-			end: addDays(new Date(booking.endDate), 1),
-		};
-		excludeDates.push(exclude);
+
+		if (userBookingsIds.includes(booking.id)) {
+			const highlight = {
+				"react-datepicker__day--highlighted-custom-3": eachDayOfInterval({
+					start: subDays(new Date(booking.startDate), 0),
+					end: addDays(new Date(booking.endDate), 0),
+				}),
+			};
+			highlightDates.push(highlight);
+		} else {
+			const exclude = {
+				start: subDays(new Date(booking.startDate), 0),
+				end: addDays(new Date(booking.endDate), 1),
+			};
+			excludeDates.push(exclude);
+		}
 	});
 
 	const handleBook = async (e) => {
@@ -48,23 +63,27 @@ function SingleRightBody({ spot }) {
 			startDate: startDate?.toISOString().split("T")[0],
 			endDate: endDate?.toISOString().split("T")[0],
 		};
-		await dispatch(createBooking(newBooking, spot.id)).catch(async (res) => {
+		if(isEditing){
+			await dispatch(updateBooking(newBooking, booking.id)).catch(
+				async (res) => {
+					const data = await res.json();
+
+					if (data && data.message) setErrors([data.message]);
+					if (data && data.errors) setErrors(Object.values(data.errors));
+				}
+			);
+			setIsEditing(false)
+		}else{
+			await dispatch(createBooking(newBooking, spot.id)).catch(async (res) => {
 			const data = await res.json();
 
 			if (data && data.message) setErrors([data.message]);
 			if (data && data.errors) setErrors(Object.values(data.errors));
-		});
-
+		});}
 		setStartDate(null);
 		setEndDate(null);
 	};
 
-	const clearDates = (e) => {
-		e.preventDefault();
-
-		setStartDate(null);
-		setEndDate(null);
-	};
 	const handleOpen = (e) => {
 		if(e){
 			e.preventDefault();
@@ -72,19 +91,32 @@ function SingleRightBody({ spot }) {
 		setIsOpen(!isOpen)
 	};
 
+	const onChange = (dates) => {
+		const [start, end] = dates;
+		setStartDate(start);
+		setEndDate(end);
+		if(start && end) handleOpen()
+	};
+	console.log('userBookings',userBookings)
+	console.log('booking', booking)
+	const clearDates = (e) => {
+		e.preventDefault();
+
+		setStartDate(null);
+		setEndDate(null);
+	};
+	const editBooking = (e) => {
+		e.preventDefault();
+		setStartDate(new Date(booking.startDate));
+		setEndDate(new Date(booking.endDate));
+		setIsEditing(true)
+	};
+
+	useEffect(() => {},[userBookings])
 	useEffect(() => {
 		if (startDate && endDate)
 			setNumNights(differenceInDays(endDate, startDate));
 	}, [startDate, endDate]);
-
-	// console.log("startDate", startDate);
-	// console.log("endDate", endDate);
-	// console.log('numNights', numNights)
-	// console.log('diff in days', differenceInDays(startDate, endDate))
-	// console.log("spotBookingsArr", spotBookingsArr);
-	// console.log("excludeDates", excludeDates);
-	console.log("isOpen", isOpen);
-
 
 	return (
 		<div className="single-right-main">
@@ -116,6 +148,7 @@ function SingleRightBody({ spot }) {
 					}
 					// disabled={disabled}
 					excludeDateIntervals={excludeDates}
+					highlightDates={highlightDates}
 					selectsRange
 					monthsShown={2}
 					// inline
@@ -123,14 +156,21 @@ function SingleRightBody({ spot }) {
 					<button className="clear-dates-btn" onClick={clearDates}>
 						Clear Dates
 					</button>
+					<button className="clear-dates-btn" onClick={editBooking}>
+						Edit a booking
+					</button>
 				</DatePicker>
-				{startDate && endDate
+				{isEditing ?
+				<button onClick={handleBook} className="open-modal-button reserve-btn">
+					Edit Booking
+				</button>
+				:startDate && endDate
 				?
-				<button style={{width:'70%'}} onClick={handleBook} className="open-modal-button">
+				<button onClick={handleBook} className="open-modal-button reserve-btn">
 					Reserve
 				</button>
 				:
-				<button style={{width:'70%'}} onClick={handleOpen} className="open-modal-button">
+				<button onClick={handleOpen} className="open-modal-button reserve-btn">
 					Check Availability
 				</button>
 				}

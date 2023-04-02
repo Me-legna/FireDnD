@@ -411,6 +411,57 @@ const validateBooking = [
             }
             return true;
         }),
+	check("activeBookings")
+        .custom(async (value, { req }) => {
+            if(req.params.spotId){
+                const spot = await Spot.findByPk(req.params.spotId);
+                const spotBooking = await Booking.findOne({
+                    where: {
+                        userId: req.user.id,
+                        spotId: spot.id,
+                        [Op.or]: [
+                            {
+                                startDate: {
+                                    [Op.gte]: Date.now()
+                                },
+                            },
+                            {
+                                endDate: {
+                                    [Op.lte]: Date.now()
+                                },
+                            },
+                        ],
+                    },
+                });
+                const booking = await Booking.findOne({
+                    where: {
+                        userId: req.user.id,
+                        [Op.or]: [
+                            {
+                                startDate: {
+                                    [Op.gte]: req.body.startDate,
+                                    [Op.lt]: req.body.endDate,
+                                },
+                            },
+                            {
+                                endDate: {
+                                    [Op.gt]: req.body.startDate,
+                                    [Op.lte]: req.body.endDate,
+                                },
+                            },
+                        ],
+                    },
+                });
+
+                if(booking) {
+                    throw new Error("You already have an active booking for these dates.");
+                }
+                if(spotBooking) {
+                    throw new Error("You already have a booking for this spot.");
+                }
+            }
+            return true;
+        }),
 	check("startDate")
         .isDate()
         .withMessage("Check-in Date must be selected"),
@@ -437,7 +488,7 @@ const validateBooking = [
                 },
             });
             if (booking) {
-                throw new Error("Check-in date conflicts with an existing booking");
+                throw new Error("Dates conflict with an existing booking");
             }
 
         }
