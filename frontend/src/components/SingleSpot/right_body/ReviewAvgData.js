@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import solidStar from "../../../images/spotImages/star-solid.svg";
-import logo from "../../images/fireDnD-logo.png";
+import logo from "../../../images/fireDnD-logo.png";
 
 
 function ReviewAvgData() {
