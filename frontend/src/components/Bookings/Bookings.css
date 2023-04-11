@@ -1,0 +1,29 @@
+.user-bookings-ctn{
+    display: flex;
+    flex-direction: column;
+}
+.user-bookings-list{
+    display: flex;
+    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
+}
+.user-booking{
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-right: 10rem;
+    margin-bottom: 2rem;
+}
+.preview-ctn{
+    width: 10rem;
+    height: 5rem;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.delete-booking-btn{
+    position: absolute;
+    right: 0px;
+    top: 0;
+    color: red;
+    cursor: pointer;
+}
