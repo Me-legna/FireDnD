@@ -16,7 +16,7 @@
     display: flex;
 }
 .dot-space{
-    margin: 0px 10px;
+    margin: 0px 5px;
 }
 .share-save-button{
     margin: 0px 8px
@@ -40,8 +40,83 @@
         padding: 40px 0px;
 }
 .single-left-main{
-    width: 60%;
+    width: 55%;
+    word-break: break-all;
+    white-space: normal;
 }
 .single-right-main{
-    width: 30%;
+    width: 40%;
+    height: 100%;
+    border: 1px solid black;
+    padding: 20px 0px;
+    border-radius: 10px;
+    box-shadow: 0rem 0rem 1rem 0rem black;
+}
+
+.review-preview-ctn{
+    display: flex;
+    justify-content: space-between;
+}
+
+.date-ctn{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.date-headers{
+    display: flex;
+    justify-content: space-evenly;
+}
+.clear-dates-btn{
+    background: none;
+    border: none;
+    margin: 4px 8px;
+    border-radius: 3px 3px 0 0;
+    border-bottom: 1px solid
+}
+.clear-dates-btn:hover{
+    cursor: pointer;
+    background: #d6d1d1;
+}
+.react-datepicker__input-container {
+    text-align: center;
+}
+.react-datepicker__input-container input{
+    cursor: pointer;
+    width: 60%;
+    text-align: center;
+}
+.right-body-price{
+    font-weight: 600;
+    font-size: 30px;
+}
+
+.spacer{
+    border: 1px solid;
+    margin: 20px;
+}
+.reserve-btn{
+    width: 70%;
+}
+.open-modal-button:hover{
+    cursor: pointer;
+    color: #e5d3d3;
+    background: rgb(209 43 82);
+}
+.react-datepicker__day--highlighted-custom-3{
+    background-color:green;
+    color:white !important;
+}
+
+.color-id1{
+    padding: 1px 5px;
+    margin-right: 5px;
+    color: green;
+    background: green;
+}
+.color-id2{
+    color: #216ba5;
+    background: #216ba5;
+    margin-right: 5px;
+    padding: 1px 4px;
 }

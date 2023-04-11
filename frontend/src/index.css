@@ -12,9 +12,6 @@
     flex-direction: column;
     justify-content: flex-start;
 }
-.review-idx{
-    width: 70%;
-}
 .each-review{
     display: flex;
 
