@@ -19,11 +19,9 @@ function SingleRightBody({ spot }) {
 	const spotBookings = useSelector((state) => state.bookings.spot);
 	const userBookings = useSelector((state) => state.bookings.user);
 	const spotBookingsArr = Object.values(spotBookings);
-	const userBookingsArr = Object.values(userBookings)
-	const booking = userBookingsArr.find(
-		(booking) => booking.spotId === spot.id
-	);
-	const userBookingsIds = Object.keys(userBookings).map(id => +id);
+	const userBookingsArr = Object.values(userBookings);
+	const booking = userBookingsArr.find((booking) => booking.spotId === spot.id);
+	const userBookingsIds = Object.keys(userBookings).map((id) => +id);
 	const dispatch = useDispatch();
 	const [startDate, setStartDate] = useState(null);
 	const [endDate, setEndDate] = useState(null);
@@ -38,7 +36,6 @@ function SingleRightBody({ spot }) {
 	];
 
 	spotBookingsArr.forEach((booking) => {
-
 		if (userBookingsIds.includes(booking.id)) {
 			const highlight = {
 				"react-datepicker__day--highlighted-custom-3": eachDayOfInterval({
@@ -63,7 +60,7 @@ function SingleRightBody({ spot }) {
 			startDate: startDate?.toISOString().split("T")[0],
 			endDate: endDate?.toISOString().split("T")[0],
 		};
-		if(isEditing){
+		if (isEditing) {
 			await dispatch(updateBooking(newBooking, booking.id)).catch(
 				async (res) => {
 					const data = await res.json();
@@ -72,30 +69,31 @@ function SingleRightBody({ spot }) {
 					if (data && data.errors) setErrors(Object.values(data.errors));
 				}
 			);
-			setIsEditing(false)
-		}else{
+			setIsEditing(false);
+		} else {
 			await dispatch(createBooking(newBooking, spot.id)).catch(async (res) => {
-			const data = await res.json();
+				const data = await res.json();
 
-			if (data && data.message) setErrors([data.message]);
-			if (data && data.errors) setErrors(Object.values(data.errors));
-		});}
+				if (data && data.message) setErrors([data.message]);
+				if (data && data.errors) setErrors(Object.values(data.errors));
+			});
+		}
 		setStartDate(null);
 		setEndDate(null);
 	};
 
 	const handleOpen = (e) => {
-		if(e){
+		if (e) {
 			e.preventDefault();
 		}
-		setIsOpen(!isOpen)
+		setIsOpen(!isOpen);
 	};
 
 	const onChange = (dates) => {
 		const [start, end] = dates;
 		setStartDate(start);
 		setEndDate(end);
-		if(start && end) handleOpen()
+		if (start && end) handleOpen();
 	};
 	const clearDates = (e) => {
 		e.preventDefault();
@@ -107,10 +105,10 @@ function SingleRightBody({ spot }) {
 		e.preventDefault();
 		setStartDate(new Date(booking.startDate));
 		setEndDate(new Date(booking.endDate));
-		setIsEditing(true)
+		setIsEditing(true);
 	};
 
-	useEffect(() => {},[userBookings])
+	useEffect(() => {}, [userBookings]);
 	useEffect(() => {
 		if (startDate && endDate)
 			setNumNights(differenceInDays(endDate, startDate));
@@ -151,27 +149,44 @@ function SingleRightBody({ spot }) {
 					monthsShown={2}
 					// inline
 				>
-					<button className="clear-dates-btn" onClick={clearDates}>
-						Clear Dates
-					</button>
-					<button className="clear-dates-btn" onClick={editBooking}>
-						Edit a booking
-					</button>
+					{/* <p> gdfg</p> */}
+					<span className="color-id1">F</span>
+					<span>- Your active booking</span>
+					<br/>
+					<br/>
+					<span className="color-id2">U</span>
+					<span>- Selected Dates</span>
+					<div>
+						<button className="clear-dates-btn" onClick={clearDates}>
+							Clear Dates
+						</button>
+						<button className="clear-dates-btn" onClick={editBooking}>
+							Edit a booking
+						</button>
+					</div>
 				</DatePicker>
-				{isEditing ?
-				<button onClick={handleBook} className="open-modal-button reserve-btn">
-					Edit Booking
-				</button>
-				:startDate && endDate
-				?
-				<button onClick={handleBook} className="open-modal-button reserve-btn">
-					Reserve
-				</button>
-				:
-				<button onClick={handleOpen} className="open-modal-button reserve-btn">
-					Check Availability
-				</button>
-				}
+				{isEditing ? (
+					<button
+						onClick={handleBook}
+						className="open-modal-button reserve-btn"
+					>
+						Edit Booking
+					</button>
+				) : startDate && endDate ? (
+					<button
+						onClick={handleBook}
+						className="open-modal-button reserve-btn"
+					>
+						Reserve
+					</button>
+				) : (
+					<button
+						onClick={handleOpen}
+						className="open-modal-button reserve-btn"
+					>
+						Check Availability
+					</button>
+				)}
 
 				{numNights < 1 ? (
 					<></>

@@ -54,7 +54,7 @@ function AllSpots() {
 											<div className="spot-price">{`$${spot.price} night`}</div>
 										</div>
 										<div className="flex-column">
-											<div className="spot-avg-rating">
+											<div className="ting">
 												<img
 													className="solid-star"
 													src={solidStar}
