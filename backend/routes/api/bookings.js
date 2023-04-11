@@ -3,28 +3,27 @@ const express = require('express');
 const { Op } = require('sequelize');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const {validateBooking} = require('./spots')
 const { requireAuth } = require('../../utils/auth.js');
 const { Spot, User, Booking, Review, ReviewImage, SpotImage, sequelize } = require('../../db/models');
 
 const router = express.Router();
 
-// const validateBooking = [
-//     check('startDate')
-//         .isDate()
-//         .withMessage('Must be a valid Date (YYYY-MM-DD)'),
-//     check('endDate')
-//         .isDate()
-//         .withMessage('Must be a valid Date (YYYY-MM-DD)'),
-//     check('endDate')
-//         .custom((value, { req }) => {
-//             if (new Date(value).getTime() <= new Date(req.body.startDate).getTime()) {
-//                 throw new Error('endDate cannot be on or before startDate')
-//             }
-//             return true
-//         }),
-//     handleValidationErrors
-// ]
+const validateBooking = [
+    check('startDate')
+        .isDate()
+        .withMessage('Must be a valid Date (YYYY-MM-DD)'),
+    check('endDate')
+        .isDate()
+        .withMessage('Must be a valid Date (YYYY-MM-DD)'),
+    check('endDate')
+        .custom((value, { req }) => {
+            if (new Date(value).getTime() <= new Date(req.body.startDate).getTime()) {
+                throw new Error('endDate cannot be on or before startDate')
+            }
+            return true
+        }),
+    handleValidationErrors
+]
 
 //GET all Current User Bookings
 router.get('/current', requireAuth, async (req, res, next) => {
@@ -86,16 +85,16 @@ router.put('/:bookingId', requireAuth, validateBooking, async (req, res, next) =
             error.status = 403;
             return next(error)
         }
-        // if (start === bookingStart || start > bookingStart && start <= bookingEnd) {
-        //     err.message = 'Sorry, this spot is already booked for the specified dates';
-        //     err.status = 403;
-        //     err.errors.startDate = 'Check-in date conflicts with an existing booking'
-        // }
-        // if (end === bookingStart || end > bookingStart && end <= bookingEnd) {
-        //     err.message = 'Sorry, this spot is already booked for the specified dates';
-        //     err.status = 403;
-        //     err.errors.endDate = 'Check-out date conflicts with an existing booking'
-        // }
+        if (start === bookingStart || start > bookingStart && start <= bookingEnd) {
+            err.message = 'Sorry, this spot is already booked for the specified dates';
+            err.status = 403;
+            err.errors.startDate = 'Start date conflicts with an existing booking'
+        }
+        if (end === bookingStart || end > bookingStart && end <= bookingEnd) {
+            err.message = 'Sorry, this spot is already booked for the specified dates';
+            err.status = 403;
+            err.errors.endDate = 'Start date conflicts with an existing booking'
+        }
         if (Object.keys(err.errors).length) next(err)
         else {
             booking.startDate = startDate;

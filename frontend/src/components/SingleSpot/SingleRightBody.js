@@ -1,18 +1,9 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import OpenModalButton from "../OpenModalButton";
-import DeleteSpotModal from "./DeleteSpotModal";
-import EditSpotFormModal from "./EditSpotFormModal";
-import solidStar from "../../images/spotImages/star-solid.svg";
-import ReviewAvgData from "./right_body/ReviewAvgData";
-import DatePicker from "react-datepicker";
-import subDays from "date-fns/subDays";
-import addDays from "date-fns/addDays";
-import differenceInDays from "date-fns/differenceInDays";
-import eachDayOfInterval from "date-fns/eachDayOfInterval";
-import "react-datepicker/dist/react-datepicker.css";
-import { createBooking, updateBooking } from "../../store/bookings";
-import { useEffect } from "react";
+import { useState } from "react"
+import { useSelector } from "react-redux"
+import OpenModalButton from "../OpenModalButton"
+import DeleteSpotModal from "./DeleteSpotModal"
+import EditSpotFormModal from "./EditSpotFormModal"
+import solidStar from '../../images/spotImages/star-solid.svg'
 
 function SingleRightBody({ spot }) {
 	const user = useSelector((state) => state.session.user);
@@ -217,4 +208,4 @@ function SingleRightBody({ spot }) {
 	);
 }
 
-export default SingleRightBody;
+export default SingleRightBody
