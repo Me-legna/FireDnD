@@ -48,6 +48,7 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
+    margin-left: 36%;
 }
 
 .spot-details {

@@ -72,7 +72,6 @@
 
 #profile-dropdown {
     display: flex;
-    overflow: hidden;
     width: 14rem;
     height: 14rem;
     flex-flow: column wrap;

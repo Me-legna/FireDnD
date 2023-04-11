@@ -9,7 +9,6 @@ import SignupFormModal from '../SignupFormModal';
 import OpenModalMenuItem from './OpenModalMenuItem'
 import AllUserReviews from "../Reviews/AllUserReviews";
 import CreateSpotFormModal from "../SingleSpot/CreateSpotFormModal";
-import AllUserBookings from "../Bookings";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -71,13 +70,6 @@ function ProfileButton({ user }) {
                   itemText='Manage Reviews'
                   onItemClick={closeMenu}
                   modalComponent={<AllUserReviews />}
-                />
-              </li>
-              <li className="dropdown-item">
-                <OpenModalMenuItem
-                  itemText='Manage Bookings'
-                  onItemClick={closeMenu}
-                  modalComponent={<AllUserBookings />}
                 />
               </li>
             </div>
