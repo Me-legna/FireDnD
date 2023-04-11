@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { createReview } from "../../store/reviews";
 import solidStar from '../../images/spotImages/star-solid.svg'
-import logo from "../../images/fireDnD-logo.png";
-
 
 function CreateReviewFormModal() {
     const dispatch = useDispatch();
@@ -16,11 +14,6 @@ function CreateReviewFormModal() {
     const User = useSelector(state => state.session.user)
     const ReviewImages = []
     const spotId = useSelector(state => state.spots.singleSpot.id)
-
-    const addDefaultSrc = (e) => {
-			e.target.onerror = null; // prevents looping
-			e.target.src = logo;
-		};
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -83,7 +76,7 @@ function CreateReviewFormModal() {
                             onChange={(e) => setStars(e.target.value)}
                             required
                         />
-                        <img className="solid-star" src={solidStar} onError={addDefaultSrc} alt="solid-black-star" />
+                        <img className="solid-star" src={solidStar} alt="solid-black-star" />
                         <output>{stars}</output>
                     </div>
                 </label>

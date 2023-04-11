@@ -9,21 +9,15 @@ import CreateSpotFormModal from '../SingleSpot/CreateSpotFormModal';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
-import logo from "../../images/fireDnD-logo.png";
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
-
-  const addDefaultSrc = (e) => {
-		e.target.onerror = null; // prevents looping
-		e.target.src = logo;
-	};
 
   return (
     <ul id='ul-nav' className='flex-center'>
       <li>
         <NavLink exact to="/">
-          <img id='logo' onError={addDefaultSrc} src={require('../../images/fireDnD-logo.png')} alt='fireDnD-logo'></img>
+          <img id='logo' src={require('../../images/fireDnD-logo.png')} alt='fireDnD-logo'></img>
         </NavLink>
       </li>
       {/* <div id='query-filters'>
@@ -41,19 +35,19 @@ function Navigation({ isLoaded }) {
           )
           : (
             <li className='create-spot nav-middle dropdown-item' >
-              <div className="dropdown-item">
+              <li className="dropdown-item">
                 <OpenModalMenuItem
                   itemText="Sign Up"
                   modalComponent={<SignupFormModal />}
                 />
-              </div>
+              </li>
               <div className='dot-space'>/</div>
-              <div className="dropdown-item">
+              <li className="dropdown-item">
                 <OpenModalMenuItem
                   itemText="Log In"
                   modalComponent={<LoginFormModal />}
                 />
-              </div>
+              </li>
             </li>
           )
         }
