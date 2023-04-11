@@ -52,6 +52,7 @@ function SingleRightBody({ spot }) {
 			excludeDates.push(exclude);
 		}
 	});
+	
 
 	const handleBook = async (e) => {
 		e.preventDefault();
